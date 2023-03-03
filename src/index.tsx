@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import { StyledEngineProvider } from '@mui/material/styles';
+import { StyledEngineProvider } from '@mui/material/styles';
 import App from './components/App/App';
 import './index.css';
 
@@ -9,8 +9,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    {/* <StyledEngineProvider injectFirst> */}
+    <StyledEngineProvider injectFirst>
       <App />
-    {/* </StyledEngineProvider> */}
+    </StyledEngineProvider>
   </React.StrictMode>
 );
