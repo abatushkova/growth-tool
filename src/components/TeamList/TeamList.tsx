@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -6,27 +6,10 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-
-const members = [
-  {
-    id: 1,
-    color: 'teal',
-    name: 'Alon'
-  },
-  {
-    id: 2,
-    color: 'orange',
-    name: 'Akhil'
-  },
-  {
-    id: 3,
-    color: 'gold',
-    name: 'Gianluca'
-  },
-];
+import { members } from '../../store/fakeMembers';
 
 export default function TeamList() {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -57,11 +40,8 @@ export default function TeamList() {
             onClick={(event) => handleListItemClick(event, id)}
           >
             <ListItemAvatar>
-              <Avatar
-                sx={{ bgcolor: color }}
-                alt={name}
-                // src=""
-              />
+              {/* remove bgcolor */}
+              <Avatar src="" sx={{ bgcolor: color }} alt={name} />
             </ListItemAvatar>
             <ListItemText>{name}</ListItemText>
           </ListItemButton>

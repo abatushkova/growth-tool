@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Divider from '@mui/material/Divider';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import SpaIcon from '@mui/icons-material/Spa';
@@ -10,9 +10,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Tabs from '../Tabs/Tabs';
 
-const itemCategory = {
-  py: 2,
-  px: 2,
+const navItem = {
+  p: 2,
 };
 
 export default function Navigator(props: DrawerProps) {
@@ -20,18 +19,18 @@ export default function Navigator(props: DrawerProps) {
 
   return (
     <Drawer variant="permanent" {...other}>
-      <Grid container alignItems="center" sx={{ ...itemCategory }}>
-        <Grid item xs={2}>
+      <Grid container spacing={1} alignItems="center" sx={{ ...navItem }}>
+        <Grid item>
           <SpaIcon sx={{ fontSize: 24 }} />
         </Grid>
-        <Grid item xs={10}>
-          <Typography color="inherit" variant="h6" component="p" align="left">
+        <Grid item>
+          <Typography color="inherit" variant="h6" component="h1" align="left">
             Growth-tool
           </Typography>
         </Grid>
       </Grid>
       <Divider />
-      <Box sx={{ ...itemCategory }}>
+      <Box sx={{ ...navItem }}>
         <Box
           component="form"
           sx={{ width: '100%' }}
@@ -50,11 +49,11 @@ export default function Navigator(props: DrawerProps) {
                   <SearchIcon />
                 </InputAdornment>
               ),
+              style: { fontSize: 14 }
             }}
           />
         </Box>
       </Box>
-      <Divider />
       <Tabs />
     </Drawer>
   );
