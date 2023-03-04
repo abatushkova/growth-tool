@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import TabPanel from '../TabPanel/TabPanel';
+import TabPanel from '../NavTabPanel/NavTabPanel';
 import TeamList from '../TeamList/TeamList';
 import { categories } from '../../utils/constants/colors';
 
@@ -14,7 +14,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function FullWidthTabs() {
+export default function NavTabs() {
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

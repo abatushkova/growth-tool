@@ -1,9 +1,9 @@
 import React from 'react';
-import Paperbase from '../Paperbase/Paperbase';
+import Base from '../Base/Base';
 
 function App() {
   return (
-    <Paperbase />
+    <Base />
   );
 }
 
