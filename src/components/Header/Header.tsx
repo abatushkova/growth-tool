@@ -7,16 +7,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Avatar from '@mui/material/Avatar';
 import TeamGroup from '../TeamGroup/TeamGroup';
 
-interface HeaderProps {
+interface IHeaderProps {
   onDrawerToggle: () => void;
 }
 
-export default function Header(props: HeaderProps) {
+export default function Header(props: IHeaderProps) {
   const { onDrawerToggle } = props;
 
   return (
     <>
-      <AppBar color="primary" position="sticky" elevation={0}>
+      <AppBar color="secondary" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">
             <Grid item sx={{ display: { md: 'none', xs: 'block' } }}>
