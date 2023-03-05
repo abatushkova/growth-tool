@@ -49,7 +49,10 @@ theme = {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          color: theme.palette.secondary.main,
+          borderBottomWidth: 1,
+          borderBottomStyle: 'solid',
+          borderBottomColor: theme.palette.secondary.light,
+          backgroundColor: 'rgba(255,255,255,0.8)',
         },
       },
     },
@@ -119,13 +122,6 @@ theme = {
         primary: {
           fontSize: 14,
           fontWeight: theme.typography.fontWeightMedium,
-        },
-      },
-    },
-    MuiDivider: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'rgb(255,255,255,0.15)',
         },
       },
     },
