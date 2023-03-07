@@ -8,17 +8,35 @@ import Aside from '../Aside/Aside';
 import Content from '../Content/Content';
 import Header from '../Header/Header';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    white: Palette['primary'];
+    gray: Palette['primary'];
+  }
+  interface PaletteOptions {
+    white: PaletteOptions['primary'];
+    gray: PaletteOptions['primary'];
+  }
+}
+
 let theme = createTheme({
   palette: {
     primary: {
       light: '#63ccff',
       main: '#009be5',
       dark: '#006db3',
+      contrastText: '#fff',
     },
     secondary: {
-      light: '#f4f5f7',
+      main: '#102940',
+      contrastText: '#fff',
+    },
+    gray: {
+      main: '#f4f5f7',
+      dark: '#aaabac',
+    },
+    white: {
       main: '#fff',
-      dark: '#9e9e9e',
     },
   },
   shape: {
@@ -46,13 +64,17 @@ let theme = createTheme({
 theme = {
   ...theme,
   components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: theme.palette.secondary.main,
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          borderBottomWidth: 1,
-          borderBottomStyle: 'solid',
-          borderBottomColor: theme.palette.secondary.light,
-          backgroundColor: 'rgba(255,255,255,0.8)',
+          backgroundColor: theme.palette.secondary.main,
         },
       },
     },
@@ -73,7 +95,7 @@ theme = {
       styleOverrides: {
         root: {
           padding: theme.spacing(1),
-          color: theme.palette.primary.dark,
+          color: theme.palette.white.main,
         },
       },
     },
@@ -108,11 +130,11 @@ theme = {
       styleOverrides: {
         root: {
           '&.Mui-selected, &.Mui-selected:hover': {
-            color: '#009ce5',
+            color: theme.palette.primary.main,
             backgroundColor: 'rgba(0,155,229,0.12)',
           },
           '&:hover': {
-            backgroundColor: 'rgb(51,51,51,0.05)',
+            backgroundColor: 'rgb(51,51,51,0.06)',
           }
         },
       },

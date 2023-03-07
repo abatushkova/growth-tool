@@ -30,12 +30,11 @@ export default function Header(props: IHeaderProps) {
 
   return (
     <>
-      <AppBar color="secondary" position="sticky" elevation={0}>
+      <AppBar position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">
             <Grid item sx={{ display: { md: 'none', xs: 'block' } }}>
               <IconButton
-                color="inherit"
                 aria-label="open drawer"
                 onClick={onDrawerToggle}
                 edge="start"
@@ -45,7 +44,7 @@ export default function Header(props: IHeaderProps) {
             </Grid>
             <Grid item xs />
             <Grid item>
-              <IconButton color="inherit" sx={{ p: 0.5 }}>
+              <IconButton sx={{ p: 0.5 }}>
                 <Avatar src="" alt="My Avatar" />
               </IconButton>
             </Grid>
@@ -65,7 +64,12 @@ export default function Header(props: IHeaderProps) {
               <Avatar src="" alt="Alon" sx={{ ...headerAvatar }} />
             </AvatarGroup>
           </Grid>
-          <Grid item sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Grid item sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap'
+          }}>
             <Typography variant="h5" component="p">
               Vlad
             </Typography>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
-import Paper, { PaperProps } from '@mui/material/Paper';
+import MuiPaper, { PaperProps } from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import Accordion, { AccordionProps } from '@mui/material/Accordion';
+import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -11,24 +11,18 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 
-const Item = styled(Paper)<PaperProps>(({ theme }) => ({
+const Item = styled((props: PaperProps) => (
+  <MuiPaper {...props} />
+))(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
 }));
-// const Item = styled((props: PaperProps) => (
-//   <MuiPaper {...props} />
-// ))(({ theme }) => ({
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-// }));
-const CustomAccordion = styled(Accordion)<AccordionProps>(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.light,
+
+const CustomAccordion = styled((props: AccordionProps) => (
+  <MuiAccordion {...props} />
+))(({ theme }) => ({
+  backgroundColor: theme.palette.gray.main,
 }));
-// const CustomAccordion = styled((props: AccordionProps) => (
-//   <MuiAccordion {...props} />
-// ))(({ theme }) => ({
-//   backgroundColor: theme.palette.secondary.light,
-// }));
 
 interface ITopic {
   name: string;

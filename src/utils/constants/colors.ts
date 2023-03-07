@@ -1,5 +1,5 @@
 export const categories = [
-  '#F6FFF8',
+  '#EDF8FC',
   '#DCF4FA',
   '#DCE7F9',
 ];

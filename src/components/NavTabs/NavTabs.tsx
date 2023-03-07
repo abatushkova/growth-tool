@@ -9,8 +9,8 @@ import { categories } from '../../utils/constants/colors';
 
 function a11yProps(index: number) {
   return {
-    id: `aside-tab-${index}`,
-    'aria-controls': `aside-tabpanel-${index}`,
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
   };
 }
 
