@@ -9,8 +9,8 @@ import { categories } from '../../utils/constants/colors';
 
 function a11yProps(index: number) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `aside-tab-${index}`,
+    'aria-controls': `aside-tabpanel-${index}`,
   };
 }
 
@@ -25,8 +25,9 @@ export default function NavTabs() {
     <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <Box sx={{
         flexGrow: 1,
-        overflow: 'scroll',
-        maxHeight: 'calc(100vh - 182px)',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
         bgcolor: categories[value],
       }}>
         <TabPanel value={value} index={0}>
