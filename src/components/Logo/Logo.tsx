@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 
 export default function Logo() {
   return (
-    <Grid container spacing={1} alignItems="center" sx={{ p: 2 }}>
+    <Grid container spacing={1} alignItems="center" sx={{ py: 1, px: 2 }}>
       <Grid item>
         <SpaIcon sx={{ fontSize: 24 }} />
       </Grid>
