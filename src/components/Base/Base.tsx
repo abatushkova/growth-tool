@@ -27,10 +27,6 @@ let theme = createTheme({
       dark: '#006db3',
       contrastText: '#fff',
     },
-    secondary: {
-      main: '#102940',
-      contrastText: '#fff',
-    },
     gray: {
       main: '#f4f5f7',
       dark: '#aaabac',
@@ -67,14 +63,14 @@ theme = {
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: theme.palette.secondary.main,
+          backgroundColor: theme.palette.primary.dark,
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: theme.palette.secondary.main,
+          backgroundColor: theme.palette.primary.dark,
         },
       },
     },
