@@ -37,13 +37,13 @@ interface IMeetingProps {
 export default function MeetingItem({ id, title, created, topics }: IMeetingProps) {
   const [expanded, setExpanded] = useState<number | false>(false);
 
-  const handleChange =
+  const toggleAccordion =
     (id: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? id : false);
     };
 
   return (
-    <CustomAccordion expanded={expanded === id} onChange={handleChange(id)}>
+    <CustomAccordion expanded={expanded === id} onChange={toggleAccordion(id)}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1bh-content"
@@ -55,6 +55,22 @@ export default function MeetingItem({ id, title, created, topics }: IMeetingProp
               <Chip label={topics.length} size="small" />
             </Grid>
             <Grid item>
+            {/* <Grid item xs={11}>
+              <Box
+                component="form"
+                noValidate
+                autoComplete="off"
+              >
+                <TextField
+                  id="standard-basic meetingTitle"
+                  variant="standard"
+                  multiline
+                  defaultValue={title}
+                  fullWidth
+                  InputProps={{ disableUnderline: true }}
+                  sx={{ fontSize: '20px' }}
+                />
+              </Box> */}
               <Typography variant="h6" component="p" color="text.main">{title}</Typography>
             </Grid>
           </Grid>
