@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 interface ILayoutProps {
   children?: React.ReactNode;
@@ -8,11 +8,11 @@ interface ILayoutProps {
 }
 
 export default function Layout(props: ILayoutProps) {
-  const { children, pt, pb } = props;
+  const { children, pt, pb = 6 } = props;
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 960, m: 'auto', px: 2 }} pt={pt} pb={pb}>
+    <Container maxWidth="md" sx={{ pt, pb }}>
       {children}
-    </Box>
+    </Container>
   );
 }
