@@ -71,7 +71,7 @@ export default function MeetingItem({ id, title, created, topics }: IMeetingProp
             <Item key={index}>{topic.name}</Item>
           ))}
         </Stack>
-        <Button variant="text" sx={{ mt: 2 }}>+ New Topic</Button>
+        <Button variant="text" sx={{ mt: 2 }}>+ Create Topic</Button>
       </AccordionDetails>
     </CustomAccordion>
   );

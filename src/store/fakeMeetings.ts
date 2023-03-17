@@ -1,7 +1,7 @@
 export const meetings = [
   {
     id: 1,
-    title: 'Meeting 1 tittle with description and comments',
+    title: 'New Meeting',
     created: 'Dec 31, 2022',
     topics: [
       {
@@ -17,7 +17,7 @@ export const meetings = [
   },
   {
     id: 2,
-    title: 'Meeting 2 tittle and description',
+    title: 'New Meeting',
     created: 'Dec 16, 2022',
     topics: [
       {

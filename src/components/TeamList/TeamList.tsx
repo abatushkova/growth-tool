@@ -65,9 +65,10 @@ export default function TeamList() {
                 <PersonAddIcon sx={{ fontSize: 20 }} />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText>New Member</ListItemText>
+            <ListItemText>Add Member</ListItemText>
           </ListItemButton>
         </ListItem>
+        {/* sorted list A-Z */}
         {members.map(({ id, color, name }) => (
           <ListItem disablePadding key={id}>
             <ListItemButton

@@ -34,10 +34,10 @@ export default function NavTabs() {
           <TeamList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Typography>Catalog</Typography>
+          <Typography></Typography>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Typography>Reports</Typography>
+          <Typography></Typography>
         </TabPanel>
       </Box>
       <Tabs
