@@ -44,11 +44,11 @@ export default function MeetingPage() {
             justifyContent: 'center',
             flexWrap: 'wrap'
           }}>
-            <Typography variant="h5" component="p">
+            <Typography variant="h3" component="p">
               Vlad
             </Typography>
             <CodeIcon sx={{ fontSize: 32, mx: 1 }} />
-            <Typography variant="h5" component="p">
+            <Typography variant="h3" component="p">
               Alon
             </Typography>
           </Grid>
@@ -56,13 +56,12 @@ export default function MeetingPage() {
       </Layout>
       <Divider />
       <Layout>
-        <Grid container alignItems="center">
-          <Grid item>
-            <Typography variant="h5" component="h2" sx={{ my: 5 }} align="left">
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item xs>
+            <Typography variant="h2">
               Meetings
             </Typography>
           </Grid>
-          <Grid item xs></Grid>
           <Grid item>
             <Button variant="contained">
               Create Meeting
@@ -70,8 +69,8 @@ export default function MeetingPage() {
           </Grid>
         </Grid>
         <Box>
-          {meetings.map(meeting => (
-            <MeetingItem key={meeting.id} {...meeting} />
+          {meetings.map((meeting) => (
+            <MeetingItem key={meeting.meetingId} {...meeting} />
           ))}
         </Box>
       </Layout>
