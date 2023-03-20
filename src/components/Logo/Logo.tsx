@@ -10,7 +10,7 @@ export default function Logo() {
         <SpaIcon sx={{ fontSize: 24 }} />
       </Grid>
       <Grid item>
-        <Typography variant="h6" component="h1" align="left">
+        <Typography variant="h6" component="h1">
           Growth-tool
         </Typography>
       </Grid>

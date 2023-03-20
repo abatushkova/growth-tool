@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import TabPanel from '../NavTabPanel/NavTabPanel';
 import TeamList from '../TeamList/TeamList';
 import { categories } from '../../utils/constants/colors';
@@ -34,10 +33,8 @@ export default function NavTabs() {
           <TeamList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Typography></Typography>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Typography></Typography>
         </TabPanel>
       </Box>
       <Tabs
