@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Logout from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Toolbar from '@mui/material/Toolbar';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
@@ -31,6 +34,7 @@ export default function Header(props: IHeaderProps) {
         <Grid container spacing={1} alignItems="center">
           <Grid item sx={{ display: { md: 'none', xs: 'block' } }}>
             <IconButton
+              color="inherit"
               aria-label="open drawer"
               onClick={onDrawerToggle}
               edge="start"
@@ -59,8 +63,18 @@ export default function Header(props: IHeaderProps) {
                 'aria-labelledby': 'basic-button',
               }}
             >
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <AccountCircleIcon fontSize="small" />
+                </ListItemIcon>
+                My account
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
             </Menu>
           </Grid>
         </Grid>
