@@ -38,7 +38,13 @@ let theme = createTheme({
     borderRadius: 8,
   },
   typography: {
-    h5: {
+    h2: {
+      fontSize: 36,
+      fontWeight: 500,
+      marginBlock: '2.5rem',
+    },
+    h3: {
+      fontSize: 24,
       fontWeight: 500,
     },
   },
@@ -90,28 +96,21 @@ theme = {
       styleOverrides: {
         root: {
           padding: theme.spacing(1),
-          color: theme.palette.white.main,
         },
       },
     },
-    // MuiTextField: {
-    //   styleOverrides: {
-    //     root: {
-    //       '& .MuiInputBase-multiline': {
-    //         padding: `0 ${theme.spacing(1)}`,
-    //         marginLeft: `-${theme.spacing(1)}`,
-    //         fontSize: 20,
-    //         fontWeight: theme.typography.fontWeightMedium,
-    //         '&:hover': {
-    //           outline: `1px solid rgba(51,51,51,0.06)`,
-    //         },
-    //       },
-    //       "& .Mui-focused": {
-    //         backgroundColor: theme.palette.white.main,
-    //       }
-    //     },
-    //   }
-    // },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputLabel-root': {
+            color: theme.palette.gray.dark,
+          },
+          '& .MuiInputBase-multiline': {
+            backgroundColor: theme.palette.white.main,
+          }
+        },
+      }
+    },
     MuiTabs: {
       styleOverrides: {
         indicator: {
