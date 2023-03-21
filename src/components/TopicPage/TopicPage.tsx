@@ -51,18 +51,8 @@ const CustomToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 
 export default function TopicPage() {
   const [formView, setFormView] = useState('qa');
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleFormView = (
+  const changeFormView = (
     event: React.MouseEvent<HTMLElement>,
     newFormView: string | null,
   ) => {
@@ -87,7 +77,7 @@ export default function TopicPage() {
         </Grid>
         <Grid item>
           <IconButton aria-label="close">
-            <CloseIcon fontSize="inherit" />
+            <CloseIcon />
           </IconButton>
         </Grid>
       </Grid>
@@ -98,7 +88,7 @@ export default function TopicPage() {
         size="small"
         value={formView}
         exclusive
-        onChange={handleFormView}
+        onChange={changeFormView}
         aria-label="form view"
         sx={{ flexWrap: 'wrap' }}
       >
@@ -255,7 +245,7 @@ export default function TopicPage() {
       {/* <Typography variant="body1" color="text.secondary">
         There are no comments yet on this topic.
       </Typography> */}
-      <Stack spacing={3}>
+      <Stack spacing={2}>
         <Paper sx={{ ...topicItem }}>
           <Grid container spacing={1}>
             <Grid item xs={12} container spacing={1}>
@@ -267,14 +257,14 @@ export default function TopicPage() {
               <Grid item>
                 <Tooltip title="Edit">
                   <IconButton size="small">
-                    <EditIcon fontSize="inherit" />
+                    <EditIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Grid>
               <Grid item>
                 <Tooltip title="Delete">
                   <IconButton size="small">
-                    <DeleteIcon fontSize="inherit" />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Grid>
@@ -318,14 +308,14 @@ export default function TopicPage() {
               <Grid item>
                 <Tooltip title="Edit">
                   <IconButton size="small">
-                    <EditIcon fontSize="inherit" />
+                    <EditIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Grid>
               <Grid item>
                 <Tooltip title="Delete">
                   <IconButton size="small">
-                    <DeleteIcon fontSize="inherit" />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Grid>
@@ -348,14 +338,14 @@ export default function TopicPage() {
               <Grid item>
                 <Tooltip title="Edit">
                   <IconButton size="small">
-                    <EditIcon fontSize="inherit" />
+                    <EditIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Grid>
               <Grid item>
                 <Tooltip title="Delete">
                   <IconButton size="small">
-                    <DeleteIcon fontSize="inherit" />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Grid>
