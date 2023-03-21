@@ -7,7 +7,9 @@ import {
   Avatar,
   AvatarGroup,
   Divider,
+  TextField,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CodeIcon from '@mui/icons-material/Code';
 import Layout from '../Layout/Layout';
 import MeetingItem from '../MeetingItem/MeetingItem';
@@ -68,6 +70,33 @@ export default function MeetingPage() {
             <Button variant="contained">
               Create Meeting
             </Button>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mb: 4 }}>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              id="outlined-question"
+              defaultValue={'New Meeting'}
+              multiline
+              fullWidth
+              size="small"
+            />
+          </Grid>
+          <Grid item>
+            <DatePicker format="LL" />
+          </Grid>
+          <Grid item container spacing={1}>
+            <Grid item>
+              <Button variant="contained">
+                Create
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button variant="text">
+                Cancel
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
         <Box>
