@@ -1,8 +1,12 @@
 import React from 'react';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Base from '../Base/Base';
 
 export default function App() {
   return (
-    <Base />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Base />
+    </LocalizationProvider>
   );
 }
