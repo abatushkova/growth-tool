@@ -1,40 +1,37 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import MuiPaper, { PaperProps } from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
+import {
+  Typography,
+  Grid,
+  Button,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Chip,
+  Stack,
+  Tooltip,
+  IconButton,
+  Menu,
+  MenuItem,
+  Paper,
+  TextField,
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import AddLinkIcon from '@mui/icons-material/AddLink';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
 import { meetings } from '../../store/fakeMeetings';
 
 const ITEM_HEIGHT = 48;
 
-const Item = styled((props: PaperProps) => (
-  <MuiPaper {...props} />
-))(({ theme }) => ({
+const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body1,
   paddingInline: theme.spacing(2),
   paddingBlock: theme.spacing(0.5),
 }));
 
-const CustomAccordion = styled((props: AccordionProps) => (
-  <MuiAccordion {...props} />
-))(({ theme }) => ({
+const CustomAccordion = styled(Accordion)(({ theme }) => ({
   backgroundColor: theme.palette.gray.main,
 }));
 
@@ -198,10 +195,10 @@ export default function MeetingItem(props: IMeetingProps) {
             ))}
           </Stack>
         )}
-        {/* <Button variant="text" startIcon={<AddIcon />}>
+        <Button variant="text" startIcon={<AddIcon />}>
           Add Topic
-        </Button> */}
-        <Grid container spacing={2}>
+        </Button>
+        {/* <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               variant="outlined"
@@ -225,8 +222,7 @@ export default function MeetingItem(props: IMeetingProps) {
               </Button>
             </Grid>
           </Grid>
-        </Grid>
-
+        </Grid> */}
       </AccordionDetails>
     </CustomAccordion>
   );

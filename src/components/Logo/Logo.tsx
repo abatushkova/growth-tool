@@ -1,7 +1,9 @@
 import React from 'react';
+import {
+  Typography,
+  Grid,
+} from '@mui/material';
 import SpaIcon from '@mui/icons-material/Spa';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 
 export default function Logo() {
   return (

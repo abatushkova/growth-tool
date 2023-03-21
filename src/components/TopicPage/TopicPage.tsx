@@ -1,33 +1,33 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
+import {
+  Typography,
+  Grid,
+  Stack,
+  Box,
+  Button,
+  Tooltip,
+  IconButton,
+  Paper,
+  TextField,
+  FormControl,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import Radio from '@mui/material/Radio';
-import ToggleButton from '@mui/material/ToggleButton';
-import MuiToggleButton, { ToggleButtonGroupProps } from '@mui/material/ToggleButtonGroup';
 import Layout from '../Layout/Layout';
 
 const topicItem = {
   padding: 2,
 };
 
-const CustomToggleButtonGroup = styled((props: ToggleButtonGroupProps) => (
-  <MuiToggleButton {...props} />
-))(({ theme }) => ({
+const CustomToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   '& .MuiToggleButtonGroup-grouped': {
     minWidth: '4rem',
     paddingInline: theme.spacing(2),

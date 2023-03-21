@@ -1,5 +1,8 @@
 import React from 'react';
-import Drawer, { DrawerProps } from '@mui/material/Drawer';
+import {
+  Drawer,
+  DrawerProps
+} from '@mui/material';
 import Logo from '../Logo/Logo';
 import NavTabs from '../NavTabs/NavTabs';
 

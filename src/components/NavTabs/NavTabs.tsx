@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
+import {
+  Tabs,
+  Tab,
+  Box,
+} from '@mui/material';
 import TabPanel from '../NavTabPanel/NavTabPanel';
 import TeamList from '../TeamList/TeamList';
 import { categories } from '../../utils/constants/colors';

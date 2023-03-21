@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
+import {
+  useMediaQuery,
+  CssBaseline,
+  Box
+} from '@mui/material';
 import Aside from '../Aside/Aside';
 import Content from '../Content/Content';
 import Header from '../Header/Header';

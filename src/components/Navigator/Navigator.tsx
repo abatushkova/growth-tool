@@ -1,8 +1,10 @@
 import React from 'react';
+import {
+  Box,
+  TextField,
+  InputAdornment
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
 import NavTabs from '../NavTabs/NavTabs';
 
 export default function Navigator() {
