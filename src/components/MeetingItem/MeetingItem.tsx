@@ -13,14 +13,15 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  ListItemIcon,
   Paper,
-  TextField,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import AddLinkIcon from '@mui/icons-material/AddLink';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { meetings } from '../../store/fakeMeetings';
 
 const ITEM_HEIGHT = 48;
@@ -54,13 +55,15 @@ interface IMeetingProps {
 }
 
 export default function MeetingItem(props: IMeetingProps) {
-  const { meetingId, title, createdAt, topics, closedAt } = props;
+  const { meetingId, title, createdAt, topics } = props;
   const [expanded, setExpanded] = useState<number | false>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [targetEl, setTargetEl] = useState('');
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (id: string) => (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    setTargetEl(id);
   };
 
   const handleClose = () => {
@@ -86,37 +89,14 @@ export default function MeetingItem(props: IMeetingProps) {
                 <Chip label={topics.length} size="small" />
               </Grid>
             )}
-            <Grid item container spacing={2}>
-            {/* <Grid item xs={11}>
-              <Box
-                component="form"
-                noValidate
-                autoComplete="off"
-              >
-                <TextField
-                  id="standard-basic meetingTitle"
-                  variant="standard"
-                  multiline
-                  defaultValue={title}
-                  fullWidth
-                  InputProps={{ disableUnderline: true }}
-                  sx={{ fontSize: '20px' }}
-                />
-              </Box> */}
-              <Grid item>
-                <Typography variant="h6" component="p" color="text.main">
-                  {title}
-                </Typography>
-              </Grid>
-              {/* <Grid item>
-                <Chip
-                  variant="outlined"
-                  color={ !closedAt ? 'primary': 'success' }
-                  size="small"
-                  label={ !closedAt ? 'upcoming': 'passed' }
-                />
-              </Grid> */}
+            <Grid item>
+              <Typography variant="h6" component="p">
+                {title}
+              </Typography>
             </Grid>
+            {/* <Grid item>
+              <Chip label="passed" size="small" variant="outlined" />
+            </Grid> */}
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" color="text.secondary">
@@ -136,19 +116,15 @@ export default function MeetingItem(props: IMeetingProps) {
                   </Grid>
                   <Grid item>
                     <Tooltip title="Carry-over">
-                      {/* <IconButton size="small">
-                        <AddLinkIcon fontSize="inherit" />
-                      </IconButton> */}
                       <IconButton
                         size="small"
-                        aria-label="more"
                         id="long-button"
-                        aria-controls={open ? 'long-menu' : undefined}
+                        aria-controls={open ? 'topicMenu' : undefined}
                         aria-expanded={open ? 'true' : undefined}
                         aria-haspopup="true"
-                        onClick={handleClick}
+                        onClick={handleClick('topicMenu')}
                       >
-                        <AddLinkIcon fontSize="inherit" />
+                        <AddLinkIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
                     <Menu
@@ -158,6 +134,7 @@ export default function MeetingItem(props: IMeetingProps) {
                       }}
                       anchorEl={anchorEl}
                       open={open}
+                      hidden={targetEl !== 'topicMenu'}
                       onClose={handleClose}
                       PaperProps={{
                         style: {
@@ -179,14 +156,14 @@ export default function MeetingItem(props: IMeetingProps) {
                   <Grid item>
                     <Tooltip title="Edit">
                       <IconButton size="small">
-                        <EditIcon fontSize="inherit" />
+                        <EditIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
                   </Grid>
                   <Grid item>
                     <Tooltip title="Delete">
                       <IconButton size="small">
-                        <DeleteIcon fontSize="inherit" />
+                        <DeleteIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
                   </Grid>
@@ -195,9 +172,54 @@ export default function MeetingItem(props: IMeetingProps) {
             ))}
           </Stack>
         )}
-        <Button variant="text" startIcon={<AddIcon />}>
-          Add Topic
-        </Button>
+        <Grid container spacing={1}>
+          <Grid item xs>
+            <Button variant="text" startIcon={<AddIcon />}>
+              Add Topic
+            </Button>
+          </Grid>
+          <Grid item>
+            <IconButton
+              aria-label="Meeting menu"
+              size="small"
+              id="menu-button"
+              aria-controls={open ? 'meetingMenu' : undefined}
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup="true"
+              onClick={handleClick('meetingMenu')}
+            >
+              <MoreHorizIcon />
+            </IconButton>
+            <Menu
+              id="meeting-menu"
+              MenuListProps={{
+                'aria-labelledby': 'menu-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              hidden={targetEl !== 'meetingMenu'}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                },
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <EditIcon fontSize="small" />
+                </ListItemIcon>
+                Edit
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <DeleteIcon fontSize="small" />
+                </ListItemIcon>
+                Delete
+              </MenuItem>
+            </Menu>
+          </Grid>
+        </Grid>
         {/* <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -207,7 +229,6 @@ export default function MeetingItem(props: IMeetingProps) {
               multiline
               fullWidth
               size="small"
-              sx={{ backgroundColor: 'white' }}
             />
           </Grid>
           <Grid item container spacing={1}>
