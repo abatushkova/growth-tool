@@ -22,11 +22,11 @@ export default function Header(props: IHeaderProps) {
   const open = Boolean(anchorEl);
   const { onDrawerToggle } = props;
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAvatarOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleAvatarClose = () => {
     setAnchorEl(null);
   };
 
@@ -51,7 +51,7 @@ export default function Header(props: IHeaderProps) {
               aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
+              onClick={handleAvatarOpen}
               sx={{ p: 0.5 }}
             >
               <Avatar src="" alt="My avatar" />
@@ -60,18 +60,18 @@ export default function Header(props: IHeaderProps) {
               id="basic-menu"
               anchorEl={anchorEl}
               open={open}
-              onClose={handleClose}
+              onClose={handleAvatarClose}
               MenuListProps={{
                 'aria-labelledby': 'basic-button',
               }}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleAvatarClose}>
                 <ListItemIcon>
                   <AccountCircleIcon fontSize="small" />
                 </ListItemIcon>
                 My account
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleAvatarClose}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>

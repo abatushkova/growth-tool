@@ -18,7 +18,7 @@ function a11yProps(index: number) {
 export default function NavTabs() {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -41,7 +41,7 @@ export default function NavTabs() {
       </Box>
       <Tabs
         value={value}
-        onChange={handleChange}
+        onChange={handleTabChange}
         aria-label="navigation tabs"
         variant="fullWidth"
         centered

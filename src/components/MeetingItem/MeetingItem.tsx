@@ -15,6 +15,7 @@ import {
   MenuItem,
   ListItemIcon,
   Paper,
+  TextField,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -61,22 +62,22 @@ export default function MeetingItem(props: IMeetingProps) {
   const [targetEl, setTargetEl] = useState('');
   const open = Boolean(anchorEl);
 
-  const handleClick = (id: string) => (event: React.MouseEvent<HTMLElement>) => {
+  const handleMenuOpen = (id: string) => (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
     setTargetEl(id);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
-  const toggleAccordion =
+  const handleAccordionToggle =
     (meetingId: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? meetingId : false);
     };
 
   return (
-    <CustomAccordion expanded={expanded === meetingId} onChange={toggleAccordion(meetingId)}>
+    <CustomAccordion expanded={expanded === meetingId} onChange={handleAccordionToggle(meetingId)}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1bh-content"
@@ -122,7 +123,7 @@ export default function MeetingItem(props: IMeetingProps) {
                         aria-controls={open ? 'topicMenu' : undefined}
                         aria-expanded={open ? 'true' : undefined}
                         aria-haspopup="true"
-                        onClick={handleClick('topicMenu')}
+                        onClick={handleMenuOpen('topicMenu')}
                       >
                         <AddLinkIcon fontSize="small" />
                       </IconButton>
@@ -135,7 +136,7 @@ export default function MeetingItem(props: IMeetingProps) {
                       anchorEl={anchorEl}
                       open={open}
                       hidden={targetEl !== 'topicMenu'}
-                      onClose={handleClose}
+                      onClose={handleMenuClose}
                       PaperProps={{
                         style: {
                           maxHeight: ITEM_HEIGHT * 4.5,
@@ -145,8 +146,9 @@ export default function MeetingItem(props: IMeetingProps) {
                       {meetings.map((meeting) => (
                         <MenuItem
                           key={meeting.meetingId}
-                          selected={meeting.meetingId === 2}
-                          onClick={handleClose}
+                          // selected={meeting.meetingId === 2}
+                          // disabled={meeting.meetingId === 2}
+                          onClick={handleMenuClose}
                         >
                           {meeting.createdAt}
                         </MenuItem>
@@ -186,7 +188,7 @@ export default function MeetingItem(props: IMeetingProps) {
               aria-controls={open ? 'meetingMenu' : undefined}
               aria-expanded={open ? 'true' : undefined}
               aria-haspopup="true"
-              onClick={handleClick('meetingMenu')}
+              onClick={handleMenuOpen('meetingMenu')}
             >
               <MoreHorizIcon />
             </IconButton>
@@ -198,20 +200,20 @@ export default function MeetingItem(props: IMeetingProps) {
               anchorEl={anchorEl}
               open={open}
               hidden={targetEl !== 'meetingMenu'}
-              onClose={handleClose}
+              onClose={handleMenuClose}
               PaperProps={{
                 style: {
                   maxHeight: ITEM_HEIGHT * 4.5,
                 },
               }}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleMenuClose}>
                 <ListItemIcon>
                   <EditIcon fontSize="small" />
                 </ListItemIcon>
                 Edit
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleMenuClose}>
                 <ListItemIcon>
                   <DeleteIcon fontSize="small" />
                 </ListItemIcon>
@@ -220,7 +222,7 @@ export default function MeetingItem(props: IMeetingProps) {
             </Menu>
           </Grid>
         </Grid>
-        {/* <Grid container spacing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               variant="outlined"
@@ -243,7 +245,7 @@ export default function MeetingItem(props: IMeetingProps) {
               </Button>
             </Grid>
           </Grid>
-        </Grid> */}
+        </Grid>
       </AccordionDetails>
     </CustomAccordion>
   );
