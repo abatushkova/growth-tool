@@ -29,7 +29,6 @@ const topicItem = {
 
 const CustomToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   '& .MuiToggleButtonGroup-grouped': {
-    minWidth: '4rem',
     paddingInline: theme.spacing(2),
     marginRight: theme.spacing(1),
     marginBottom: theme.spacing(1),
@@ -49,10 +48,26 @@ const CustomToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }));
 
+const CustomTextField = styled(TextField)(({ theme }) => ({
+  marginBlock: theme.spacing(5),
+  '& .MuiInput-root': {
+    padding: 0,
+    fontSize: 30,
+    fontWeight: 500,
+    [theme.breakpoints.up('md')]: {
+      fontSize: 36,
+    },
+    '&::before': {
+      borderBottom: 'none',
+    },
+  },
+}));
+
 export default function TopicPage() {
   const [formView, setFormView] = useState('qa');
+  const [name, setName] = useState('Topic 1');
 
-  const changeFormView = (
+  const handleFormViewToggle = (
     event: React.MouseEvent<HTMLElement>,
     newFormView: string | null,
   ) => {
@@ -61,15 +76,24 @@ export default function TopicPage() {
     }
   };
 
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
   return (
     <Layout>
       <Grid container alignItems="center" spacing={1}>
-        <Grid item>
-          <Typography variant="h2">
-            Topic 1
-          </Typography>
+        <Grid item xs>
+          <Typography variant="h2" hidden>{name}</Typography>
+          <CustomTextField
+            variant="standard"
+            id="topicTitle"
+            value={name}
+            multiline
+            fullWidth
+            onChange={handleTitleChange}
+          />
         </Grid>
-        <Grid item xs></Grid>
         <Grid item>
           <Button variant="contained">
             Save
@@ -88,7 +112,7 @@ export default function TopicPage() {
         size="small"
         value={formView}
         exclusive
-        onChange={changeFormView}
+        onChange={handleFormViewToggle}
         aria-label="form view"
         sx={{ flexWrap: 'wrap' }}
       >
@@ -362,7 +386,7 @@ export default function TopicPage() {
             </Grid>
           </Grid>
         </Paper>
-        {/* <Paper sx={{ ...topicItem }}>
+        <Paper sx={{ ...topicItem }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -399,7 +423,7 @@ export default function TopicPage() {
               </Grid>
             </Grid>
           </Grid>
-        </Paper> */}
+        </Paper>
       </Stack>
     </Layout>
   )
