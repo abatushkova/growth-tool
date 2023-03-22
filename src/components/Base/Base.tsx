@@ -40,11 +40,6 @@ let theme = createTheme({
     borderRadius: 8,
   },
   typography: {
-    h2: {
-      fontSize: 36,
-      fontWeight: 500,
-      marginBlock: '2.5rem',
-    },
     h3: {
       fontSize: 24,
       fontWeight: 500,
@@ -67,6 +62,20 @@ let theme = createTheme({
 theme = {
   ...theme,
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          '&.MuiTypography-h2': {
+            marginBlock: 40,
+            fontSize: 30,
+            fontWeight: 500,
+            [theme.breakpoints.up('md')]: {
+              fontSize: 36,
+            },
+          },
+        },
+      },
+    },
     MuiDrawer: {
       styleOverrides: {
         paper: {
@@ -169,7 +178,7 @@ const drawerWidth = 300;
 
 export default function Base() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isSmUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -183,7 +192,7 @@ export default function Base() {
           component="nav"
           sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
         >
-          {isSmUp ? null : (
+          {isDesktop ? null : (
             <Aside
               PaperProps={{ style: { width: drawerWidth } }}
               variant="temporary"
