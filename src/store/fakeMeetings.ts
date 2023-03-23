@@ -122,25 +122,6 @@ export const meetings = [
       },
     ],
     topics: [
-      {
-        topicId: 1,
-        title: 'Test rocket in simulator',
-        createdAt: '',
-        categories: [
-          'NPS',
-        ],
-        comments: [
-          {
-            commentId: 6,
-            createdAt: '',
-            formView: 'Score',
-            comment: 'Useful information',
-            question: '',
-            score: 8,
-            meetingId: 1,
-          },
-        ],
-      },
     ],
   },
 ];
