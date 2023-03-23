@@ -1,63 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Typography,
-  Box,
   Grid,
   Button,
-  Avatar,
-  AvatarGroup,
   Divider,
   TextField,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import CodeIcon from '@mui/icons-material/Code';
 import Layout from '../Layout/Layout';
-import MeetingItem from '../MeetingItem/MeetingItem';
-import { meetings } from '../../store/fakeMeetings';
-
-const meetingAvatar = {
-  width: {
-    md: 54,
-    xs: 44,
-  },
-  height: {
-    md: 54,
-    xs: 44,
-  },
-};
+import MeetingMembers from '../MeetingMembers/MeetingMembers';
+import MeetingList from '../MeetingList/MeetingList';
 
 export default function MeetingPage() {
+  const [isCreating, setIsCreating] = useState(false);
+
+  const handleCreateClick = () => setIsCreating(true);
+  const handleCancelClick = () => setIsCreating(false);
+
   return (
     <>
-      <Layout pt={3} pb={3}>
-        <Grid
-          container
-          spacing={{ md: 2, xs: 1}}
-          alignItems="center"
-          direction={{ md: 'row', xs: 'column' }}
-        >
-          <Grid item>
-            <AvatarGroup>
-              <Avatar src="" alt="Vlad" sx={{ ...meetingAvatar }} />
-              <Avatar src="" alt="Alon" sx={{ ...meetingAvatar }} />
-            </AvatarGroup>
-          </Grid>
-          <Grid item sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexWrap: 'wrap'
-          }}>
-            <Typography variant="h3" component="p">
-              Vlad
-            </Typography>
-            <CodeIcon sx={{ fontSize: 32, mx: 1 }} />
-            <Typography variant="h3" component="p">
-              Alon
-            </Typography>
-          </Grid>
-        </Grid>
-      </Layout>
+      <MeetingMembers />
       <Divider />
       <Layout>
         <Grid container alignItems="center" spacing={1}>
@@ -67,43 +29,43 @@ export default function MeetingPage() {
             </Typography>
           </Grid>
           <Grid item>
-            <Button variant="contained">
+            <Button variant="contained" onClick={handleCreateClick}>
               Create Meeting
             </Button>
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ mb: 4 }}>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              id="outlined-question"
-              defaultValue={'New Meeting'}
-              multiline
-              fullWidth
-              size="small"
-            />
-          </Grid>
-          <Grid item>
-            <DatePicker format="LL" />
-          </Grid>
-          <Grid item container spacing={1}>
-            <Grid item>
-              <Button variant="contained">
-                Create
-              </Button>
+
+        {isCreating ? (
+          <Grid container spacing={2} sx={{ mb: 4 }}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                id="outlined-question"
+                defaultValue={'New Meeting'}
+                multiline
+                fullWidth
+                size="small"
+              />
             </Grid>
             <Grid item>
-              <Button variant="text">
-                Cancel
-              </Button>
+              <DatePicker format="LL" />
+            </Grid>
+            <Grid item container spacing={1}>
+              <Grid item>
+                <Button variant="contained">
+                  Create
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button variant="text" onClick={handleCancelClick}>
+                  Cancel
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Box>
-          {meetings.map((meeting) => (
-            <MeetingItem key={meeting.meetingId} {...meeting} />
-          ))}
-        </Box>
+        ) : null}
+
+        <MeetingList />
       </Layout>
     </>
   );
