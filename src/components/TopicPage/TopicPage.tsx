@@ -70,5 +70,5 @@ export default function TopicPage() {
       </Typography>
       <TopicCommentList />
     </Layout>
-  )
+  );
 }

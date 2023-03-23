@@ -10,5 +10,5 @@ export default function TopicCommentList() {
         <TopicCommentItem key={comment.commentId} { ...comment } />
       ))}
     </Stack>
-  )
+  );
 }

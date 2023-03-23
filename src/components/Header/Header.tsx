@@ -26,9 +26,7 @@ export default function Header(props: IHeaderProps) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleAvatarClose = () => {
-    setAnchorEl(null);
-  };
+  const handleAvatarClose = () => setAnchorEl(null);
 
   return (
     <AppBar position="sticky" elevation={0}>

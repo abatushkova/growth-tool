@@ -29,116 +29,109 @@ export default function TopicCommentItem(props: ICommentProps) {
   const { createdAt, question, comment, score, formView } = props;
   const [scoreValue, setScoreValue] = useState(score);
   const [isEditing, setIsEditing] = useState(false);
-  let commentContent;
 
   const handleEditClick = () => setIsEditing(true);
   const handleCancelClick = () => setIsEditing(false);
 
-  if (isEditing) {
-    commentContent = (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            id="outlined-question"
-            label="Question"
-            multiline
-            fullWidth
-            size="small"
-            value="Question?"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            id="outlined-answer"
-            label="Answer"
-            multiline
-            fullWidth
-            size="small"
-            value="Answer"
-          />
-        </Grid>
-        <Grid item container spacing={1}>
-          <Grid item>
-            <Button variant="contained">
-              Save
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="text" onClick={handleCancelClick}>
-              Cancel
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    )
-  } else {
-    commentContent = (
-      <Grid container spacing={1}>
-        <Grid item xs={12} container spacing={1}>
-          <Grid item xs>
-            <Typography variant="body2" color="text.secondary">
-              {createdAt}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Tooltip title="Edit">
-              <IconButton size="small" onClick={handleEditClick}>
-                <EditIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          </Grid>
-          <Grid item>
-            <Tooltip title="Delete">
-              <IconButton size="small">
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          {question && (
-            <Typography variant="h6" component="p">
-              {question}
-            </Typography>
-          )}
-          {comment && (
-            <Typography variant="body1">
-              {comment}
-            </Typography>
-          )}
-        </Grid>
-        {score && (
-          <Grid item xs={12}>
-            <FormControl disabled>
-              <RadioGroup
-                row
-                aria-labelledby="radio-buttons-group"
-                name="score"
-                value={scoreValue}
-              >
-                {[...Array(11)].map((num, index) => (index > 0 &&
-                  <FormControlLabel
-                    key={index}
-                    value={index}
-                    control={<Radio size="small" />}
-                    label={index}
-                    labelPlacement="bottom"
-                    sx={{ mx: 1 }}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </Grid>
-        )}
-      </Grid>
-    )
-  }
-
   return (
     <Paper sx={{ p: 2}}>
-      {commentContent}
+      {isEditing ? (
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              id="outlined-question"
+              label="Question"
+              multiline
+              fullWidth
+              size="small"
+              value="Question"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              id="outlined-answer"
+              label="Answer"
+              multiline
+              fullWidth
+              size="small"
+              value="Answer"
+            />
+          </Grid>
+          <Grid item container spacing={1}>
+            <Grid item>
+              <Button variant="contained">
+                Save
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button variant="text" onClick={handleCancelClick}>
+                Cancel
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      ) : (
+        <Grid container spacing={1}>
+          <Grid item xs={12} container spacing={1}>
+            <Grid item xs>
+              <Typography variant="body2" color="text.secondary">
+                {createdAt}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Tooltip title="Edit">
+                <IconButton size="small" onClick={handleEditClick}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+            <Grid item>
+              <Tooltip title="Delete">
+                <IconButton size="small">
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            {question && (
+              <Typography variant="h6" component="p">
+                {question}
+              </Typography>
+            )}
+            {comment && (
+              <Typography variant="body1">
+                {comment}
+              </Typography>
+            )}
+          </Grid>
+          {score && (
+            <Grid item xs={12}>
+              <FormControl disabled>
+                <RadioGroup
+                  row
+                  aria-labelledby="radio-buttons-group"
+                  name="score"
+                  value={scoreValue}
+                >
+                  {[...Array(11)].map((_, index) => (index > 0 &&
+                    <FormControlLabel
+                      key={index}
+                      value={index}
+                      control={<Radio size="small" />}
+                      label={index}
+                      labelPlacement="bottom"
+                      sx={{ mx: 1 }}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+          )}
+        </Grid>
+      )}
     </Paper>
   );
 }
