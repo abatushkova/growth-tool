@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import {
   AppBar,
   IconButton,
@@ -11,22 +12,26 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logout from '@mui/icons-material/Logout';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 interface IHeaderProps {
   onDrawerToggle: () => void;
 }
 
+const CustomAvatar = styled(Avatar)(({ theme }) => ({
+  backgroundColor: theme.palette.white.main,
+  color: theme.palette.primary.dark,
+}));
+
 export default function Header(props: IHeaderProps) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const { onDrawerToggle } = props;
+  const [avatarAnchor, setAvatarAnchor] = useState<null | HTMLElement>(null);
+  const isMenuOpened = Boolean(avatarAnchor);
 
   const handleAvatarOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAvatarAnchor(event.currentTarget);
   };
 
-  const handleAvatarClose = () => setAnchorEl(null);
+  const handleAvatarClose = () => setAvatarAnchor(null);
 
   return (
     <AppBar position="sticky" elevation={0}>
@@ -35,7 +40,7 @@ export default function Header(props: IHeaderProps) {
           <Grid item sx={{ display: { md: 'none', xs: 'block' } }}>
             <IconButton
               color="inherit"
-              aria-label="open drawer"
+              aria-label="Open navbar"
               onClick={onDrawerToggle}
               edge="start"
             >
@@ -45,30 +50,25 @@ export default function Header(props: IHeaderProps) {
           <Grid item xs />
           <Grid item>
             <IconButton
-              id="basic-button"
-              aria-controls={open ? 'basic-menu' : undefined}
+              aria-label="Avatar"
+              id="avatar-btn"
+              aria-controls={isMenuOpened ? 'avatar-menu' : undefined}
               aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
+              aria-expanded={isMenuOpened ? 'true' : undefined}
               onClick={handleAvatarOpen}
               sx={{ p: 0.5 }}
             >
-              <Avatar src="" alt="My avatar" />
+              <CustomAvatar />
             </IconButton>
             <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
+              id="avatar-menu"
+              anchorEl={avatarAnchor}
+              open={isMenuOpened}
               onClose={handleAvatarClose}
               MenuListProps={{
-                'aria-labelledby': 'basic-button',
+                'aria-labelledby': 'avatar-btn',
               }}
             >
-              <MenuItem onClick={handleAvatarClose}>
-                <ListItemIcon>
-                  <AccountCircleIcon fontSize="small" />
-                </ListItemIcon>
-                My account
-              </MenuItem>
               <MenuItem onClick={handleAvatarClose}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
