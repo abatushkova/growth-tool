@@ -1,80 +1,58 @@
 export const members = [
   {
-    id: 1,
-    color: 'teal',
-    avatar: '',
-    name: 'Alon'
+    personId: 1,
+    personName: 'Alon',
   },
   {
-    id: 2,
-    color: 'orange',
-    avatar: '',
-    name: 'Akhil'
+    personId: 2,
+    personName: 'Akhil',
   },
   {
-    id: 3,
-    color: 'gold',
-    avatar: '',
-    name: 'Gianluca'
+    personId: 3,
+    personName: 'Gianluca',
   },
   {
-    id: 4,
-    color: 'coral',
-    avatar: '',
-    name: 'Brad'
+    personId: 4,
+    personName: 'Brad',
   },
   {
-    id: 5,
-    color: 'cyan',
-    avatar: '',
-    name: 'Morgan'
+    personId: 5,
+    personName: 'Morgan',
   },
   {
-    id: 6,
-    color: 'green',
-    avatar: '',
-    name: 'Eddie'
+    personId: 6,
+    personName: 'Eddie',
   },
   {
-    id: 7,
-    color: 'aquamarine',
-    avatar: '',
-    name: 'Stellan'
+    personId: 7,
+    personName: 'Stellan',
   },
   {
-    id: 8,
-    color: 'maroon',
-    avatar: '',
-    name: 'Alicia'
+    personId: 8,
+    personName: 'Alicia',
   },
   {
-    id: 9,
-    color: 'navy',
-    avatar: '',
-    name: 'Quentin'
+    personId: 9,
+    personName: 'Quentin',
   },
   {
-    id: 10,
-    color: 'yellowGreen',
-    avatar: '',
-    name: 'Meryl'
+    personId: 10,
+    personName: 'Meryl',
   },
   {
-    id: 11,
-    color: 'indigo',
-    avatar: '',
-    name: 'Robin'
+    personId: 11,
+    personName: 'Robin',
   },
   {
-    id: 12,
-    color: 'skyBlue',
-    avatar: '',
-    name: 'Keanu'
+    personId: 12,
+    personName: 'Keanu',
   },
   {
-    id: 13,
-    color: 'plum',
-    avatar: '',
-    name: 'Sandra'
+    personId: 13,
+    personName: 'Sandra',
+  },
+  {
+    personId: 14,
+    personName: 'Vlad',
   },
 ];
