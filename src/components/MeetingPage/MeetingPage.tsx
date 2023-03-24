@@ -14,8 +14,8 @@ import MeetingList from '../MeetingList/MeetingList';
 export default function MeetingPage() {
   const [isCreating, setIsCreating] = useState(false);
 
-  const handleCreateClick = () => setIsCreating(true);
-  const handleCancelClick = () => setIsCreating(false);
+  const handleCreateOpen = () => setIsCreating(true);
+  const handleCreateClose = () => setIsCreating(false);
 
   return (
     <>
@@ -29,7 +29,7 @@ export default function MeetingPage() {
             </Typography>
           </Grid>
           <Grid item>
-            <Button variant="contained" onClick={handleCreateClick}>
+            <Button variant="contained" onClick={handleCreateOpen}>
               Create Meeting
             </Button>
           </Grid>
@@ -40,7 +40,7 @@ export default function MeetingPage() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                id="outlined-question"
+                id="new-meeting-title"
                 defaultValue={'New Meeting'}
                 multiline
                 fullWidth
@@ -57,7 +57,7 @@ export default function MeetingPage() {
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant="text" onClick={handleCancelClick}>
+                <Button variant="text" onClick={handleCreateClose}>
                   Cancel
                 </Button>
               </Grid>

@@ -49,32 +49,28 @@ interface IMeetingProps {
 export default function MeetingItem(props: IMeetingProps) {
   const { meetingId, title, createdAt, topics } = props;
   const [isEditing, setIsEditing] = useState(false);
-  const [expanded, setExpanded] = useState<number | false>(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [targetEl, setTargetEl] = useState('');
-  const [value, setValue] = useState<Dayjs | null>(dayjs('2022-12-16'));
-  const open = Boolean(anchorEl);
+  const [isExpanded, setIsExpanded] = useState<number | false>(false);
+  const [dotsAnchor, setDotsAnchor] = useState<null | HTMLElement>(null);
+  const [dateValue, setDateValue] = useState<Dayjs | null>(dayjs('2022-12-16'));
+  const isMenuOpened = Boolean(dotsAnchor);
 
-  const handleMenuOpen = (id: string) => (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-    setTargetEl(id);
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setDotsAnchor(event.currentTarget);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  const handleMenuClose = () => setDotsAnchor(null);
 
   const handleAccordionToggle =
     (meetingId: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? meetingId : false);
+      setIsExpanded(isExpanded ? meetingId : false);
     };
 
-  const handleEditClick = () => {
+  const handleEditOpen = () => {
     handleMenuClose();
     setIsEditing(true);
   };
 
-  const handleCancelClick = () => setIsEditing(false);
+  const handleEditClose = () => setIsEditing(false);
 
   return (
     <>
@@ -83,7 +79,7 @@ export default function MeetingItem(props: IMeetingProps) {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              id="outlined-question"
+              id="meeting-title"
               defaultValue={'New Meeting'}
               multiline
               fullWidth
@@ -93,8 +89,8 @@ export default function MeetingItem(props: IMeetingProps) {
           <Grid item>
             <DatePicker
               format="LL"
-              value={value}
-              onChange={(newValue) => setValue(newValue)}
+              value={dateValue}
+              onChange={(newValue) => setDateValue(newValue)}
             />
           </Grid>
           <Grid item container spacing={1}>
@@ -104,18 +100,18 @@ export default function MeetingItem(props: IMeetingProps) {
               </Button>
             </Grid>
             <Grid item>
-              <Button variant="text" onClick={handleCancelClick}>
+              <Button variant="text" onClick={handleEditClose}>
                 Cancel
               </Button>
             </Grid>
           </Grid>
         </Grid>
       ) : (
-        <CustomAccordion expanded={expanded === meetingId} onChange={handleAccordionToggle(meetingId)}>
+        <CustomAccordion expanded={isExpanded === meetingId} onChange={handleAccordionToggle(meetingId)}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
+            id="meeting-header"
+            aria-controls="meeting-content"
           >
             <Grid container spacing={1}>
               <Grid item xs={12} container flexWrap="nowrap" spacing={2}>
@@ -147,22 +143,21 @@ export default function MeetingItem(props: IMeetingProps) {
                 <IconButton
                   aria-label="Meeting menu"
                   size="small"
-                  id="menu-button"
-                  aria-controls={open ? 'meetingMenu' : undefined}
-                  aria-expanded={open ? 'true' : undefined}
+                  id="meeting-dots"
+                  aria-controls={isMenuOpened ? 'meeting-menu' : undefined}
+                  aria-expanded={isMenuOpened ? 'true' : undefined}
                   aria-haspopup="true"
-                  onClick={handleMenuOpen('meetingMenu')}
+                  onClick={handleMenuOpen}
                 >
                   <MoreHorizIcon />
                 </IconButton>
                 <Menu
                   id="meeting-menu"
                   MenuListProps={{
-                    'aria-labelledby': 'menu-button',
+                    'aria-labelledby': 'meeting-dots',
                   }}
-                  anchorEl={anchorEl}
-                  open={open}
-                  hidden={targetEl !== 'meetingMenu'}
+                  anchorEl={dotsAnchor}
+                  open={isMenuOpened}
                   onClose={handleMenuClose}
                   PaperProps={{
                     style: {
@@ -170,7 +165,7 @@ export default function MeetingItem(props: IMeetingProps) {
                     },
                   }}
                 >
-                  <MenuItem onClick={handleEditClick}>
+                  <MenuItem onClick={handleEditOpen}>
                     <ListItemIcon>
                       <EditIcon fontSize="small" />
                     </ListItemIcon>

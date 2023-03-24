@@ -28,21 +28,21 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 }));
 
 export default function TopicPage() {
-  const [name, setName] = useState('Topic 1');
+  const [title, setTitle] = useState('Topic 1');
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+    setTitle(event.target.value);
   };
 
   return (
     <Layout>
       <Grid container alignItems="center" spacing={1}>
         <Grid item xs>
-          <Typography variant="h2" hidden>{name}</Typography>
+          <Typography variant="h2" hidden>{title}</Typography>
           <CustomTextField
             variant="standard"
-            id="topicTitle"
-            value={name}
+            id="topic-textfield"
+            value={title}
             multiline
             fullWidth
             onChange={handleTitleChange}
@@ -54,7 +54,7 @@ export default function TopicPage() {
           </Button>
         </Grid>
         <Grid item>
-          <IconButton aria-label="close">
+          <IconButton aria-label="Close">
             <CloseIcon />
           </IconButton>
         </Grid>

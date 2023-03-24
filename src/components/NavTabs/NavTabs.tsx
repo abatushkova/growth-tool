@@ -10,16 +10,16 @@ import { categories } from '../../utils/constants/colors';
 
 function a11yProps(index: number) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `nav-tab-${index}`,
+    'aria-controls': `nav-tabpanel-${index}`,
   };
 }
 
 export default function NavTabs() {
-  const [value, setValue] = useState(0);
+  const [tabName, setTabName] = useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setTabName(newValue);
   };
 
   return (
@@ -29,20 +29,20 @@ export default function NavTabs() {
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        bgcolor: categories[value],
+        bgcolor: categories[tabName],
       }}>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={tabName} index={0}>
           <TeamList />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={tabName} index={1}>
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={tabName} index={2}>
         </TabPanel>
       </Box>
       <Tabs
-        value={value}
+        value={tabName}
         onChange={handleTabChange}
-        aria-label="navigation tabs"
+        aria-label="Navigation tabs"
         variant="fullWidth"
         centered
       >

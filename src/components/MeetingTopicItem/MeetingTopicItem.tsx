@@ -27,18 +27,14 @@ interface ITopicProps {
 
 export default function MeetingTopicItem(props: ITopicProps) {
   const { title } = props;
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [targetEl, setTargetEl] = useState('');
-  const open = Boolean(anchorEl);
+  const [datesAnchor, setDatesAnchor] = useState<null | HTMLElement>(null);
+  const isMenuOpened = Boolean(datesAnchor);
 
-  const handleMenuOpen = (id: string) => (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-    setTargetEl(id);
+  const handleDatesOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setDatesAnchor(event.currentTarget);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  const handleDatesClose = () => setDatesAnchor(null);
 
   return (
     <Item>
@@ -50,24 +46,23 @@ export default function MeetingTopicItem(props: ITopicProps) {
           <Tooltip title="Carry-over">
             <IconButton
               size="small"
-              id="long-button"
-              aria-controls={open ? 'topicMenu' : undefined}
-              aria-expanded={open ? 'true' : undefined}
+              id="dates-btn"
+              aria-controls={isMenuOpened ? 'dates-menu' : undefined}
+              aria-expanded={isMenuOpened ? 'true' : undefined}
               aria-haspopup="true"
-              onClick={handleMenuOpen('topicMenu')}
+              onClick={handleDatesOpen}
             >
               <AddLinkIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <Menu
-            id="long-menu"
+            id="dates-menu"
             MenuListProps={{
-              'aria-labelledby': 'long-button',
+              'aria-labelledby': 'dates-btn',
             }}
-            anchorEl={anchorEl}
-            open={open}
-            hidden={targetEl !== 'topicMenu'}
-            onClose={handleMenuClose}
+            anchorEl={datesAnchor}
+            open={isMenuOpened}
+            onClose={handleDatesClose}
             PaperProps={{
               style: {
                 maxHeight: ITEM_HEIGHT * 4.5,
@@ -79,7 +74,7 @@ export default function MeetingTopicItem(props: ITopicProps) {
                 key={meeting.meetingId}
                 // selected={meeting.meetingId === 2}
                 // disabled={meeting.meetingId === 2}
-                onClick={handleMenuClose}
+                onClick={handleDatesClose}
               >
                 {meeting.createdAt}
               </MenuItem>

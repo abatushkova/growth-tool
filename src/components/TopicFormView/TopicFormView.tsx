@@ -41,10 +41,10 @@ export default function TopicFormView() {
 
   const handleFormViewToggle = (
     event: React.MouseEvent<HTMLElement>,
-    newFormView: string | null,
+    newValue: string | null,
   ) => {
-    if (newFormView !== null) {
-      setFormView(newFormView);
+    if (newValue !== null) {
+      setFormView(newValue);
     }
   };
 
@@ -56,7 +56,7 @@ export default function TopicFormView() {
         value={formView}
         exclusive
         onChange={handleFormViewToggle}
-        aria-label="form view"
+        aria-label="Form view"
         sx={{ flexWrap: 'wrap' }}
       >
         <ToggleButton value="qa">
@@ -80,7 +80,7 @@ export default function TopicFormView() {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  id="outlined-question"
+                  id="question"
                   label="Question"
                   multiline
                   fullWidth
@@ -92,7 +92,7 @@ export default function TopicFormView() {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  id="outlined-answer"
+                  id="answer"
                   label="Answer"
                   multiline
                   fullWidth
@@ -105,7 +105,7 @@ export default function TopicFormView() {
                 <Grid item xs={12}>
                   <TextField
                     variant="outlined"
-                    id="outlined-score-question"
+                    id="score-comment"
                     label="Comment (optional)"
                     multiline
                     fullWidth
@@ -138,7 +138,7 @@ export default function TopicFormView() {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  id="outlined-comment"
+                  id="comment"
                   label="Comment"
                   multiline
                   fullWidth

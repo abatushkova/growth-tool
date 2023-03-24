@@ -19,8 +19,8 @@ interface ITopicsProps {
 export default function MeetingTopicList({ topics }: ITopicsProps) {
   const [isAdding, setIsAdding] = useState(false);
 
-  const handleAddTopicClick = () => setIsAdding(true);
-  const handleCancelClick = () => setIsAdding(false);
+  const handleAddOpen = () => setIsAdding(true);
+  const handleAddClose = () => setIsAdding(false);
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function MeetingTopicList({ topics }: ITopicsProps) {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              id="outlined-question"
+              id="topic-title"
               label="Topic"
               multiline
               fullWidth
@@ -50,7 +50,7 @@ export default function MeetingTopicList({ topics }: ITopicsProps) {
               </Button>
             </Grid>
             <Grid item>
-              <Button variant="text" onClick={handleCancelClick}>
+              <Button variant="text" onClick={handleAddClose}>
                 Cancel
               </Button>
             </Grid>
@@ -60,7 +60,7 @@ export default function MeetingTopicList({ topics }: ITopicsProps) {
         <Button
           variant="text"
           startIcon={<AddIcon />}
-          onClick={handleAddTopicClick}
+          onClick={handleAddOpen}
         >
           Add Topic
         </Button>

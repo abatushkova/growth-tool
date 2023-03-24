@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import CodeIcon from '@mui/icons-material/Code';
 import Layout from '../Layout/Layout';
+import { convertToInitials } from '../../utils/helpers/convertToInitials';
 
 const meetingAvatar = {
   width: {
@@ -30,8 +31,8 @@ export default function MeetingMembers() {
       >
         <Grid item>
           <AvatarGroup>
-            <Avatar src="" alt="Vlad" sx={{ ...meetingAvatar }} />
-            <Avatar src="" alt="Alon" sx={{ ...meetingAvatar }} />
+            <Avatar {...convertToInitials('Vlad', meetingAvatar)} />
+            <Avatar {...convertToInitials('Alon', meetingAvatar)} />
           </AvatarGroup>
         </Grid>
         <Grid item sx={{

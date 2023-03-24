@@ -13,15 +13,16 @@ import {
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SearchIcon from '@mui/icons-material/Search';
 import { members } from '../../store/fakeMembers';
+import { convertToInitials } from '../../utils/helpers/convertToInitials';
 
 export default function TeamList() {
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedMember, setSelectedMember] = useState(-1);
 
-  const handleListItemClick = (
+  const handleMemberSelect = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
   ) => {
-    setSelectedIndex(index);
+    setSelectedMember(index);
   };
 
   return (
@@ -33,7 +34,7 @@ export default function TeamList() {
           autoComplete="off"
         >
           <TextField
-            id="outlined-search"
+            id="members-search"
             type="search"
             placeholder="Search"
             size="small"
@@ -59,8 +60,8 @@ export default function TeamList() {
       }}>
         <ListItem disablePadding>
           <ListItemButton
-            selected={selectedIndex === 0}
-            onClick={(event) => handleListItemClick(event, 0)}
+            selected={selectedMember === 0}
+            onClick={(event) => handleMemberSelect(event, 0)}
           >
             <ListItemAvatar>
               <Avatar>
@@ -71,17 +72,16 @@ export default function TeamList() {
           </ListItemButton>
         </ListItem>
         {/* sorted list A-Z */}
-        {members.map(({ id, color, name }) => (
-          <ListItem disablePadding key={id}>
+        {members.map(({ personId, personName }) => (
+          <ListItem disablePadding key={personId}>
             <ListItemButton
-              selected={selectedIndex === id}
-              onClick={(event) => handleListItemClick(event, id)}
+              selected={selectedMember === personId}
+              onClick={(event) => handleMemberSelect(event, personId)}
             >
               <ListItemAvatar>
-                {/* remove bgcolor */}
-                <Avatar src="" sx={{ bgcolor: color }} alt={name} />
+                <Avatar {...convertToInitials(personName)} />
               </ListItemAvatar>
-              <ListItemText>{name}</ListItemText>
+              <ListItemText>{personName}</ListItemText>
             </ListItemButton>
           </ListItem>
         ))}

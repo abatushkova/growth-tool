@@ -30,8 +30,8 @@ export default function TopicCommentItem(props: ICommentProps) {
   const [scoreValue, setScoreValue] = useState(score);
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleEditClick = () => setIsEditing(true);
-  const handleCancelClick = () => setIsEditing(false);
+  const handleEditOpen = () => setIsEditing(true);
+  const handleEditClose = () => setIsEditing(false);
 
   return (
     <Paper sx={{ p: 2}}>
@@ -40,7 +40,7 @@ export default function TopicCommentItem(props: ICommentProps) {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              id="outlined-question"
+              id="question"
               label="Question"
               multiline
               fullWidth
@@ -51,7 +51,7 @@ export default function TopicCommentItem(props: ICommentProps) {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              id="outlined-answer"
+              id="answer"
               label="Answer"
               multiline
               fullWidth
@@ -66,7 +66,7 @@ export default function TopicCommentItem(props: ICommentProps) {
               </Button>
             </Grid>
             <Grid item>
-              <Button variant="text" onClick={handleCancelClick}>
+              <Button variant="text" onClick={handleEditClose}>
                 Cancel
               </Button>
             </Grid>
@@ -82,7 +82,7 @@ export default function TopicCommentItem(props: ICommentProps) {
             </Grid>
             <Grid item>
               <Tooltip title="Edit">
-                <IconButton size="small" onClick={handleEditClick}>
+                <IconButton size="small" onClick={handleEditOpen}>
                   <EditIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
