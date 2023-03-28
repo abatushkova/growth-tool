@@ -149,9 +149,6 @@ theme = {
             color: theme.palette.primary.main,
             backgroundColor: 'rgba(0,155,229,0.12)',
           },
-          '&:hover': {
-            backgroundColor: 'rgba(51,51,51,0.06)',
-          }
         },
       },
     },
