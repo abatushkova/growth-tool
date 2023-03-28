@@ -38,7 +38,7 @@ export default function MeetingTopicItem(props: ITopicProps) {
 
   return (
     <Item>
-      <Grid container spacing={1} alignItems="center">
+      <Grid container alignItems="center">
         <Grid item xs>
           {title}
         </Grid>

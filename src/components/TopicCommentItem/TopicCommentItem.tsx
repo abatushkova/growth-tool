@@ -74,7 +74,7 @@ export default function TopicCommentItem(props: ICommentProps) {
         </Grid>
       ) : (
         <Grid container spacing={1}>
-          <Grid item xs={12} container spacing={1}>
+          <Grid item xs={12} container>
             <Grid item xs>
               <Typography variant="body2" color="text.secondary">
                 {createdAt}
