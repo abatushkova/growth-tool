@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-type PersonId = number;
+type PersonId = string;
 export type Person = {
   personId: PersonId;
   personName: string;
@@ -50,4 +50,4 @@ export const {
 } = personsSlice.actions;
 
 export const personsReducer = personsSlice.reducer;
-export const selectTodos = (state: RootState) => state.persons.list;
+export const selectPersons = (state: RootState) => state.persons.list;

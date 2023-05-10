@@ -1,4 +1,4 @@
-const KEY = 'state';
+const KEY = 'growthStateData';
 
 export const loadState = () => {
   try {
