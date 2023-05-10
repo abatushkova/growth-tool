@@ -34,30 +34,29 @@ const CustomListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 interface IMemberProps {
-  personId: number;
   personName: string;
   selected: number;
+  index: number;
   onMemberClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, S: number) => void;
 }
 
 export default function TeamItem(props: IMemberProps) {
-  const { personId, personName, selected, onMemberClick } = props;
+  const { index, personName, selected, onMemberClick } = props;
   const [isEditing, setIsEditing] = useState(false);
-  const [nameValue, setNameValue] = useState(personName);
+  const [name, setName] = useState(personName);
   const [dotsAnchor, setDotsAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpened = Boolean(dotsAnchor);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setDotsAnchor(event.currentTarget);
+  const handleMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
+    setDotsAnchor(e.currentTarget);
   };
-
-  const handleMenuClose = () => setDotsAnchor(null);
 
   const handleEditOpen = () => {
     handleMenuClose();
     setIsEditing(true);
   };
 
+  const handleMenuClose = () => setDotsAnchor(null);
   const handleEditClose = () => setIsEditing(false);
 
   return (
@@ -67,14 +66,14 @@ export default function TeamItem(props: IMemberProps) {
           <TextField
             id="member-add"
             variant="standard"
-            value={nameValue}
+            value={name}
             placeholder="Name"
             size="small"
             fullWidth
             InputProps={{
               style: { fontSize: 14 }
             }}
-            onChange={(event) => setNameValue(event.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
           <IconButton aria-label="Add" size="small">
             <SaveIcon fontSize="inherit" />
@@ -90,8 +89,8 @@ export default function TeamItem(props: IMemberProps) {
       ) : (
         <CustomListItem disablePadding>
           <ListItemButton
-            selected={selected === personId}
-            onClick={(event) => onMemberClick(event, personId)}
+            selected={selected === index}
+            onClick={(e) => onMemberClick(e, index)}
           >
             <ListItemAvatar>
               <Avatar {...convertToInitials(personName)} />
