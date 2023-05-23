@@ -8,6 +8,8 @@ import {
 import CodeIcon from '@mui/icons-material/Code';
 import Layout from '../Layout/Layout';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
+import { selectPerson } from '../../features/persons/personsSlice';
+import { useAppSelector } from '../../app/hooks';
 
 const meetingAvatar = {
   width: {
@@ -21,6 +23,8 @@ const meetingAvatar = {
 };
 
 export default function MeetingMembers() {
+  const { personName } = useAppSelector(selectPerson);
+
   return (
     <Layout pt={3} pb={3}>
       <Grid
@@ -32,7 +36,9 @@ export default function MeetingMembers() {
         <Grid item>
           <AvatarGroup>
             <Avatar {...convertToInitials('Vlad', meetingAvatar)} />
-            <Avatar {...convertToInitials('Alon', meetingAvatar)} />
+            {personName ? (
+              <Avatar {...convertToInitials(personName, meetingAvatar)} />
+            ) : null}
           </AvatarGroup>
         </Grid>
         <Grid item sx={{
@@ -44,10 +50,14 @@ export default function MeetingMembers() {
           <Typography variant="h3" component="p">
             Vlad
           </Typography>
-          <CodeIcon sx={{ fontSize: 32, mx: 1 }} />
-          <Typography variant="h3" component="p">
-            Alon
-          </Typography>
+          {personName ? (
+            <>
+              <CodeIcon sx={{ fontSize: 32, mx: 1 }} />
+              <Typography variant="h3" component="p">
+                {personName}
+              </Typography>
+            </>
+          ): null}
         </Grid>
       </Grid>
     </Layout>
