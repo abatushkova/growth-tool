@@ -7,4 +7,5 @@ export const store = configureStore({
   preloadedState: loadState(),
 });
 
+export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>
