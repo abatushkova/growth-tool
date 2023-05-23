@@ -1,17 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { loadState } from "../../app/localStorage";
+import { PersonId, Person } from "../../app/types";
 
-type PersonId = string;
-export type Person = {
-  personId: PersonId;
-  personName: string;
-}
 type PersonsState = {
-  list: Person[];
-}
+  personList: Person[];
+  activePerson: Person;
+};
 
 const initialState: PersonsState = {
-  list: []
+  personList: loadState() || [],
+  activePerson: loadState() || {},
 };
 
 export const personsSlice = createSlice({
@@ -22,32 +21,52 @@ export const personsSlice = createSlice({
       state: PersonsState,
       action: PayloadAction<Person>
     ) {
-      state.list.push(action.payload);
+      state.personList.push(action.payload);
     },
     deletePerson(
       state: PersonsState,
       action: PayloadAction<PersonId>
     ) {
-      state.list = state.list.filter(({ personId }) => personId !== action.payload);
+      const deletedPerson = action.payload;
+
+      state.personList = state.personList.filter(
+        ({ personId }) => personId !== deletedPerson
+      );
+
+      // where code changes to state - component | redux
+      // e.g. in compoent use dispatch(setActivePerson('',''))
+      if (state.activePerson.personId === deletedPerson) {
+        state.activePerson.personId = '';
+        state.activePerson.personName = '';
+      }
     },
     editPerson(
       state: PersonsState,
-      action: PayloadAction<Person>
+      { payload }: PayloadAction<Person>
     ) {
-      const index = state.list.findIndex(({ personId }) => personId === action.payload.personId);
+      const index = state.personList.findIndex(({ personId }) => personId === payload.personId);
 
       if (index !== undefined) {
-        state.list[index].personName = action.payload.personName;
+        state.personList[index].personName = payload.personName;
       }
     },
-  }
+    setActivePerson(
+      state: PersonsState,
+      { payload }: PayloadAction<Person>
+    ) {
+      state.activePerson.personId = payload.personId;
+      state.activePerson.personName = payload.personName;
+    },
+  },
 });
 
 export const {
   addPerson,
   deletePerson,
   editPerson,
+  setActivePerson,
 } = personsSlice.actions;
 
 export const personsReducer = personsSlice.reducer;
-export const selectPersons = (state: RootState) => state.persons.list;
+export const selectPersons = (state: RootState) => state.persons.personList;
+export const selectPerson = (state: RootState) => state.persons.activePerson;

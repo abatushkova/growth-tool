@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import {
   ListItem,
   ListItemButton,
@@ -15,11 +14,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import { addPerson } from '../../features/persons/personsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
+import { useAppDispatch } from '../../app/hooks';
 
-export default function TeamItemAdd() {
+export default function PersonItemAdd() {
   const [isAdding, setIsAdding] = useState(false);
   const [name, setName] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSubmit =(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,6 +31,7 @@ export default function TeamItemAdd() {
         personName: name.trim(),
       })
     );
+    setIsAdding(false);
     setName('');
   }
 
@@ -54,7 +55,7 @@ export default function TeamItemAdd() {
           <TextField
             id="member-add"
             variant="standard"
-            placeholder="Name"
+            placeholder="Type a Name"
             size="small" fullWidth
             InputProps={{
               style: { fontSize: 14 }

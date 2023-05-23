@@ -5,7 +5,7 @@ import {
   Box,
 } from '@mui/material';
 import TabPanel from '../NavTabPanel/NavTabPanel';
-import TeamList from '../TeamList/TeamList';
+import PersonList from '../PersonList/PersonList';
 import { categories } from '../../utils/constants/colors';
 
 function a11yProps(index: number) {
@@ -32,7 +32,7 @@ export default function NavTabs() {
         bgcolor: categories[tabName],
       }}>
         <TabPanel value={tabName} index={0}>
-          <TeamList />
+          <PersonList />
         </TabPanel>
         <TabPanel value={tabName} index={1}>
         </TabPanel>

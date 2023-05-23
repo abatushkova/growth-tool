@@ -20,50 +20,86 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
+import { useAppDispatch } from '../../app/hooks';
+import { deletePerson, editPerson } from '../../features/persons/personsSlice';
+import { SelectFunc } from '../../app/types';
 
-const CustomListItem = styled(ListItem)(({ theme }) => ({
+const CustomListItem = styled(ListItem)(() => ({
   '&.MuiListItem-secondaryAction': {
     paddingRight: 0,
   },
-  '&.MuiListItem-root + .hidden-menu': {
-    // display: 'none',
-  },
-  '&.MuiListItem-root:hover + .hidden-menu': {
-    // display: 'block',
-  },
 }));
 
-interface IMemberProps {
+interface PersonProps {
   personName: string;
-  selected: number;
-  index: number;
-  onMemberClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, S: number) => void;
+  personId: string;
+  selected: string;
+  onPersonClick: SelectFunc;
 }
 
-export default function TeamItem(props: IMemberProps) {
-  const { index, personName, selected, onMemberClick } = props;
+export default function PersonItem(props: PersonProps) {
+  const { personName, personId, selected, onPersonClick } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(personName);
+  const [status, setStatus] = useState('typing');
   const [dotsAnchor, setDotsAnchor] = useState<null | HTMLElement>(null);
+  const dispatch = useAppDispatch();
   const isMenuOpened = Boolean(dotsAnchor);
-
+  
+  const handleMenuClose = () => setDotsAnchor(null);
   const handleMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
     setDotsAnchor(e.currentTarget);
   };
 
+  const handleEditClose = () => {
+    setIsEditing(false);
+    setStatus('typing');
+    setName(personName);
+  };
   const handleEditOpen = () => {
     handleMenuClose();
     setIsEditing(true);
   };
 
-  const handleMenuClose = () => setDotsAnchor(null);
-  const handleEditClose = () => setIsEditing(false);
+  const handlePersonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStatus('typing');
+    setName(e.target.value);
+  }
+
+  const handlePersonSave = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!name.trim()) {
+      setStatus('error');
+      return;
+    }
+
+    setIsEditing(false);
+    dispatch(
+      editPerson({
+        personName: name,
+        personId
+      })
+    );
+  };
+
+  const handlePersonDelete = () => {
+    dispatch(deletePerson(personId));
+  };
 
   return (
     <>
       {isEditing ? (
-        <Stack direction="row" alignItems="center" spacing={0.5} sx={{ pt: 0.75, pr: 1.5, pb: 1, pl: 2 }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={0.5}
+          sx={{ pt: 0.75, pr: 1.5, pb: 1, pl: 2 }}
+          component="form" noValidate
+          onSubmit={handlePersonSave}
+        >
           <TextField
+            error={status === 'error' ?? 'true'}
+            helperText={status === 'error' ? 'Name cannot be empty' : null}
             id="member-add"
             variant="standard"
             value={name}
@@ -73,9 +109,14 @@ export default function TeamItem(props: IMemberProps) {
             InputProps={{
               style: { fontSize: 14 }
             }}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handlePersonChange}
           />
-          <IconButton aria-label="Add" size="small">
+          <IconButton
+            aria-label="Add"
+            size="small"
+            type="submit"
+            // onClick={handlePersonSave}
+          >
             <SaveIcon fontSize="inherit" />
           </IconButton>
           <IconButton
@@ -89,8 +130,8 @@ export default function TeamItem(props: IMemberProps) {
       ) : (
         <CustomListItem disablePadding>
           <ListItemButton
-            selected={selected === index}
-            onClick={(e) => onMemberClick(e, index)}
+            selected={selected === personId}
+            onClick={() => onPersonClick(personId, personName)}
           >
             <ListItemAvatar>
               <Avatar {...convertToInitials(personName)} />
@@ -125,7 +166,7 @@ export default function TeamItem(props: IMemberProps) {
                 </ListItemIcon>
                 Edit
               </MenuItem>
-              <MenuItem>
+              <MenuItem onClick={handlePersonDelete}>
                 <ListItemIcon>
                   <DeleteIcon fontSize="small" />
                 </ListItemIcon>
