@@ -11,18 +11,15 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Stack,
-  TextField,
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CloseIcon from '@mui/icons-material/Close';
-import SaveIcon from '@mui/icons-material/Save';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
 import { useAppDispatch } from '../../app/hooks';
 import { deletePerson, editPerson } from '../../features/persons/personsSlice';
-import { SelectFunc } from '../../app/types';
+import { SelectFunc, PersonId } from '../../app/types';
+import PersonItemWrap from '../PersonItemWrap/PersonItemWrap';
 
 const CustomListItem = styled(ListItem)(() => ({
   '&.MuiListItem-secondaryAction': {
@@ -32,7 +29,7 @@ const CustomListItem = styled(ListItem)(() => ({
 
 interface PersonProps {
   personName: string;
-  personId: string;
+  personId: PersonId;
   selected: string;
   onPersonClick: SelectFunc;
 }
@@ -73,13 +70,13 @@ export default function PersonItem(props: PersonProps) {
       return;
     }
 
-    setIsEditing(false);
     dispatch(
       editPerson({
-        personName: name,
+        personName: name.trim(),
         personId
       })
     );
+    setIsEditing(false);
   };
 
   const handlePersonDelete = () => {
@@ -89,44 +86,13 @@ export default function PersonItem(props: PersonProps) {
   return (
     <>
       {isEditing ? (
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={0.5}
-          sx={{ pt: 0.75, pr: 1.5, pb: 1, pl: 2 }}
-          component="form" noValidate
-          onSubmit={handlePersonSave}
-        >
-          <TextField
-            error={status === 'error' ?? 'true'}
-            helperText={status === 'error' ? 'Name cannot be empty' : null}
-            id="member-add"
-            variant="standard"
-            value={name}
-            placeholder="Name"
-            size="small"
-            fullWidth
-            InputProps={{
-              style: { fontSize: 14 }
-            }}
-            onChange={handlePersonChange}
-          />
-          <IconButton
-            aria-label="Add"
-            size="small"
-            type="submit"
-            // onClick={handlePersonSave}
-          >
-            <SaveIcon fontSize="inherit" />
-          </IconButton>
-          <IconButton
-            aria-label="Cancel"
-            size="small"
-            onClick={handleEditClose}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-        </Stack>
+        <PersonItemWrap
+          name={name}
+          onFormSubmit={handlePersonSave}
+          onInputChange={handlePersonChange}
+          onCloseClick={handleEditClose}
+          status={status}
+        />
       ) : (
         <CustomListItem disablePadding>
           <ListItemButton

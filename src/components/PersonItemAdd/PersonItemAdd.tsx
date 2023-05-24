@@ -5,25 +5,25 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Stack,
-  TextField,
-  IconButton,
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import CloseIcon from '@mui/icons-material/Close';
-import SaveIcon from '@mui/icons-material/Save';
 import { addPerson } from '../../features/persons/personsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
 import { useAppDispatch } from '../../app/hooks';
+import PersonItemWrap from '../PersonItemWrap/PersonItemWrap';
 
 export default function PersonItemAdd() {
   const [isAdding, setIsAdding] = useState(false);
   const [name, setName] = useState('');
+  const [status, setStatus] = useState('typing');
   const dispatch = useAppDispatch();
 
   const handleSubmit =(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim()) {
+      setStatus('error');
+      return;
+    }
 
     dispatch(
       addPerson({
@@ -33,52 +33,30 @@ export default function PersonItemAdd() {
     );
     setIsAdding(false);
     setName('');
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStatus('typing');
+    setName(e.target.value);
   }
 
-  const handleAddOpen = () => {
-    setIsAdding(true);
-  };
+  const handleAddOpen = () => setIsAdding(true);
   const handleAddClose = () => {
     setIsAdding(false);
+    setStatus('typing');
     setName('');
   };
 
   return (
     <>
       {isAdding ? (
-        <Stack
-          direction="row" alignItems="center"
-          spacing={0.5} sx={{ pt: 0.75, pr: 1.5, pb: 1, pl: 2 }}
-          component="form" noValidate
-          onSubmit={handleSubmit}
-        >
-          <TextField
-            id="member-add"
-            variant="standard"
-            placeholder="Type a Name"
-            size="small" fullWidth
-            InputProps={{
-              style: { fontSize: 14 }
-            }}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
-          />
-          <IconButton
-            aria-label="Add"
-            size="small"
-            type="submit"
-          >
-            <SaveIcon fontSize="inherit" />
-          </IconButton>
-          <IconButton
-            aria-label="Cancel"
-            size="small"
-            onClick={handleAddClose}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-        </Stack>
+        <PersonItemWrap
+          name={name}
+          onFormSubmit={handleSubmit}
+          onInputChange={handleChange}
+          onCloseClick={handleAddClose}
+          status={status}
+        />
       ) : (
         <ListItem disablePadding>
           <ListItemButton onClick={handleAddOpen}>
