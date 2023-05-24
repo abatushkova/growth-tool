@@ -20,7 +20,10 @@ const meetingAvatar = {
     md: 54,
     xs: 44,
   },
+  fontSize: '1.5rem',
 };
+
+const author = 'Vlad';
 
 export default function MeetingMembers() {
   const { personName } = useAppSelector(selectPerson);
@@ -35,7 +38,7 @@ export default function MeetingMembers() {
       >
         <Grid item>
           <AvatarGroup>
-            <Avatar {...convertToInitials('Vlad', meetingAvatar)} />
+            <Avatar {...convertToInitials(author, meetingAvatar)} />
             {personName ? (
               <Avatar {...convertToInitials(personName, meetingAvatar)} />
             ) : null}
@@ -48,7 +51,7 @@ export default function MeetingMembers() {
           flexWrap: 'wrap'
         }}>
           <Typography variant="h3" component="p">
-            Vlad
+            {author}
           </Typography>
           {personName ? (
             <>
