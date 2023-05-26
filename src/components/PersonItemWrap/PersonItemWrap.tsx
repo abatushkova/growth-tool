@@ -28,7 +28,7 @@ export default function PersonItemWrap(props: WrapProps) {
     <Stack
       direction="row" spacing={1}
       alignItems="flex-start"
-      sx={{ pt: 1.2, pr: 1.5, pb: 1.2, pl: 2 }}
+      sx={{ pt: 0.75, pr: 1.5, pl: 2, minHeight: 48 }}
       component="form" noValidate
       onSubmit={onFormSubmit}
     >
