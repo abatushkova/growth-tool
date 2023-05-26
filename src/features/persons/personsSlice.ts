@@ -33,8 +33,6 @@ export const personsSlice = createSlice({
         ({ personId }) => personId !== deletedPerson
       );
 
-      // where code changes to state - component | redux
-      // e.g. in compoent use dispatch(setActivePerson('',''))
       if (state.activePerson.personId === deletedPerson) {
         state.activePerson.personId = '';
         state.activePerson.personName = '';

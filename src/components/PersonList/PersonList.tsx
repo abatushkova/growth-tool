@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   List,
   Box,
@@ -10,20 +10,21 @@ import PersonItem from '../PersonItem/PersonItem';
 import PersonItemAdd from '../PersonItemAdd/PersonItemAdd';
 import { selectPerson, selectPersons, setActivePerson } from '../../features/persons/personsSlice';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { Person } from '../../app/types';
 
 export default function PersonList() {
+  const dispatch = useAppDispatch();
   const selectedPerson = useAppSelector(selectPerson);
   const persons = useAppSelector(selectPersons);
-  const dispatch = useAppDispatch();
-  const sortedPersons = [...persons].sort((a, b) => (
-    (a.personName > b.personName) ? 1 : -1
-  ));
+  const list = useMemo(() => (
+    [...persons].sort((a, b) => ((a.personName > b.personName) ? 1 : -1))
+  ), [persons]);
+  const [sortedPersons, setSortedPersons] = useState<Person[]>(list);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handlePersonSelect = (id: string, name: string) => {
-    if (selectedPerson.personName === name) {
-      console.log(selectedPerson.personName, name);
-      return;
-    }
+    if (selectedPerson.personId === id) return;
+
     dispatch(
       setActivePerson({
         personId: id,
@@ -32,12 +33,27 @@ export default function PersonList() {
     );
   };
 
+  const handlePersonSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    const filteredPersons = [...list].filter((person) => (
+      person.personName.toLowerCase().includes(query.toLowerCase())
+    ));
+    setSortedPersons(filteredPersons);
+  };
+
+  useEffect(() => {
+    setSearchQuery('');
+    setSortedPersons(list);
+  }, [list]);
+
   return (
     <>
       <Box sx={{ p: 2 }}>
         <Box component="form" noValidate autoComplete="off">
           <TextField
-            id="persons-search"
+            value={searchQuery}
             type="search"
             placeholder="Search"
             size="small" fullWidth
@@ -49,6 +65,7 @@ export default function PersonList() {
               ),
               style: { fontSize: 14 }
             }}
+            onChange={handlePersonSearch}
           />
         </Box>
       </Box>
