@@ -135,6 +135,21 @@ theme = {
         },
       },
     },
+    MuiListItem: {
+      styleOverrides: {
+        container: {
+          '& .MuiListItemSecondaryAction-root': {
+            visibility: 'hidden',
+          },
+          '&:hover .MuiListItemSecondaryAction-root': {
+            visibility: 'inherit'
+          },
+        },
+        secondaryAction: {
+          paddingRight: 0,
+        },
+      },
+    },
     MuiListItemButton: {
       styleOverrides: {
         root: {

@@ -26,9 +26,9 @@ export default function PersonItemWrap(props: WrapProps) {
 
   return (
     <Stack
-      direction="row" spacing={1}
+      direction="row"
       alignItems="flex-start"
-      sx={{ pt: 0.75, pr: 1.5, pl: 2, minHeight: 48 }}
+      sx={{ pt: 0.75, px: 2, minHeight: 48 }}
       component="form" noValidate
       onSubmit={onFormSubmit}
     >
@@ -50,14 +50,14 @@ export default function PersonItemWrap(props: WrapProps) {
         size="small"
         type="submit"
       >
-        <SaveIcon fontSize="inherit" />
+        <SaveIcon fontSize="small" />
       </IconButton>
       <IconButton
         aria-label="Cancel"
         size="small"
         onClick={onCloseClick}
       >
-        <CloseIcon fontSize="inherit" />
+        <CloseIcon fontSize="small" />
       </IconButton>
     </Stack>
   );
