@@ -1,13 +1,13 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-interface ITabPanelProps {
+interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
 
-export default function NavTabPanel(props: ITabPanelProps) {
+export default function NavTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (

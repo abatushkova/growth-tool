@@ -6,7 +6,13 @@ import {
 } from '@mui/material';
 import TabPanel from '../NavTabPanel/NavTabPanel';
 import PersonList from '../PersonList/PersonList';
-import { categories } from '../../utils/constants/colors';
+import { TabTypes } from '../../utils/constants/colors';
+
+const tabColors = [
+  TabTypes.Meetings,
+  TabTypes.Catalog,
+  TabTypes.Reports
+];
 
 function a11yProps(index: number) {
   return {
@@ -16,10 +22,10 @@ function a11yProps(index: number) {
 }
 
 export default function NavTabs() {
-  const [tabName, setTabName] = useState(0);
+  const [tabIdx, setTabIdx] = useState(0);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabName(newValue);
+  const handleTabChange = (e: React.SyntheticEvent, newValue: number) => {
+    setTabIdx(newValue);
   };
 
   return (
@@ -29,26 +35,26 @@ export default function NavTabs() {
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        bgcolor: categories[tabName],
+        bgcolor: tabColors[tabIdx],
       }}>
-        <TabPanel value={tabName} index={0}>
+        <TabPanel value={tabIdx} index={0}>
           <PersonList />
         </TabPanel>
-        <TabPanel value={tabName} index={1}>
+        <TabPanel value={tabIdx} index={1}>
         </TabPanel>
-        <TabPanel value={tabName} index={2}>
+        <TabPanel value={tabIdx} index={2}>
         </TabPanel>
       </Box>
       <Tabs
-        value={tabName}
+        value={tabIdx}
         onChange={handleTabChange}
         aria-label="Navigation tabs"
         variant="fullWidth"
         centered
       >
-        <Tab label="Meetings" {...a11yProps(0)} sx={{ bgcolor: categories[0] }} />
-        <Tab label="Catalog" {...a11yProps(1)} sx={{ bgcolor: categories[1] }} />
-        <Tab label="Reports" {...a11yProps(2)} sx={{ bgcolor: categories[2] }} />
+        <Tab label="Meetings" {...a11yProps(0)} sx={{ bgcolor: TabTypes.Meetings }} />
+        <Tab label="Catalog" {...a11yProps(1)} sx={{ bgcolor: TabTypes.Catalog }} />
+        <Tab label="Reports" {...a11yProps(2)} sx={{ bgcolor: TabTypes.Reports }} />
       </Tabs>
     </Box>
   );

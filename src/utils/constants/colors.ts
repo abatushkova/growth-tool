@@ -1,5 +1,5 @@
-export const categories = [
-  '#EDF8FC',
-  '#DCF4FA',
-  '#DCE7F9',
-];
+export enum TabTypes {
+  Meetings = '#EDF8FC',
+  Catalog = '#DCF4FA',
+  Reports = '#DCE7F9',
+}
