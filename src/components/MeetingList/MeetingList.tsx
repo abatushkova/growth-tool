@@ -1,14 +1,23 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import MeetingItem from '../MeetingItem/MeetingItem';
-import { meetings } from '../../store/fakeMeetings';
+import { useAppSelector } from '../../app/hooks';
+import { selectMeetings } from '../../features/meetings/meetingsSlice';
 
 export default function MeetingList() {
+  const meetings = useAppSelector(selectMeetings);
+
   return (
     <Box>
-      {meetings.map((meeting) => (
-        <MeetingItem key={meeting.meetingId} {...meeting} />
-      ))}
+      {meetings.length > 0 ? (
+        meetings.map((meeting) => (
+          <MeetingItem key={meeting.meetingId} {...meeting} />
+        ))
+      ) : (
+        <Typography variant="body1">
+          This list is empty
+        </Typography>
+      )}
     </Box>
   );
 }
