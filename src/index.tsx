@@ -10,7 +10,10 @@ import App from './components/App/App';
 import './index.css';
 
 store.subscribe(debounce(() => {
-  saveState(store.getState());
+  saveState({
+    persons: store.getState().persons,
+    meetings: store.getState().meetings,
+  });
 }, 1000));
 
 const root = ReactDOM.createRoot(
