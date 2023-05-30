@@ -10,6 +10,7 @@ import Layout from '../Layout/Layout';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
 import { selectPerson } from '../../features/persons/personsSlice';
 import { useAppSelector } from '../../app/hooks';
+import { author } from '../../utils/constants/auth';
 
 const meetingAvatar = {
   width: {
@@ -22,8 +23,6 @@ const meetingAvatar = {
   },
   fontSize: '1.5rem',
 };
-
-const author = 'Vlad';
 
 export default function MeetingMembers() {
   const { personName } = useAppSelector(selectPerson);
