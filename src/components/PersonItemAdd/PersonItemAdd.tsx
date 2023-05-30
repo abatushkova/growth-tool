@@ -38,7 +38,7 @@ export default function PersonItemAdd() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStatus('typing');
     setName(e.target.value);
-  }
+  };
 
   const handleAddOpen = () => setIsAdding(true);
   const handleAddClose = () => {

@@ -4,6 +4,7 @@ import {
   Box,
   TextField,
   InputAdornment,
+  Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonItem from '../PersonItem/PersonItem';
@@ -78,14 +79,20 @@ export default function PersonList() {
         overflow: 'auto',
       }}>
         <PersonItemAdd />
-        {sortedPersons.map((person) => (
-          <PersonItem
-            key={person.personId}
-            {...person}
-            selected={selectedPerson.personId}
-            onPersonClick={handlePersonSelect}
-          />
-        ))}
+        {sortedPersons.length > 0 ? (
+          sortedPersons.map((person) => (
+            <PersonItem
+              key={person.personId}
+              {...person}
+              selected={selectedPerson.personId}
+              onPersonClick={handlePersonSelect}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" sx={{ py: 1, px: 2 }}>
+            This list is empty
+          </Typography>
+        )}
       </List>
     </>
   );
