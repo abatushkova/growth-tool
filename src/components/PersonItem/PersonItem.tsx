@@ -37,12 +37,12 @@ export default function PersonItem(props: PersonProps) {
     setName(personName);
   };
 
-  const handlePersonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStatus('typing');
     setName(e.target.value);
   }
 
-  const handlePersonSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validName = name.trim();
 
@@ -77,8 +77,8 @@ export default function PersonItem(props: PersonProps) {
       {isEditing ? (
         <PersonItemWrap
           name={name}
-          onFormSubmit={handlePersonSave}
-          onInputChange={handlePersonChange}
+          onFormSubmit={handleSubmit}
+          onInputChange={handleChange}
           onCloseClick={handleEditClose}
           status={status}
         />
