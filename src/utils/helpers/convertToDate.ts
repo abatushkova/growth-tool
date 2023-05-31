@@ -1,5 +1,10 @@
-export const convertToDate = (date: Date): string => {
-  return '';
-}
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-// Dec 31, 2022
+export const convertToDate = (date: string): string => {
+  const localDate = new Date(date);
+  const day = localDate.getDate();
+  const month = months[localDate.getMonth()];
+  const year = localDate.getFullYear();
+
+  return `${month} ${day}, ${year}`;
+}

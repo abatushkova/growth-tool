@@ -9,12 +9,16 @@ export interface SelectFunc {
   (...S: string[]): void;
 }
 
+type Guest = {
+  guestId: PersonId
+};
+
 export type Meeting = {
   meetingId: string;
   title: string;
-  createdAt: Date;
-  closedAt: Date;
-  plannedAt: Date;
-  ownerId: string;
-  guests: PersonId[];
+  createdAt: string;
+  // closedAt: string;
+  plannedAt: string;
+  ownerId: PersonId;
+  guests: Guest[];
 };
