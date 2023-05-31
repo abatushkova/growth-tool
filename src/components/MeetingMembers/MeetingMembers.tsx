@@ -10,7 +10,7 @@ import Layout from '../Layout/Layout';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
 import { selectPerson } from '../../features/persons/personsSlice';
 import { useAppSelector } from '../../app/hooks';
-import { author } from '../../utils/constants/auth';
+import { owner } from '../../utils/constants/auth';
 
 const meetingAvatar = {
   width: {
@@ -37,7 +37,7 @@ export default function MeetingMembers() {
       >
         <Grid item>
           <AvatarGroup>
-            <Avatar {...convertToInitials(author, meetingAvatar)} />
+            <Avatar {...convertToInitials(owner.personName, meetingAvatar)} />
             {personName ? (
               <Avatar {...convertToInitials(personName, meetingAvatar)} />
             ) : null}
@@ -50,7 +50,7 @@ export default function MeetingMembers() {
           flexWrap: 'wrap'
         }}>
           <Typography variant="h3" component="p">
-            {author}
+            {owner.personName}
           </Typography>
           {personName ? (
             <>
