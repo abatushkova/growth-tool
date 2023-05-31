@@ -59,7 +59,7 @@ theme = {
       styleOverrides: {
         root: {
           '&.MuiTypography-h2': {
-            marginBlock: 40,
+            marginBottom: theme.spacing(5),
             fontSize: 30,
             fontWeight: 500,
             [theme.breakpoints.up('md')]: {

@@ -89,8 +89,8 @@ export default function PersonList() {
             />
           ))
         ) : (
-          <Typography variant="body2" sx={{ py: 1, px: 2 }}>
-            This list is empty
+          <Typography variant="body2" sx={{ py: 1, px: 2 }} align="center">
+            There are no members.
           </Typography>
         )}
       </List>

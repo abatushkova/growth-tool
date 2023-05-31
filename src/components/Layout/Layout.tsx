@@ -8,7 +8,7 @@ interface ILayoutProps {
 }
 
 export default function Layout(props: ILayoutProps) {
-  const { children, pt, pb = 6 } = props;
+  const { children, pt = 5, pb = 6 } = props;
 
   return (
     <Container maxWidth="md" sx={{ pt, pb }}>

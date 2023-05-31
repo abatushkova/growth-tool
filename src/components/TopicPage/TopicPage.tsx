@@ -13,7 +13,7 @@ import TopicFormView from '../TopicFormView/TopicFormView';
 import TopicCommentList from '../TopicCommentList/TopicCommentList';
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
-  marginBlock: theme.spacing(5),
+  marginBottom: theme.spacing(5),
   '& .MuiInput-root': {
     padding: 0,
     fontSize: 30,
@@ -36,7 +36,7 @@ export default function TopicPage() {
 
   return (
     <Layout>
-      <Grid container alignItems="center" spacing={1}>
+      <Grid container alignItems="flex-start" spacing={1}>
         <Grid item xs>
           <Typography variant="h2" hidden>{title}</Typography>
           <CustomTextField
@@ -62,7 +62,7 @@ export default function TopicPage() {
 
       <TopicFormView />
 
-      {/* <Typography variant="body1" color="text.secondary">
+      {/* <Typography variant="body1">
         There are no comments yet on this topic.
       </Typography> */}
       <Typography variant="h3" sx={{ mt: 6, mb: 3 }}>

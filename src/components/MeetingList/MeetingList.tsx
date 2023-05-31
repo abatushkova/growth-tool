@@ -15,7 +15,7 @@ export default function MeetingList() {
         ))
       ) : (
         <Typography variant="body1">
-          This list is empty
+          There are no meetings yet with this guest.
         </Typography>
       )}
     </Box>
