@@ -8,15 +8,15 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import MeetingTopicItem from '../MeetingTopicItem/MeetingTopicItem';
 
-interface ITopic {
+interface Topic {
   topicId: number;
   title: string;
 }
-interface ITopicsProps {
-  topics: ITopic[];
+interface TopicsProps {
+  topics: Topic[];
 }
 
-export default function MeetingTopicList({ topics }: ITopicsProps) {
+export default function MeetingTopicList() {
   const [isAdding, setIsAdding] = useState(false);
 
   const handleAddOpen = () => setIsAdding(true);
@@ -24,13 +24,13 @@ export default function MeetingTopicList({ topics }: ITopicsProps) {
 
   return (
     <>
-      {topics.length > 0 && (
+      {/* {topics.length > 0 && (
         <Stack spacing={0.5} sx={{ mb: 2 }}>
           {topics.map((topic) => (
             <MeetingTopicItem key={topic.topicId} {...topic} />
           ))}
         </Stack>
-      )}
+      )} */}
       {isAdding ? (
         <Grid container spacing={2}>
           <Grid item xs={12}>

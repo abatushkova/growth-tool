@@ -40,7 +40,7 @@ export default function TopicFormView() {
   const [formView, setFormView] = useState('qa');
 
   const handleFormViewToggle = (
-    event: React.MouseEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement>,
     newValue: string | null,
   ) => {
     if (newValue !== null) {

@@ -21,17 +21,17 @@ const Item = styled(Paper)(({ theme }) => ({
   paddingBlock: theme.spacing(0.5),
 }));
 
-interface ITopicProps {
+interface TopicProps {
   title: string;
 }
 
-export default function MeetingTopicItem(props: ITopicProps) {
+export default function MeetingTopicItem(props: TopicProps) {
   const { title } = props;
   const [datesAnchor, setDatesAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpened = Boolean(datesAnchor);
 
-  const handleDatesOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setDatesAnchor(event.currentTarget);
+  const handleDatesOpen = (e: React.MouseEvent<HTMLElement>) => {
+    setDatesAnchor(e.currentTarget);
   };
 
   const handleDatesClose = () => setDatesAnchor(null);

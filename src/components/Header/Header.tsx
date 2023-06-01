@@ -13,7 +13,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import Logout from '@mui/icons-material/Logout';
 
-interface IHeaderProps {
+interface HeaderProps {
   onDrawerToggle: () => void;
 }
 
@@ -22,7 +22,7 @@ const CustomAvatar = styled(Avatar)(({ theme }) => ({
   color: theme.palette.primary.dark,
 }));
 
-export default function Header(props: IHeaderProps) {
+export default function Header(props: HeaderProps) {
   const { onDrawerToggle } = props;
   const [avatarAnchor, setAvatarAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpened = Boolean(avatarAnchor);

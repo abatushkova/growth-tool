@@ -15,7 +15,7 @@ export default function Main() {
       {selectedPerson.personId ? (
         <>
           <MeetingPage />
-          <TopicPage />
+          {/* <TopicPage /> */}
         </>
       ) : (
         <EmptyPage />

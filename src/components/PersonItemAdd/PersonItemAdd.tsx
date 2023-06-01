@@ -18,20 +18,10 @@ export default function PersonItemAdd() {
   const [status, setStatus] = useState('typing');
   const dispatch = useAppDispatch();
 
-  const handleSubmit =(e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!name.trim()) {
-      setStatus('error');
-      return;
-    }
-
-    dispatch(
-      addPerson({
-        personId: createGuid(),
-        personName: name.trim(),
-      })
-    );
+  const handleAddOpen = () => setIsAdding(true);
+  const handleAddClose = () => {
     setIsAdding(false);
+    setStatus('typing');
     setName('');
   };
 
@@ -40,11 +30,22 @@ export default function PersonItemAdd() {
     setName(e.target.value);
   };
 
-  const handleAddOpen = () => setIsAdding(true);
-  const handleAddClose = () => {
-    setIsAdding(false);
-    setStatus('typing');
-    setName('');
+  const handleSubmit =(e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const validName = name.trim();
+
+    if (!validName) {
+      setStatus('error');
+      return;
+    }
+
+    dispatch(
+      addPerson({
+        personId: createGuid(),
+        personName: validName,
+      })
+    );
+    handleAddClose();
   };
 
   return (

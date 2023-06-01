@@ -40,7 +40,7 @@ export default function PersonItem(props: PersonProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStatus('typing');
     setName(e.target.value);
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

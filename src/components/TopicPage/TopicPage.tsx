@@ -30,8 +30,8 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 export default function TopicPage() {
   const [title, setTitle] = useState('Topic 1');
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
   };
 
   return (

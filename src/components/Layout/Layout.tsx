@@ -1,13 +1,13 @@
 import React from 'react';
 import { Container } from '@mui/material';
 
-interface ILayoutProps {
+interface LayoutProps {
   children?: React.ReactNode;
   pt?: number;
   pb?: number;
 }
 
-export default function Layout(props: ILayoutProps) {
+export default function Layout(props: LayoutProps) {
   const { children, pt = 5, pb = 6 } = props;
 
   return (

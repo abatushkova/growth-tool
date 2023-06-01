@@ -15,7 +15,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-interface ICommentProps {
+interface CommentProps {
   commentId: number;
   createdAt: string;
   formView: string;
@@ -25,7 +25,7 @@ interface ICommentProps {
   meetingId: number;
 }
 
-export default function TopicCommentItem(props: ICommentProps) {
+export default function TopicCommentItem(props: CommentProps) {
   const { createdAt, question, comment, score, formView } = props;
   const [scoreValue, setScoreValue] = useState(score);
   const [isEditing, setIsEditing] = useState(false);

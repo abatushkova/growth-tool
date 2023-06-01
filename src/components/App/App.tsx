@@ -13,9 +13,7 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
