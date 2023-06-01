@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { loadState } from "../../app/localStorage";
-import { Meeting } from "../../app/types";
+import { Meeting, PersonId } from "../../app/types";
 
 type MeetingsState = {
   meetingList: Meeting[];
@@ -21,12 +21,21 @@ export const meetingsSlice = createSlice({
     ) {
       state.meetingList.push(action.payload);
     },
+    filterMeetings(
+      state: MeetingsState,
+      action: PayloadAction<PersonId>
+    ) {
+      state.meetingList = state.meetingList.filter(({ guests }) => (
+        guests[0].guestId !== action.payload
+      ));
+    }
   },
 });
 
 export const {
   addMeeting,
+  filterMeetings,
 } = meetingsSlice.actions;
 
 export const meetingsReducer = meetingsSlice.reducer;
-export const selectMeetings = (state: RootState) => state.meetings.meetingList;
+export const selectMeetingList = (state: RootState) => state.meetings.meetingList;
