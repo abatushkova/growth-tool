@@ -10,11 +10,12 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PersonItemWrap from '../PersonItemWrap/PersonItemWrap';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
 import { useAppDispatch } from '../../app/hooks';
-import { deletePerson, editPerson, setActivePerson } from '../../features/persons/personsSlice';
 import { SelectFunc, PersonId } from '../../app/types';
-import PersonItemWrap from '../PersonItemWrap/PersonItemWrap';
+import { deletePerson, editPerson, setActivePerson } from '../../features/persons/personsSlice';
+import { filterMeetings } from '../../features/meetings/meetingsSlice';
 
 interface PersonProps {
   personName: string;
@@ -70,6 +71,7 @@ export default function PersonItem(props: PersonProps) {
 
   const handlePersonDelete = () => {
     dispatch(deletePerson(personId));
+    dispatch(filterMeetings(personId));
   };
 
   return (
