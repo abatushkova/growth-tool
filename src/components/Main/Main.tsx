@@ -5,14 +5,14 @@ import MeetingPage from '../MeetingPage/MeetingPage';
 import TopicPage from '../TopicPage/TopicPage';
 import EmptyPage from '../EmptyPage/EmptyPage';
 import { useAppSelector } from '../../app/hooks';
-import { selectPerson } from '../../features/persons/personsSlice';
+import { selectActivePerson } from '../../features/persons/personsSlice';
 
 export default function Main() {
-  const selectedPerson = useAppSelector(selectPerson);
+  const { personId } = useAppSelector(selectActivePerson);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      {selectedPerson.personId ? (
+      {personId ? (
         <>
           <MeetingPage />
           {/* <TopicPage /> */}

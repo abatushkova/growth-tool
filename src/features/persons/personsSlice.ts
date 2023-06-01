@@ -29,9 +29,9 @@ export const personsSlice = createSlice({
     ) {
       const deletedPerson = action.payload;
 
-      state.personList = state.personList.filter(
-        ({ personId }) => personId !== deletedPerson
-      );
+      state.personList = state.personList.filter(({ personId }) => (
+        personId !== deletedPerson
+      ));
 
       if (state.activePerson.personId === deletedPerson) {
         state.activePerson.personId = '';
@@ -42,7 +42,9 @@ export const personsSlice = createSlice({
       state: PersonsState,
       { payload }: PayloadAction<Person>
     ) {
-      const index = state.personList.findIndex(({ personId }) => personId === payload.personId);
+      const index = state.personList.findIndex(({ personId }) => (
+        personId === payload.personId
+      ));
 
       if (index !== undefined) {
         state.personList[index].personName = payload.personName;
@@ -66,5 +68,5 @@ export const {
 } = personsSlice.actions;
 
 export const personsReducer = personsSlice.reducer;
-export const selectPersons = (state: RootState) => state.persons.personList;
-export const selectPerson = (state: RootState) => state.persons.activePerson;
+export const selectPersonList = (state: RootState) => state.persons.personList;
+export const selectActivePerson = (state: RootState) => state.persons.activePerson;

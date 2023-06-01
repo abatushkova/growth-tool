@@ -8,7 +8,7 @@ import {
 import CodeIcon from '@mui/icons-material/Code';
 import Layout from '../Layout/Layout';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
-import { selectPerson } from '../../features/persons/personsSlice';
+import { selectActivePerson } from '../../features/persons/personsSlice';
 import { useAppSelector } from '../../app/hooks';
 import { owner } from '../../utils/constants/auth';
 
@@ -25,7 +25,7 @@ const meetingAvatar = {
 };
 
 export default function MeetingMembers() {
-  const { personName } = useAppSelector(selectPerson);
+  const { personName } = useAppSelector(selectActivePerson);
 
   return (
     <Layout pt={3} pb={3}>

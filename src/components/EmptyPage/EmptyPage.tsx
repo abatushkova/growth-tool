@@ -6,7 +6,7 @@ export default function EmptyPage() {
   return (
     <Layout>
       <Typography variant="h3">
-        Select guest to create a Meeting.
+        Select guest to create a meeting.
       </Typography>
     </Layout>
   )

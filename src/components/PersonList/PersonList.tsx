@@ -9,14 +9,14 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import PersonItem from '../PersonItem/PersonItem';
 import PersonItemAdd from '../PersonItemAdd/PersonItemAdd';
-import { selectPerson, selectPersons, setActivePerson } from '../../features/persons/personsSlice';
+import { selectActivePerson, selectPersonList, setActivePerson } from '../../features/persons/personsSlice';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { Person } from '../../app/types';
 
 export default function PersonList() {
   const dispatch = useAppDispatch();
-  const selectedPerson = useAppSelector(selectPerson);
-  const persons = useAppSelector(selectPersons);
+  const selectedPerson = useAppSelector(selectActivePerson);
+  const persons = useAppSelector(selectPersonList);
   const list = useMemo(() => (
     [...persons].sort((a, b) => ((a.personName > b.personName) ? 1 : -1))
   ), [persons]);

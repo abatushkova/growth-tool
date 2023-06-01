@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import {
   Typography,
@@ -8,14 +8,13 @@ import {
   TextField,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import type { DateValidationError } from '@mui/x-date-pickers';
 import Layout from '../Layout/Layout';
 import MeetingMembers from '../MeetingMembers/MeetingMembers';
 import MeetingList from '../MeetingList/MeetingList';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addMeeting } from '../../features/meetings/meetingsSlice';
+import { selectActivePerson } from '../../features/persons/personsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
-import { selectPerson } from '../../features/persons/personsSlice';
 import { owner } from '../../utils/constants/auth';
 
 const defaultTitle = 'New Meeting';
@@ -23,10 +22,10 @@ const tomorrow = dayjs().add(1, 'day');
 
 export default function MeetingPage() {
   const dispatch = useAppDispatch();
-  const selectedPerson = useAppSelector(selectPerson);
+  const selectedPerson = useAppSelector(selectActivePerson);
   const [isCreating, setIsCreating] = useState(false);
-  const [title, setTitle] = useState(defaultTitle);
   const [status, setStatus] = useState('typing');
+  const [title, setTitle] = useState(defaultTitle);
   const [date, setDate] = useState<Dayjs | null>(tomorrow);
 
   const handleCreateOpen = () => setIsCreating(true);
@@ -57,11 +56,12 @@ export default function MeetingPage() {
         plannedAt: date!.toString(),
         ownerId: owner.personId,
         guests: [
-          { guestId: selectedPerson.personId }
+          {
+            guestId: selectedPerson.personId
+          }
         ]
       })
     );
-
     handleCreateClose();
   };
 
