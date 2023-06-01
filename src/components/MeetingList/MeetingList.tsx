@@ -2,15 +2,20 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import MeetingItem from '../MeetingItem/MeetingItem';
 import { useAppSelector } from '../../app/hooks';
-import { selectMeetings } from '../../features/meetings/meetingsSlice';
+import { selectMeetingList } from '../../features/meetings/meetingsSlice';
+import { selectActivePerson } from '../../features/persons/personsSlice';
 
 export default function MeetingList() {
-  const meetings = useAppSelector(selectMeetings);
+  const { personId } = useAppSelector(selectActivePerson);
+  const meetings = useAppSelector(selectMeetingList);
+  const activeMeetings = [...meetings].filter(({ guests }) => (
+    guests[0].guestId === personId
+  ));
 
   return (
     <Box>
-      {meetings.length > 0 ? (
-        meetings.map((meeting) => (
+      {activeMeetings.length > 0 ? (
+        activeMeetings.map((meeting) => (
           <MeetingItem key={meeting.meetingId} {...meeting} />
         ))
       ) : (
