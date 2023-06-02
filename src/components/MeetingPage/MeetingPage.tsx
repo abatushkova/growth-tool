@@ -5,12 +5,12 @@ import {
   Grid,
   Button,
   Divider,
-  TextField,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Layout from '../Layout/Layout';
 import MeetingMembers from '../MeetingMembers/MeetingMembers';
 import MeetingList from '../MeetingList/MeetingList';
+import MeetingForm from '../MeetingForm/MeetingForm';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addMeeting } from '../../features/meetings/meetingsSlice';
 import { selectActivePerson } from '../../features/persons/personsSlice';
@@ -25,25 +25,27 @@ export default function MeetingPage() {
   const selectedPerson = useAppSelector(selectActivePerson);
   const [isCreating, setIsCreating] = useState(false);
   const [status, setStatus] = useState('typing');
-  const [title, setTitle] = useState(defaultTitle);
-  const [date, setDate] = useState<Dayjs | null>(tomorrow);
+  const [curTitle, setCurTitle] = useState(defaultTitle);
+  const [curDate, setCurDate] = useState<Dayjs | null>(tomorrow);
 
   const handleCreateOpen = () => setIsCreating(true);
   const handleCreateClose = () => {
     setIsCreating(false);
     setStatus('typing');
-    setTitle(defaultTitle);
-    setDate(tomorrow);
+    setCurTitle(defaultTitle);
+    setCurDate(tomorrow);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStatus('typing');
-    setTitle(e.target.value);
+    setCurTitle(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!title.trim()) {
+    const validTitle = curTitle.trim();
+
+    if (!validTitle) {
       setStatus('error');
       return;
     }
@@ -51,15 +53,13 @@ export default function MeetingPage() {
     dispatch(
       addMeeting({
         meetingId: createGuid(),
-        title,
+        title: validTitle,
         createdAt: dayjs().toString(),
-        plannedAt: date!.toString(),
+        plannedAt: curDate!.toString(),
         ownerId: owner.personId,
-        guests: [
-          {
-            guestId: selectedPerson.personId
-          }
-        ]
+        guests: [{
+          guestId: selectedPerson.personId,
+        }],
       })
     );
     handleCreateClose();
@@ -84,44 +84,22 @@ export default function MeetingPage() {
         </Grid>
 
         {isCreating ? (
-          <Grid
-            container spacing={2}
+          <MeetingForm
             sx={{ mb: 4 }}
-            component="form" noValidate
-            onSubmit={handleSubmit}
+            title={curTitle}
+            status={status}
+            onFormSubmit={handleSubmit}
+            onInputChange={handleChange}
+            onCloseClick={handleCreateClose}
+            buttonName="Create"
           >
-            <Grid item xs={12}>
-              <TextField
-                error={status === 'error' ?? 'true'}
-                helperText={status === 'error' ? 'Title cannot be empty' : null}
-                variant="outlined"
-                placeholder="Enter Title"
-                size="small" fullWidth
-                value={title}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item>
-              <DatePicker
-                format="LL"
-                value={date}
-                onChange={(newDate) => setDate(newDate)}
-                disablePast
-              />
-            </Grid>
-            <Grid item container spacing={1}>
-              <Grid item>
-                <Button variant="contained" type="submit">
-                  Create
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="text" onClick={handleCreateClose}>
-                  Cancel
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
+            <DatePicker
+              format="LL"
+              value={curDate}
+              onChange={(newDate) => setCurDate(newDate)}
+              disablePast
+            />
+          </MeetingForm>
         ) : null}
         <MeetingList />
       </Layout>
