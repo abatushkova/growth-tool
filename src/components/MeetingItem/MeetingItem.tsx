@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import {
   Typography,
   Grid,
-  Button,
   Accordion,
   AccordionDetails,
   AccordionSummary,
@@ -13,7 +12,6 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-  TextField,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -21,6 +19,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import MeetingTopicList from '../MeetingTopicList/MeetingTopicList';
+import MeetingForm from '../MeetingForm/MeetingForm';
+import { Meeting } from '../../app/types';
+import { convertToDate } from '../../utils/helpers/convertToDate';
+import { useAppDispatch } from '../../app/hooks';
+import { deleteMeeting, editMeeting } from '../../features/meetings/meetingsSlice';
 
 const ITEM_HEIGHT = 48;
 
@@ -28,98 +31,98 @@ const CustomAccordion = styled(Accordion)(({ theme }) => ({
   backgroundColor: theme.palette.gray.main,
 }));
 
-interface ITopic {
-  topicId: number;
-  title: string;
-}
-interface IGuest {
-  guestId: number;
-}
-interface IMeetingProps {
-  meetingId: number;
-  title: string;
-  createdAt: string;
-  closedAt: string;
-  plannedAt: string;
-  ownerId: number;
-  guests: IGuest[];
-  topics: ITopic[];
-}
-
-export default function MeetingItem(props: IMeetingProps) {
-  const { meetingId, title, createdAt, topics } = props;
+export default function MeetingItem(props: Meeting) {
+  const { meetingId, title, plannedAt } = props;
+  const dispatch = useAppDispatch();
   const [isEditing, setIsEditing] = useState(false);
-  const [isExpanded, setIsExpanded] = useState<number | false>(false);
+  const [isExpanded, setIsExpanded] = useState<string | false>(false);
   const [dotsAnchor, setDotsAnchor] = useState<null | HTMLElement>(null);
-  const [dateValue, setDateValue] = useState<Dayjs | null>(dayjs('2022-12-16'));
+  const [curTitle, setCurTitle] = useState(title);
+  const [curDate, setCurDate] = useState<Dayjs | null>(dayjs(plannedAt));
+  const [status, setStatus] = useState('typing');
   const isMenuOpened = Boolean(dotsAnchor);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setDotsAnchor(event.currentTarget);
-  };
-
-  const handleMenuClose = () => setDotsAnchor(null);
-
   const handleAccordionToggle =
-    (meetingId: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (meetingId: string) => (e: React.SyntheticEvent, isExpanded: boolean) => {
       setIsExpanded(isExpanded ? meetingId : false);
     };
+
+  const handleMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
+    setDotsAnchor(e.currentTarget);
+  };
+  const handleMenuClose = () => setDotsAnchor(null);
 
   const handleEditOpen = () => {
     handleMenuClose();
     setIsEditing(true);
   };
+  const handleEditClose = () => {
+    setIsEditing(false);
+    setStatus('typing');
+    setCurTitle(title);
+  };
 
-  const handleEditClose = () => setIsEditing(false);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStatus('typing');
+    setCurTitle(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const validTitle = curTitle.trim();
+
+    if (!validTitle) {
+      setStatus('error');
+      return;
+    }
+
+    dispatch(
+      editMeeting({
+        meetingId,
+        title: validTitle,
+        plannedAt: curDate!.toString(),
+      })
+    );
+    setIsEditing(false);
+    setCurTitle(validTitle);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteMeeting(meetingId));
+  };
 
   return (
     <>
       {isEditing ? (
-        <Grid container spacing={2} sx={{ mt: 0.5, mb: 3 }}>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              id="meeting-title"
-              defaultValue={'New Meeting'}
-              multiline
-              fullWidth
-              size="small"
-            />
-          </Grid>
-          <Grid item>
-            <DatePicker
-              format="LL"
-              value={dateValue}
-              onChange={(newValue) => setDateValue(newValue)}
-            />
-          </Grid>
-          <Grid item container spacing={1}>
-            <Grid item>
-              <Button variant="contained">
-                Save
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button variant="text" onClick={handleEditClose}>
-                Cancel
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
+        <MeetingForm
+          sx={{ mt: 0.5, mb: 3 }}
+          title={curTitle}
+          status={status}
+          onFormSubmit={handleSubmit}
+          onInputChange={handleChange}
+          onCloseClick={handleEditClose}
+          buttonName="Save"
+        >
+          <DatePicker
+            format="LL"
+            value={curDate}
+            onChange={(newValue) => setCurDate(newValue)}
+            disablePast
+          />
+        </MeetingForm>
       ) : (
-        <CustomAccordion expanded={isExpanded === meetingId} onChange={handleAccordionToggle(meetingId)}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            id="meeting-header"
-            aria-controls="meeting-content"
-          >
+        <CustomAccordion
+          expanded={isExpanded === meetingId}
+          onChange={handleAccordionToggle(meetingId)}
+        >
+          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="meeting-content">
             <Grid container spacing={1}>
-              <Grid item xs={12} container flexWrap="nowrap" spacing={2}>
-                {topics.length > 0 && (
+              <Grid item xs={12} container spacing={2} flexWrap="nowrap">
+                {/* {topics.length > 0 && (
                   <Grid item>
                     <Chip label={topics.length} size="small" />
                   </Grid>
-                )}
+                )} */}
                 <Grid item>
                   <Typography variant="h6" component="p">
                     {title}
@@ -131,13 +134,13 @@ export default function MeetingItem(props: IMeetingProps) {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body2" color="text.secondary">
-                  {createdAt}
+                  {convertToDate(plannedAt)}
                 </Typography>
               </Grid>
             </Grid>
           </AccordionSummary>
           <AccordionDetails>
-            <MeetingTopicList topics={topics} />
+            <MeetingTopicList />
             <Grid container spacing={1} justifyContent="flex-end" sx={{ mt: -6 }}>
               <Grid item>
                 <IconButton
@@ -171,7 +174,7 @@ export default function MeetingItem(props: IMeetingProps) {
                     </ListItemIcon>
                     Edit
                   </MenuItem>
-                  <MenuItem>
+                  <MenuItem onClick={handleDelete}>
                     <ListItemIcon>
                       <DeleteIcon fontSize="small" />
                     </ListItemIcon>

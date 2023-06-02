@@ -3,6 +3,12 @@ import { RootState } from "../../app/store";
 import { loadState } from "../../app/localStorage";
 import { Meeting, PersonId } from "../../app/types";
 
+type MeetingEntity = {
+  meetingId: string;
+  title: string;
+  plannedAt: string;
+};
+
 type MeetingsState = {
   meetingList: Meeting[];
 };
@@ -28,6 +34,30 @@ export const meetingsSlice = createSlice({
       state.meetingList = state.meetingList.filter(({ guests }) => (
         guests[0].guestId !== action.payload
       ));
+    },
+    deleteMeeting(
+      state: MeetingsState,
+      action: PayloadAction<string>
+    ) {
+      state.meetingList = state.meetingList.filter(({ meetingId }) => (
+        meetingId !== action.payload
+      ));
+    },
+    editMeeting(
+      state: MeetingsState,
+      { payload }: PayloadAction<MeetingEntity>
+    ) {
+      const index = state.meetingList.findIndex(({ meetingId }) => (
+        meetingId === payload.meetingId
+      ));
+
+      if (index !== undefined) {
+        state.meetingList[index] = {
+          ...state.meetingList[index],
+          title: payload.title,
+          plannedAt: payload.plannedAt,
+        };
+      }
     }
   },
 });
@@ -35,6 +65,8 @@ export const meetingsSlice = createSlice({
 export const {
   addMeeting,
   filterMeetings,
+  deleteMeeting,
+  editMeeting,
 } = meetingsSlice.actions;
 
 export const meetingsReducer = meetingsSlice.reducer;
