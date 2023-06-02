@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonItem from '../PersonItem/PersonItem';
-import PersonItemAdd from '../PersonItemAdd/PersonItemAdd';
+import PersonAdd from '../PersonAdd/PersonAdd';
 import { selectActivePerson, selectPersonList, setActivePerson } from '../../features/persons/personsSlice';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { Person } from '../../app/types';
@@ -78,7 +78,7 @@ export default function PersonList() {
         bottom: 0,
         overflow: 'auto',
       }}>
-        <PersonItemAdd />
+        <PersonAdd />
         {sortedPersons.length > 0 ? (
           sortedPersons.map((person) => (
             <PersonItem
@@ -90,7 +90,7 @@ export default function PersonList() {
           ))
         ) : (
           <Typography variant="body2" sx={{ py: 1, px: 2 }} align="center">
-            There are no members.
+            There are no members yet.
           </Typography>
         )}
       </List>

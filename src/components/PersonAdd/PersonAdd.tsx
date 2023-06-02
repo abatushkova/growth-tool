@@ -10,9 +10,9 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { addPerson } from '../../features/persons/personsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
 import { useAppDispatch } from '../../app/hooks';
-import PersonItemWrap from '../PersonItemWrap/PersonItemWrap';
+import PersonForm from '../PersonForm/PersonForm';
 
-export default function PersonItemAdd() {
+export default function PersonAdd() {
   const [isAdding, setIsAdding] = useState(false);
   const [name, setName] = useState('');
   const [status, setStatus] = useState('typing');
@@ -51,7 +51,7 @@ export default function PersonItemAdd() {
   return (
     <>
       {isAdding ? (
-        <PersonItemWrap
+        <PersonForm
           name={name}
           onFormSubmit={handleSubmit}
           onInputChange={handleChange}

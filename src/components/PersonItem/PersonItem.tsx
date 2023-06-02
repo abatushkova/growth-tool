@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import PersonItemWrap from '../PersonItemWrap/PersonItemWrap';
+import PersonFrom from '../PersonForm/PersonForm';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
 import { useAppDispatch } from '../../app/hooks';
 import { SelectFunc, PersonId } from '../../app/types';
@@ -67,9 +67,10 @@ export default function PersonItem(props: PersonProps) {
       );
     }
     setIsEditing(false);
+    setName(validName);
   };
 
-  const handlePersonDelete = () => {
+  const handleDelete = () => {
     dispatch(deletePerson(personId));
     dispatch(filterMeetings(personId));
   };
@@ -77,7 +78,7 @@ export default function PersonItem(props: PersonProps) {
   return (
     <>
       {isEditing ? (
-        <PersonItemWrap
+        <PersonFrom
           name={name}
           onFormSubmit={handleSubmit}
           onInputChange={handleChange}
@@ -99,7 +100,7 @@ export default function PersonItem(props: PersonProps) {
             <IconButton onClick={handleEditOpen} size="small">
               <EditIcon fontSize="small" />
             </IconButton>
-            <IconButton onClick={handlePersonDelete} size="small">
+            <IconButton onClick={handleDelete} size="small">
               <DeleteIcon fontSize="small" />
             </IconButton>
           </ListItemSecondaryAction>

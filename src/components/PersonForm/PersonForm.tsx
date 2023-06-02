@@ -7,7 +7,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
-interface WrapProps {
+interface FormProps {
   name: string;
   onFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -15,7 +15,7 @@ interface WrapProps {
   status: string;
 }
 
-export default function PersonItemWrap(props: WrapProps) {
+export default function PersonForm(props: FormProps) {
   const {
     name,
     onInputChange,
