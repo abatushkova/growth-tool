@@ -109,9 +109,9 @@ theme = {
           '& .MuiInputLabel-root': {
             color: theme.palette.gray.dark,
           },
-          '& .MuiInputBase-multiline': {
+          '& .MuiInputBase-root': {
             backgroundColor: theme.palette.white.main,
-          }
+          },
         },
       }
     },
