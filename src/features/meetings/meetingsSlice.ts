@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { loadState } from "../../app/localStorage";
-import { Meeting, PersonId } from "../../app/types";
+import { Meeting, PersonId, MeetingId } from "../../app/types";
 
 type MeetingEntity = {
-  meetingId: string;
+  meetingId: MeetingId;
   title: string;
   plannedAt: string;
 };
@@ -37,7 +37,7 @@ export const meetingsSlice = createSlice({
     },
     deleteMeeting(
       state: MeetingsState,
-      action: PayloadAction<string>
+      action: PayloadAction<MeetingId>
     ) {
       state.meetingList = state.meetingList.filter(({ meetingId }) => (
         meetingId !== action.payload
