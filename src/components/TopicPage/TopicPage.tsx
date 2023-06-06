@@ -41,9 +41,7 @@ export default function TopicPage() {
           <Typography variant="h2" hidden>{title}</Typography>
           <CustomTextField
             variant="standard"
-            id="topic-textfield"
             value={title}
-            multiline
             fullWidth
             onChange={handleTitleChange}
           />

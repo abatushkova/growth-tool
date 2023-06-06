@@ -29,15 +29,17 @@ export default function PersonForm(props: FormProps) {
       direction="row"
       alignItems="flex-start"
       sx={{ pt: 0.75, px: 2, minHeight: 48 }}
-      component="form" noValidate
+      component="form"
+      noValidate
       onSubmit={onFormSubmit}
     >
       <TextField
-        error={status === 'error' ?? 'true'}
+        error={status === 'error' && true}
         helperText={status === 'error' ? 'Name cannot be empty' : null}
         variant="outlined"
         placeholder="Enter Name"
-        size="small" fullWidth
+        fullWidth
+        size="small"
         InputProps={{
           style: { fontSize: 14 }
         }}

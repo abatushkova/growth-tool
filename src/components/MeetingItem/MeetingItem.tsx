@@ -129,7 +129,7 @@ export default function MeetingItem(props: Meeting) {
                   </Typography>
                 </Grid>
                 {/* <Grid item>
-                  <Chip label="passed" size="small" variant="outlined" />
+                  <Chip label="upcoming" size="small" variant="outlined" color="primary" />
                 </Grid> */}
               </Grid>
               <Grid item xs={12}>

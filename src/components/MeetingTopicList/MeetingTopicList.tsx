@@ -62,8 +62,10 @@ export default function MeetingTopicList() {
       )}
       {isAdding ? (
         <Grid
-          container spacing={2}
-          component="form" noValidate
+          container
+          spacing={2}
+          component="form"
+          noValidate
           onSubmit={handleSubmit}
         >
           <Grid item xs={12}>
@@ -72,7 +74,8 @@ export default function MeetingTopicList() {
               helperText={status === 'error' ? 'Topic cannot be empty' : null}
               variant="outlined"
               placeholder="Enter Topic"
-              fullWidth size="small"
+              fullWidth
+              size="small"
               value={curTitle}
               onChange={handleChange}
             />

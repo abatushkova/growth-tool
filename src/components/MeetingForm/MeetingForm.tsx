@@ -26,23 +26,26 @@ export default function MeetingForm(props: FormProps) {
     onCloseClick,
     status,
     buttonName,
-    ...other
+    sx
   } = props;
 
   return (
     <Grid
-      container spacing={2}
-      component="form" noValidate
+      container
+      spacing={2}
+      component="form"
+      noValidate
       onSubmit={onFormSubmit}
-      {...other}
+      sx={sx}
     >
       <Grid item xs={12}>
         <TextField
-          error={status === 'error' ?? 'true'}
+          error={status === 'error' && true}
           helperText={status === 'error' ? 'Title cannot be empty' : null}
           variant="outlined"
           placeholder="Enter Title"
-          fullWidth size="small"
+          fullWidth
+          size="small"
           value={title}
           onChange={onInputChange}
         />

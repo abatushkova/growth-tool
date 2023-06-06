@@ -57,7 +57,8 @@ export default function PersonList() {
             value={searchQuery}
             type="search"
             placeholder="Search"
-            size="small" fullWidth
+            fullWidth
+            size="small"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
