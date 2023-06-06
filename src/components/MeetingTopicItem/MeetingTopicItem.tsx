@@ -9,9 +9,11 @@ import {
   Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import AddLinkIcon from '@mui/icons-material/AddLink';
-import { meetings } from '../../store/fakeMeetings';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import { Topic } from '../../app/types';
+import { useAppDispatch } from '../../app/hooks';
+import { deleteTopic } from '../../features/topics/topicsSlice';
 
 const ITEM_HEIGHT = 48;
 
@@ -21,26 +23,33 @@ const Item = styled(Paper)(({ theme }) => ({
   paddingBlock: theme.spacing(0.5),
 }));
 
-interface TopicProps {
-  title: string;
-}
-
-export default function MeetingTopicItem(props: TopicProps) {
-  const { title } = props;
+export default function MeetingTopicItem(props: Topic) {
+  const { title, topicId } = props;
+  const dispatch = useAppDispatch();
   const [datesAnchor, setDatesAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpened = Boolean(datesAnchor);
 
+  const handleDatesClose = () => setDatesAnchor(null);
   const handleDatesOpen = (e: React.MouseEvent<HTMLElement>) => {
     setDatesAnchor(e.currentTarget);
   };
 
-  const handleDatesClose = () => setDatesAnchor(null);
+  const handleDelete = () => {
+    dispatch(deleteTopic(topicId));
+  };
 
   return (
     <Item>
       <Grid container alignItems="center">
         <Grid item xs>
           {title}
+        </Grid>
+        <Grid item>
+          <Tooltip title="Comment">
+            <IconButton size="small">
+              <ArticleOutlinedIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
         </Grid>
         <Grid item>
           <Tooltip title="Carry-over">
@@ -69,7 +78,7 @@ export default function MeetingTopicItem(props: TopicProps) {
               },
             }}
           >
-            {meetings.map((meeting) => (
+            {/* {meetings.map((meeting) => (
               <MenuItem
                 key={meeting.meetingId}
                 // selected={meeting.meetingId === 2}
@@ -78,19 +87,12 @@ export default function MeetingTopicItem(props: TopicProps) {
               >
                 {meeting.createdAt}
               </MenuItem>
-            ))}
+            ))} */}
           </Menu>
         </Grid>
         <Grid item>
-          <Tooltip title="Edit">
-            <IconButton size="small">
-              <EditIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </Grid>
-        <Grid item>
           <Tooltip title="Delete">
-            <IconButton size="small">
+            <IconButton size="small" onClick={handleDelete}>
               <DeleteIcon fontSize="small" />
             </IconButton>
           </Tooltip>
