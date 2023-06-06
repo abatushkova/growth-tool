@@ -1,24 +1,36 @@
 # Growth-tool
-App to make comments during one-on-one meetings, to create meetings, topics.
+App to create meetings, topics, to make comments during one-on-one meetings.
 
-## Installation
-You need node and npm installed globally on your machine.
+### Built with
+- Create React App
+- Redux Toolkit
+- TypeScript
+- Material UI
+
+## Getting Started
+To get a local copy up and running follow these steps.
+
+### Prerequisites
+* Node.js
+* npm
 ```
-$ git clone https://github.com/abatushkova/growth-tool.git
-$ cd growth-tool
-$ npm install
+npm install -g npm
 ```
 
-## Start the local server
+### Installation
+1. Clone the repo
 ```
-$ npm start
+git clone https://github.com/abatushkova/growth-tool.git
 ```
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-## Build the app for production to the 'build' folder
+2. Chage directory
 ```
-$ npm run build
+cd growth-tool
 ```
-It correctly bundles React in production mode and optimizes the build for the best performance.  
-The build is minified and the filenames include the hashes.  
-Your app is ready to be deployed!
+3. Install NPM packages
+```
+npm install
+```
+4. Start the local server
+```
+npm start
+```
