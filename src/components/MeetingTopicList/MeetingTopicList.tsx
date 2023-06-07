@@ -11,10 +11,19 @@ import MeetingTopicItem from '../MeetingTopicItem/MeetingTopicItem';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addTopic, selectTopicList } from '../../features/topics/topicsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
+import { FormView, MeetingId } from '../../app/types';
 
-export default function MeetingTopicList() {
+interface TopicListProps {
+  activeMeetingId: MeetingId;
+}
+
+export default function MeetingTopicList(props: TopicListProps) {
+  const { activeMeetingId } = props;
   const dispatch = useAppDispatch();
   const topics = useAppSelector(selectTopicList);
+  const activeTopics = [...topics].filter(({ comments }) => (
+    comments.every((comment) => comment.meetingId === activeMeetingId)
+  ));
   const [isAdding, setIsAdding] = useState(false);
   const [curTitle, setCurTitle] = useState('');
   const [status, setStatus] = useState('typing');
@@ -45,7 +54,12 @@ export default function MeetingTopicList() {
         topicId: createGuid(),
         title: validTitle,
         createdAt: dayjs().toString(),
-        comments: [],
+        comments: [{
+          commentId: createGuid(),
+          createdAt: dayjs().toString(),
+          formView: FormView.QA,
+          meetingId: activeMeetingId,
+        }],
       })
     );
     handleAddClose();
@@ -53,10 +67,14 @@ export default function MeetingTopicList() {
 
   return (
     <>
-      {topics.length > 0 && (
+      {activeTopics.length > 0 && (
         <Stack spacing={0.5} sx={{ mb: 2 }}>
-          {topics.map((topic) => (
-            <MeetingTopicItem key={topic.topicId} {...topic} />
+          {activeTopics.map((topic) => (
+            <MeetingTopicItem
+              key={topic.topicId}
+              activeMeetingId={activeMeetingId}
+              {...topic}
+            />
           ))}
         </Stack>
       )}
@@ -78,6 +96,7 @@ export default function MeetingTopicList() {
               size="small"
               value={curTitle}
               onChange={handleChange}
+              autoFocus
             />
           </Grid>
           <Grid item container spacing={1}>

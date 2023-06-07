@@ -7,13 +7,17 @@ import {
   Menu,
   MenuItem,
   Paper,
+
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import { Topic } from '../../app/types';
-import { useAppDispatch } from '../../app/hooks';
+import { MeetingId, Topic } from '../../app/types';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { deleteTopic } from '../../features/topics/topicsSlice';
+import { selectMeetingList } from '../../features/meetings/meetingsSlice';
+import { convertToDate } from '../../utils/helpers/convertToDate';
+import { selectActivePerson } from '../../features/persons/personsSlice';
 
 const ITEM_HEIGHT = 48;
 
@@ -23,9 +27,20 @@ const Item = styled(Paper)(({ theme }) => ({
   paddingBlock: theme.spacing(0.5),
 }));
 
-export default function MeetingTopicItem(props: Topic) {
-  const { title, topicId } = props;
+interface TopicItemProps extends Topic {
+  activeMeetingId: MeetingId;
+}
+
+export default function MeetingTopicItem(props: TopicItemProps) {
+  const { title, topicId, activeMeetingId } = props;
   const dispatch = useAppDispatch();
+  const { personId } = useAppSelector(selectActivePerson);
+  const meetings = useAppSelector(selectMeetingList);
+  const activeMeetings = [...meetings].filter(({ closed, meetingId, guests }) => (
+    !closed
+    && meetingId !== activeMeetingId
+    && guests[0].guestId === personId
+  ));
   const [datesAnchor, setDatesAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpened = Boolean(datesAnchor);
 
@@ -78,16 +93,18 @@ export default function MeetingTopicItem(props: Topic) {
               },
             }}
           >
-            {/* {meetings.map((meeting) => (
-              <MenuItem
-                key={meeting.meetingId}
-                // selected={meeting.meetingId === 2}
-                // disabled={meeting.meetingId === 2}
-                onClick={handleDatesClose}
-              >
-                {meeting.createdAt}
-              </MenuItem>
-            ))} */}
+            {activeMeetings.length > 0 ? (
+              activeMeetings.map((meeting) => (
+                <MenuItem
+                  key={meeting.meetingId}
+                  onClick={handleDatesClose}
+                >
+                  {convertToDate(meeting.plannedAt)}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem disabled>No upcoming meetings</MenuItem>
+            )}
           </Menu>
         </Grid>
         <Grid item>
