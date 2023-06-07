@@ -19,8 +19,8 @@ export type Meeting = {
   meetingId: MeetingId;
   title: string;
   createdAt: string;
-  // closedAt: string;
   plannedAt: string;
+  closed: boolean;
   ownerId: PersonId;
   guests: Guest[];
 };
@@ -35,10 +35,10 @@ export type Topic = {
   comments: Comment[];
 };
 
-enum FormView {
-  Comment,
-  QA,
-  Score
+export enum FormView {
+  Comment = 'Comment',
+  QA = 'QA',
+  Score = 'Score'
 }
 
 export type CommentId = string;
