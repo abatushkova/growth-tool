@@ -58,7 +58,17 @@ export const meetingsSlice = createSlice({
           plannedAt: payload.plannedAt,
         };
       }
-    }
+    },
+    toggleMeeting(
+      state: MeetingsState,
+      { payload }: PayloadAction<{ meetingId: MeetingId, closed: boolean }>
+    ) {
+      const index = state.meetingList.findIndex(({ meetingId }) => (
+        meetingId === payload.meetingId
+      ));
+
+      state.meetingList[index].closed = !state.meetingList[index].closed;
+    },
   },
 });
 
@@ -67,6 +77,7 @@ export const {
   filterMeetings,
   deleteMeeting,
   editMeeting,
+  toggleMeeting,
 } = meetingsSlice.actions;
 
 export const meetingsReducer = meetingsSlice.reducer;

@@ -60,6 +60,7 @@ export default function MeetingPage() {
         guests: [{
           guestId: selectedPerson.personId,
         }],
+        closed: false,
       })
     );
     handleCreateClose();

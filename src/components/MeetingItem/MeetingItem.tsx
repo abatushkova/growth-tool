@@ -18,12 +18,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import LockIcon from '@mui/icons-material/Lock';
+import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import MeetingTopicList from '../MeetingTopicList/MeetingTopicList';
 import MeetingForm from '../MeetingForm/MeetingForm';
 import { Meeting } from '../../app/types';
 import { convertToDate } from '../../utils/helpers/convertToDate';
-import { useAppDispatch } from '../../app/hooks';
-import { deleteMeeting, editMeeting } from '../../features/meetings/meetingsSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { toggleMeeting, deleteMeeting, editMeeting } from '../../features/meetings/meetingsSlice';
+import { selectTopicList } from '../../features/topics/topicsSlice';
 
 const ITEM_HEIGHT = 48;
 
@@ -32,8 +35,12 @@ const CustomAccordion = styled(Accordion)(({ theme }) => ({
 }));
 
 export default function MeetingItem(props: Meeting) {
-  const { meetingId, title, plannedAt } = props;
+  const { meetingId, title, plannedAt, closed } = props;
   const dispatch = useAppDispatch();
+  const topics = useAppSelector(selectTopicList);
+  const activeTopics = [...topics].filter(({ comments }) => (
+    comments.every((comment) => comment.meetingId === meetingId)
+  ));
   const [isEditing, setIsEditing] = useState(false);
   const [isExpanded, setIsExpanded] = useState<string | false>(false);
   const [dotsAnchor, setDotsAnchor] = useState<null | HTMLElement>(null);
@@ -91,6 +98,15 @@ export default function MeetingItem(props: Meeting) {
     dispatch(deleteMeeting(meetingId));
   };
 
+  const handleToggle = () => {
+    dispatch(
+      toggleMeeting({
+        meetingId,
+        closed,
+      })
+    );
+  };
+
   return (
     <>
       {isEditing ? (
@@ -118,19 +134,24 @@ export default function MeetingItem(props: Meeting) {
           <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="meeting-content">
             <Grid container spacing={1}>
               <Grid item xs={12} container spacing={2} flexWrap="nowrap">
-                {/* {topics.length > 0 && (
+                {activeTopics.length > 0 && (
                   <Grid item>
-                    <Chip label={topics.length} size="small" />
+                    <Chip label={activeTopics.length} size="small" />
                   </Grid>
-                )} */}
+                )}
                 <Grid item>
                   <Typography variant="h6" component="p">
                     {title}
                   </Typography>
                 </Grid>
-                {/* <Grid item>
-                  <Chip label="upcoming" size="small" variant="outlined" color="primary" />
-                </Grid> */}
+                <Grid item>
+                  <Chip
+                    variant={closed ? 'filled' : 'outlined'}
+                    size="small"
+                    label={closed ? 'passed' : 'upcoming'}
+                    color={closed ? 'default' : 'primary'}
+                  />
+                </Grid>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body2" color="text.secondary">
@@ -140,7 +161,7 @@ export default function MeetingItem(props: Meeting) {
             </Grid>
           </AccordionSummary>
           <AccordionDetails>
-            <MeetingTopicList />
+            <MeetingTopicList activeMeetingId={meetingId} />
             <Grid container spacing={1} justifyContent="flex-end" sx={{ mt: -6 }}>
               <Grid item>
                 <IconButton
@@ -173,6 +194,16 @@ export default function MeetingItem(props: Meeting) {
                       <EditIcon fontSize="small" />
                     </ListItemIcon>
                     Edit
+                  </MenuItem>
+                  <MenuItem onClick={handleToggle}>
+                    <ListItemIcon>
+                      {closed ? (
+                        <LockOpenOutlinedIcon fontSize="small" />
+                        ) : (
+                        <LockIcon fontSize="small" />
+                      )}
+                    </ListItemIcon>
+                    {closed ? 'Open' : 'Close'}
                   </MenuItem>
                   <MenuItem onClick={handleDelete}>
                     <ListItemIcon>
