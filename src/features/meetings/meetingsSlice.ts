@@ -67,7 +67,9 @@ export const meetingsSlice = createSlice({
         meetingId === payload.meetingId
       ));
 
-      state.meetingList[index].closed = !state.meetingList[index].closed;
+      if (index !== undefined) {
+        state.meetingList[index].closed = !state.meetingList[index].closed;
+      }
     },
   },
 });

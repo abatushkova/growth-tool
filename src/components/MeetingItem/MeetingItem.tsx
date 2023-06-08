@@ -36,17 +36,18 @@ const CustomAccordion = styled(Accordion)(({ theme }) => ({
 
 export default function MeetingItem(props: Meeting) {
   const { meetingId, title, plannedAt, closed } = props;
+
   const dispatch = useAppDispatch();
   const topics = useAppSelector(selectTopicList);
   const activeTopics = [...topics].filter(({ comments }) => (
     comments.every((comment) => comment.meetingId === meetingId)
   ));
-  const [isEditing, setIsEditing] = useState(false);
-  const [isExpanded, setIsExpanded] = useState<string | false>(false);
-  const [dotsAnchor, setDotsAnchor] = useState<null | HTMLElement>(null);
   const [curTitle, setCurTitle] = useState(title);
   const [curDate, setCurDate] = useState<Dayjs | null>(dayjs(plannedAt));
   const [status, setStatus] = useState('typing');
+  const [isEditing, setIsEditing] = useState(false);
+  const [isExpanded, setIsExpanded] = useState<string | false>(false);
+  const [dotsAnchor, setDotsAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpened = Boolean(dotsAnchor);
 
   const handleAccordionToggle =
@@ -95,16 +96,18 @@ export default function MeetingItem(props: Meeting) {
   };
 
   const handleDelete = () => {
+    handleMenuClose();
     dispatch(deleteMeeting(meetingId));
   };
 
-  const handleToggle = () => {
+  const handleMeetingToggle = () => {
     dispatch(
       toggleMeeting({
         meetingId,
         closed,
       })
     );
+    handleMenuClose();
   };
 
   return (
@@ -195,7 +198,7 @@ export default function MeetingItem(props: Meeting) {
                     </ListItemIcon>
                     Edit
                   </MenuItem>
-                  <MenuItem onClick={handleToggle}>
+                  <MenuItem onClick={handleMeetingToggle}>
                     <ListItemIcon>
                       {closed ? (
                         <LockOpenOutlinedIcon fontSize="small" />
