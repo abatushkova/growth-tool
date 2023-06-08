@@ -30,7 +30,7 @@ export type TopicId = string;
 export type Topic = {
   topicId: TopicId;
   title: string;
-  // category: string[];
+  category: string[];
   createdAt: string;
   comments: Comment[];
 };
