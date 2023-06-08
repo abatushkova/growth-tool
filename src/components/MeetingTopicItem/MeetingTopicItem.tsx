@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
 import { styled } from '@mui/material/styles';
 import {
   Grid,
@@ -12,12 +13,13 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import { MeetingId, Topic } from '../../app/types';
+import { FormView, MeetingId, Topic } from '../../app/types';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { deleteTopic } from '../../features/topics/topicsSlice';
+import { addComment, addTopic, deleteTopic } from '../../features/topics/topicsSlice';
 import { selectMeetingList } from '../../features/meetings/meetingsSlice';
 import { convertToDate } from '../../utils/helpers/convertToDate';
 import { selectActivePerson } from '../../features/persons/personsSlice';
+import { createGuid } from '../../utils/helpers/createGuid';
 
 const ITEM_HEIGHT = 48;
 
@@ -33,6 +35,7 @@ interface TopicItemProps extends Topic {
 
 export default function MeetingTopicItem(props: TopicItemProps) {
   const { title, topicId, activeMeetingId } = props;
+
   const dispatch = useAppDispatch();
   const { personId } = useAppSelector(selectActivePerson);
   const meetings = useAppSelector(selectMeetingList);
@@ -51,6 +54,35 @@ export default function MeetingTopicItem(props: TopicItemProps) {
 
   const handleDelete = () => {
     dispatch(deleteTopic(topicId));
+  };
+
+  const handleCarryOver = (id: MeetingId) => {
+    // dispatch(
+    //   addTopic({
+    //     topicId: createGuid(),
+    //     title,
+    //     category,
+    //     createdAt,
+    //     comments: [{
+    //       commentId: createGuid(),
+    //       createdAt: dayjs().toString(),
+    //       formView: FormView.QA,
+    //       meetingId: id,
+    //     }]
+    //   })
+    // );
+    dispatch(
+      addComment({
+        topicId,
+        comment: {
+          commentId: createGuid(),
+          createdAt: dayjs().toString(),
+          formView: FormView.QA,
+          meetingId: id,
+        }
+      })
+    );
+    handleDatesClose();
   };
 
   return (
@@ -97,7 +129,7 @@ export default function MeetingTopicItem(props: TopicItemProps) {
               activeMeetings.map((meeting) => (
                 <MenuItem
                   key={meeting.meetingId}
-                  onClick={handleDatesClose}
+                  onClick={() => handleCarryOver(meeting.meetingId)}
                 >
                   {convertToDate(meeting.plannedAt)}
                 </MenuItem>

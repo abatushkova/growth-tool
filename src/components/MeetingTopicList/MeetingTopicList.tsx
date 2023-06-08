@@ -9,7 +9,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import MeetingTopicItem from '../MeetingTopicItem/MeetingTopicItem';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { addTopic, selectTopicList } from '../../features/topics/topicsSlice';
+import { addComment, addTopic, selectTopicList } from '../../features/topics/topicsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
 import { FormView, MeetingId } from '../../app/types';
 
@@ -19,6 +19,7 @@ interface TopicListProps {
 
 export default function MeetingTopicList(props: TopicListProps) {
   const { activeMeetingId } = props;
+
   const dispatch = useAppDispatch();
   const topics = useAppSelector(selectTopicList);
   const activeTopics = [...topics].filter(({ comments }) => (
@@ -53,6 +54,7 @@ export default function MeetingTopicList(props: TopicListProps) {
       addTopic({
         topicId: createGuid(),
         title: validTitle,
+        category: [''],
         createdAt: dayjs().toString(),
         comments: [{
           commentId: createGuid(),
