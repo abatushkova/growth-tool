@@ -50,14 +50,13 @@ export const meetingsSlice = createSlice({
       const index = state.meetingList.findIndex(({ meetingId }) => (
         meetingId === payload.meetingId
       ));
+      if (index === -1) return;
 
-      if (index !== undefined) {
-        state.meetingList[index] = {
-          ...state.meetingList[index],
-          title: payload.title,
-          plannedAt: payload.plannedAt,
-        };
-      }
+      state.meetingList[index] = {
+        ...state.meetingList[index],
+        title: payload.title,
+        plannedAt: payload.plannedAt,
+      };
     },
     toggleMeeting(
       state: MeetingsState,
@@ -66,10 +65,9 @@ export const meetingsSlice = createSlice({
       const index = state.meetingList.findIndex(({ meetingId }) => (
         meetingId === payload.meetingId
       ));
+      if (index === -1) return;
 
-      if (index !== undefined) {
-        state.meetingList[index].closed = !state.meetingList[index].closed;
-      }
+      state.meetingList[index].closed = !state.meetingList[index].closed;
     },
   },
 });

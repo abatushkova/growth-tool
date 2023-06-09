@@ -45,10 +45,9 @@ export const personsSlice = createSlice({
       const index = state.personList.findIndex(({ personId }) => (
         personId === payload.personId
       ));
+      if (index === -1) return;
 
-      if (index !== undefined) {
-        state.personList[index].personName = payload.personName;
-      }
+      state.personList[index].personName = payload.personName;
     },
     setGuest(
       state: PersonsState,
