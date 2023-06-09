@@ -14,7 +14,7 @@ import PersonFrom from '../PersonForm/PersonForm';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
 import { useAppDispatch } from '../../app/hooks';
 import { SelectFunc, PersonId } from '../../app/types';
-import { deletePerson, editPerson, setActivePerson } from '../../features/persons/personsSlice';
+import { deletePerson, editPerson, setGuest } from '../../features/persons/personsSlice';
 import { filterMeetings } from '../../features/meetings/meetingsSlice';
 
 interface PersonProps {
@@ -60,7 +60,7 @@ export default function PersonItem(props: PersonProps) {
     );
     if (selected === personId) {
       dispatch(
-        setActivePerson({
+        setGuest({
           personId,
           personName: validName
         })

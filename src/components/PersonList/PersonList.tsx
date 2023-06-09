@@ -4,18 +4,17 @@ import {
   Box,
   TextField,
   InputAdornment,
-  Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonItem from '../PersonItem/PersonItem';
 import PersonAdd from '../PersonAdd/PersonAdd';
-import { selectActivePerson, selectPersonList, setActivePerson } from '../../features/persons/personsSlice';
+import { selectGuest, selectPersonList, setGuest } from '../../features/persons/personsSlice';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { Person } from '../../app/types';
 
 export default function PersonList() {
   const dispatch = useAppDispatch();
-  const selectedPerson = useAppSelector(selectActivePerson);
+  const guest = useAppSelector(selectGuest);
   const persons = useAppSelector(selectPersonList);
   const list = useMemo(() => (
     [...persons].sort((a, b) => ((a.personName > b.personName) ? 1 : -1))
@@ -24,10 +23,10 @@ export default function PersonList() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handlePersonSelect = (id: string, name: string) => {
-    if (selectedPerson.personId === id) return;
+    if (guest.personId === id) return;
 
     dispatch(
-      setActivePerson({
+      setGuest({
         personId: id,
         personName: name
       })
@@ -80,20 +79,14 @@ export default function PersonList() {
         overflow: 'auto',
       }}>
         <PersonAdd />
-        {sortedPersons.length > 0 ? (
-          sortedPersons.map((person) => (
+          {sortedPersons.map((person) => (
             <PersonItem
               key={person.personId}
               {...person}
-              selected={selectedPerson.personId}
+              selected={guest.personId}
               onPersonClick={handlePersonSelect}
             />
-          ))
-        ) : (
-          <Typography variant="body2" sx={{ py: 1, px: 2 }} align="center">
-            There are no members yet.
-          </Typography>
-        )}
+          ))}
       </List>
     </>
   );

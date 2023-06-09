@@ -5,12 +5,12 @@ import { PersonId, Person } from "../../app/types";
 
 type PersonsState = {
   personList: Person[];
-  activePerson: Person;
+  guest: Person;
 };
 
 const initialState: PersonsState = {
   personList: loadState() || [],
-  activePerson: loadState() || {},
+  guest: loadState() || {},
 };
 
 export const personsSlice = createSlice({
@@ -33,9 +33,9 @@ export const personsSlice = createSlice({
         personId !== deletedPerson
       ));
 
-      if (state.activePerson.personId === deletedPerson) {
-        state.activePerson.personId = '';
-        state.activePerson.personName = '';
+      if (state.guest.personId === deletedPerson) {
+        state.guest.personId = '';
+        state.guest.personName = '';
       }
     },
     editPerson(
@@ -50,12 +50,12 @@ export const personsSlice = createSlice({
         state.personList[index].personName = payload.personName;
       }
     },
-    setActivePerson(
+    setGuest(
       state: PersonsState,
       { payload }: PayloadAction<Person>
     ) {
-      state.activePerson.personId = payload.personId;
-      state.activePerson.personName = payload.personName;
+      state.guest.personId = payload.personId;
+      state.guest.personName = payload.personName;
     },
   },
 });
@@ -64,9 +64,9 @@ export const {
   addPerson,
   deletePerson,
   editPerson,
-  setActivePerson,
+  setGuest,
 } = personsSlice.actions;
 
 export const personsReducer = personsSlice.reducer;
 export const selectPersonList = (state: RootState) => state.persons.personList;
-export const selectActivePerson = (state: RootState) => state.persons.activePerson;
+export const selectGuest = (state: RootState) => state.persons.guest;

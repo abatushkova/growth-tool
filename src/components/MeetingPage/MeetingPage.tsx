@@ -13,16 +13,17 @@ import MeetingList from '../MeetingList/MeetingList';
 import MeetingForm from '../MeetingForm/MeetingForm';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addMeeting } from '../../features/meetings/meetingsSlice';
-import { selectActivePerson } from '../../features/persons/personsSlice';
+import { selectGuest } from '../../features/persons/personsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
-import { owner } from '../../utils/constants/auth';
+import { selectUser } from '../../features/auth/authSlice';
 
 const defaultTitle = 'New Meeting';
 const tomorrow = dayjs().add(1, 'day');
 
 export default function MeetingPage() {
   const dispatch = useAppDispatch();
-  const selectedPerson = useAppSelector(selectActivePerson);
+  const guest = useAppSelector(selectGuest);
+  const user = useAppSelector(selectUser);
   const [isCreating, setIsCreating] = useState(false);
   const [status, setStatus] = useState('typing');
   const [curTitle, setCurTitle] = useState(defaultTitle);
@@ -56,9 +57,9 @@ export default function MeetingPage() {
         title: validTitle,
         createdAt: dayjs().toString(),
         plannedAt: curDate!.toString(),
-        ownerId: owner.personId,
+        ownerId: user.personId,
         guests: [{
-          guestId: selectedPerson.personId,
+          guestId: guest.personId,
         }],
         closed: false,
       })
