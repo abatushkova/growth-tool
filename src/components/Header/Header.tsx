@@ -12,6 +12,8 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logout from '@mui/icons-material/Logout';
+import { useAppDispatch } from '../../app/hooks';
+import { logout } from '../../features/auth/authSlice';
 
 interface HeaderProps {
   onDrawerToggle: () => void;
@@ -24,14 +26,19 @@ const CustomAvatar = styled(Avatar)(({ theme }) => ({
 
 export default function Header(props: HeaderProps) {
   const { onDrawerToggle } = props;
+
+  const dispatch = useAppDispatch();
   const [avatarAnchor, setAvatarAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpened = Boolean(avatarAnchor);
-
+  
+  const handleAvatarClose = () => setAvatarAnchor(null);
   const handleAvatarOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAvatarAnchor(event.currentTarget);
   };
 
-  const handleAvatarClose = () => setAvatarAnchor(null);
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <AppBar position="sticky" elevation={0}>
@@ -69,7 +76,7 @@ export default function Header(props: HeaderProps) {
                 'aria-labelledby': 'avatar-btn',
               }}
             >
-              <MenuItem onClick={handleAvatarClose}>
+              <MenuItem onClick={handleLogout}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>

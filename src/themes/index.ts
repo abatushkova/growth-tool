@@ -23,7 +23,7 @@ export let theme = createTheme({
     },
     gray: {
       main: '#f4f5f7',
-      dark: '#aaabac',
+      dark: '#203746',
     },
     white: {
       main: '#fff',

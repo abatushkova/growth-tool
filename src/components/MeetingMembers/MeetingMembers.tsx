@@ -8,9 +8,9 @@ import {
 import CodeIcon from '@mui/icons-material/Code';
 import Layout from '../Layout/Layout';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
-import { selectActivePerson } from '../../features/persons/personsSlice';
+import { selectGuest } from '../../features/persons/personsSlice';
 import { useAppSelector } from '../../app/hooks';
-import { owner } from '../../utils/constants/auth';
+import { selectUser } from '../../features/auth/authSlice';
 
 const meetingAvatar = {
   width: {
@@ -25,7 +25,8 @@ const meetingAvatar = {
 };
 
 export default function MeetingMembers() {
-  const { personName } = useAppSelector(selectActivePerson);
+  const user = useAppSelector(selectUser);
+  const guest = useAppSelector(selectGuest);
 
   return (
     <Layout pt={3} pb={3}>
@@ -37,9 +38,9 @@ export default function MeetingMembers() {
       >
         <Grid item>
           <AvatarGroup>
-            <Avatar {...convertToInitials(owner.personName, meetingAvatar)} />
-            {personName ? (
-              <Avatar {...convertToInitials(personName, meetingAvatar)} />
+            <Avatar {...convertToInitials(user.personName, meetingAvatar)} />
+            {guest.personName ? (
+              <Avatar {...convertToInitials(guest.personName, meetingAvatar)} />
             ) : null}
           </AvatarGroup>
         </Grid>
@@ -50,13 +51,13 @@ export default function MeetingMembers() {
           flexWrap: 'wrap'
         }}>
           <Typography variant="h3" component="p">
-            {owner.personName}
+            {user.personName}
           </Typography>
-          {personName ? (
+          {guest.personName ? (
             <>
               <CodeIcon sx={{ fontSize: 32, mx: 1 }} />
               <Typography variant="h3" component="p">
-                {personName}
+                {guest.personName}
               </Typography>
             </>
           ): null}

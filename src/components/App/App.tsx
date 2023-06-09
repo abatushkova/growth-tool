@@ -1,46 +1,30 @@
-import React, { useState } from 'react';
-import {
-  useMediaQuery,
-  CssBaseline,
-  Box
-} from '@mui/material';
-import Aside from '../Aside/Aside';
-import Header from '../Header/Header';
+import React, { useState, useEffect } from 'react';
+import { CssBaseline, Box } from '@mui/material';
 import Main from '../Main/Main';
-import { theme, drawerWidth } from '../../themes';
+import Auth from '../Auth/Auth';
+import { useAppSelector } from '../../app/hooks';
+import { selectUser } from '../../features/auth/authSlice';
 
 export default function App() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  const user = useAppSelector(selectUser);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+  useEffect(() => {
+    if (user.personId) {
+      setIsLoggedIn(true);
+      return;
+    }
+
+    setIsLoggedIn(false);
+  }, [user.personId]);
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <CssBaseline />
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-      >
-        {isDesktop ? null : (
-          <Aside
-            PaperProps={{ style: { width: drawerWidth } }}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-          />
-        )}
-        <Aside
-          PaperProps={{ style: { width: drawerWidth } }}
-          sx={{ display: { md: 'block', xs: 'none' } }}
-        />
-      </Box>
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <Header onDrawerToggle={handleDrawerToggle} />
-        <Box component="main" sx={{ flex: 1 }}>
-          <Main />
-        </Box>
-      </Box>
+      {isLoggedIn
+        ? <Main />
+        : <Auth />
+      }
     </Box>
   );
 }
