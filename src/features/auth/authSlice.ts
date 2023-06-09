@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadState } from "../../app/localStorage";
 import { RootState } from "../../app/store";
 import { Person } from "../../app/types";
-import { createGuid } from "../../utils/helpers/createGuid";
 
 type AuthState = {
   user: Person;
