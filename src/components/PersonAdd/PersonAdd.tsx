@@ -11,6 +11,7 @@ import { addPerson } from '../../features/persons/personsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
 import { useAppDispatch } from '../../app/hooks';
 import PersonForm from '../PersonForm/PersonForm';
+import { convertToCapital } from '../../utils/helpers/convertToCapital';
 
 export default function PersonAdd() {
   const [isAdding, setIsAdding] = useState(false);
@@ -32,7 +33,7 @@ export default function PersonAdd() {
 
   const handleSubmit =(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validName = name.trim();
+    const validName = convertToCapital(name.trim());
 
     if (!validName) {
       setStatus('error');

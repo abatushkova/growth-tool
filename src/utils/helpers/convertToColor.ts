@@ -1,10 +1,10 @@
-export const convertToColor = (string: string) => {
+export const convertToColor = (name: string): string => {
   let hash = 0;
   let color = '#';
 
   /* eslint-disable no-bitwise */
-  for (let i = 0; i < string.length; i++) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
 
   for (let i = 0; i < 3; i++) {

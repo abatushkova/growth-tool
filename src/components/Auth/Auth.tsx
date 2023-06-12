@@ -14,6 +14,7 @@ import SpaIcon from '@mui/icons-material/Spa';
 import { useAppDispatch } from '../../app/hooks';
 import { login } from '../../features/auth/authSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
+import { convertToCapital } from '../../utils/helpers/convertToCapital';
 
 const userId = createGuid();
 
@@ -30,7 +31,7 @@ export default function Auth() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validName = name.trim();
+    const validName = convertToCapital(name.trim());
 
     if (!validName) {
       setStatus('error');
