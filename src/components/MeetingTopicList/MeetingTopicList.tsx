@@ -8,23 +8,20 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import MeetingTopicItem from '../MeetingTopicItem/MeetingTopicItem';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { addComment, addTopic, selectTopicList } from '../../features/topics/topicsSlice';
+import { useAppDispatch } from '../../app/hooks';
+import { addTopic } from '../../features/topics/topicsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
-import { FormView, MeetingId } from '../../app/types';
+import { FormView, MeetingId, Topic } from '../../app/types';
 
 interface TopicListProps {
   activeMeetingId: MeetingId;
+  activeTopics: Topic[];
 }
 
 export default function MeetingTopicList(props: TopicListProps) {
-  const { activeMeetingId } = props;
+  const { activeMeetingId, activeTopics } = props;
 
   const dispatch = useAppDispatch();
-  const topics = useAppSelector(selectTopicList);
-  const activeTopics = [...topics].filter(({ comments }) => (
-    comments.every((comment) => comment.meetingId === activeMeetingId)
-  ));
   const [isAdding, setIsAdding] = useState(false);
   const [curTitle, setCurTitle] = useState('');
   const [status, setStatus] = useState('typing');
@@ -44,7 +41,6 @@ export default function MeetingTopicList(props: TopicListProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validTitle = curTitle.trim();
-
     if (!validTitle) {
       setStatus('error');
       return;

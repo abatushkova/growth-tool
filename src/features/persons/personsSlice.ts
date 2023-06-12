@@ -28,10 +28,10 @@ export const personsSlice = createSlice({
       action: PayloadAction<PersonId>
     ) {
       const deletedPerson = action.payload;
-
-      state.personList = state.personList.filter(({ personId }) => (
+      const list = state.personList.filter(({ personId }) => (
         personId !== deletedPerson
       ));
+      state.personList = list;
 
       if (state.guest.personId === deletedPerson) {
         state.guest.personId = '';
@@ -45,9 +45,9 @@ export const personsSlice = createSlice({
       const index = state.personList.findIndex(({ personId }) => (
         personId === payload.personId
       ));
-      if (index === -1) return;
-
-      state.personList[index].personName = payload.personName;
+      if (index !== -1) {
+        state.personList[index].personName = payload.personName;
+      }
     },
     setGuest(
       state: PersonsState,

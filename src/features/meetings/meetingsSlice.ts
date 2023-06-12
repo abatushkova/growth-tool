@@ -27,21 +27,14 @@ export const meetingsSlice = createSlice({
     ) {
       state.meetingList.push(action.payload);
     },
-    filterMeetings(
-      state: MeetingsState,
-      action: PayloadAction<PersonId>
-    ) {
-      state.meetingList = state.meetingList.filter(({ guests }) => (
-        guests[0].guestId !== action.payload
-      ));
-    },
     deleteMeeting(
       state: MeetingsState,
       action: PayloadAction<MeetingId>
     ) {
-      state.meetingList = state.meetingList.filter(({ meetingId }) => (
+      const list = state.meetingList.filter(({ meetingId }) => (
         meetingId !== action.payload
       ));
+      state.meetingList = list;
     },
     editMeeting(
       state: MeetingsState,
@@ -50,13 +43,13 @@ export const meetingsSlice = createSlice({
       const index = state.meetingList.findIndex(({ meetingId }) => (
         meetingId === payload.meetingId
       ));
-      if (index === -1) return;
-
-      state.meetingList[index] = {
-        ...state.meetingList[index],
-        title: payload.title,
-        plannedAt: payload.plannedAt,
-      };
+      if (index !== -1) {
+        state.meetingList[index] = {
+          ...state.meetingList[index],
+          title: payload.title,
+          plannedAt: payload.plannedAt,
+        };
+      }
     },
     toggleMeeting(
       state: MeetingsState,
@@ -65,9 +58,18 @@ export const meetingsSlice = createSlice({
       const index = state.meetingList.findIndex(({ meetingId }) => (
         meetingId === payload.meetingId
       ));
-      if (index === -1) return;
-
-      state.meetingList[index].closed = !state.meetingList[index].closed;
+      if (index !== -1) {
+        state.meetingList[index].closed = !state.meetingList[index].closed;
+      }
+    },
+    filterMeetings(
+      state: MeetingsState,
+      action: PayloadAction<PersonId>
+    ) {
+      const list = state.meetingList.filter(({ guests }) => (
+        guests[0].guestId !== action.payload
+      ));
+      state.meetingList = list;
     },
   },
 });
