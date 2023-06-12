@@ -10,9 +10,11 @@ import Header from '../Header/Header';
 import { useAppSelector } from '../../app/hooks';
 import { selectGuest } from '../../features/persons/personsSlice';
 import { theme, drawerWidth } from '../../themes';
+import { selectActiveTopic } from '../../features/topics/topicsSlice';
 
 export default function Main() {
   const guest = useAppSelector(selectGuest);
+  const activeTopic = useAppSelector(selectActiveTopic);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -43,8 +45,10 @@ export default function Main() {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             {guest.personId ? (
               <>
-                <MeetingPage />
-                {/* <TopicPage /> */}
+                {activeTopic.topicId
+                  ? <TopicPage />
+                  : <MeetingPage />
+                }
               </>
             ) : (
               <EmptyPage />
