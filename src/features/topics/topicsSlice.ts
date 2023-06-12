@@ -31,22 +31,34 @@ export const topicsSlice = createSlice({
     },
     deleteTopic(
       state: TopicsState,
+      { payload }: PayloadAction<{ topicId: TopicId, meetingId: MeetingId}>
     ) {
-      state.topicList = state.topicList.filter(({ comments }) => (
-        comments.length > 0
+      const index = state.topicList.findIndex((topic) => (
+        topic.topicId === payload.topicId
       ));
+      if (index !== -1) {
+        const comments = state.topicList[index].comments.filter(
+          ({ meetingId }) => meetingId !== payload.meetingId
+        );
+        state.topicList[index].comments = comments;
+
+        const list = state.topicList.filter(({ comments }) => comments.length > 0);
+        state.topicList = list;
+      }
     },
     filterTopics(
       state: TopicsState,
       action: PayloadAction<MeetingId>
     ) {
-      state.topicList = state.topicList.filter(({ comments }) => (
-        // comments.length > 0 &&
-        comments.some(({ meetingId }) => meetingId !== action.payload)
-      ));
-      state.topicList.forEach(({ comments }) => (
-        comments.filter(({ meetingId }) => meetingId !== action.payload)
-      ));
+      let list: Topic[] = [];
+
+      state.topicList.forEach((topic) => {
+        topic.comments = topic.comments.filter(({ meetingId }) => meetingId !== action.payload);
+        list.push(topic);
+      });
+
+      list = state.topicList.filter(({ comments }) => comments.length > 0);
+      state.topicList = list;
     },
     carryOverTopic(
       state: TopicsState,
@@ -55,12 +67,12 @@ export const topicsSlice = createSlice({
       const index = state.topicList.findIndex((topic) => (
         topic.topicId === payload.topicId
       ));
-      if (index === -1) return;
-
-      const comments = state.topicList[index].comments;
-      const hasComment = comments.some(({ meetingId }) => meetingId === payload.comment.meetingId);
-
-      if (!hasComment) comments.push(payload.comment);
+      if (index !== -1) {
+        const comments = state.topicList[index].comments;
+        const hasComment = comments.some(({ meetingId }) => meetingId === payload.comment.meetingId);
+  
+        if (!hasComment) comments.push(payload.comment);
+      }
     },
     deleteComment(
       state: TopicsState,
@@ -69,7 +81,7 @@ export const topicsSlice = createSlice({
       const index = state.topicList.findIndex((topic) => (
         topic.topicId === payload.topicId
       ));
-      if (index === -1) return;
+      if (index === -1) return state;
 
       state.topicList[index].comments = state.topicList[index].comments.filter(
         ({ meetingId }) => meetingId !== payload.meetingId
@@ -100,12 +112,12 @@ export const topicsSlice = createSlice({
       const index = state.topicList.findIndex((topic) => (
         topic.topicId === payload.topicId
       ));
-      if (index === -1) return;
-
-      state.topicList[index] = {
-        ...state.topicList[index],
-        title: payload.title,
-      };
+      if (index !== -1) {
+        state.topicList[index] = {
+          ...state.topicList[index],
+          title: payload.title,
+        };
+      }
     },
   },
 });

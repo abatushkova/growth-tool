@@ -15,10 +15,10 @@ import AddLinkIcon from '@mui/icons-material/AddLink';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { FormView, MeetingId, Topic } from '../../app/types';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { addComment, addTopic, deleteTopic } from '../../features/topics/topicsSlice';
+import { carryOverTopic, deleteTopic, openActiveTopic } from '../../features/topics/topicsSlice';
 import { selectMeetingList } from '../../features/meetings/meetingsSlice';
 import { convertToDate } from '../../utils/helpers/convertToDate';
-import { selectActivePerson } from '../../features/persons/personsSlice';
+import { selectGuest } from '../../features/persons/personsSlice';
 import { createGuid } from '../../utils/helpers/createGuid';
 
 const ITEM_HEIGHT = 48;
@@ -37,9 +37,9 @@ export default function MeetingTopicItem(props: TopicItemProps) {
   const { title, topicId, activeMeetingId } = props;
 
   const dispatch = useAppDispatch();
-  const { personId } = useAppSelector(selectActivePerson);
+  const { personId } = useAppSelector(selectGuest);
   const meetings = useAppSelector(selectMeetingList);
-  const activeMeetings = [...meetings].filter(({ closed, meetingId, guests }) => (
+  const upcomingMeetings = [...meetings].filter(({ closed, meetingId, guests }) => (
     !closed
     && meetingId !== activeMeetingId
     && guests[0].guestId === personId
@@ -53,26 +53,17 @@ export default function MeetingTopicItem(props: TopicItemProps) {
   };
 
   const handleDelete = () => {
-    dispatch(deleteTopic(topicId));
+    dispatch(
+      deleteTopic({
+        topicId,
+        meetingId: activeMeetingId,
+      })
+    );
   };
 
   const handleCarryOver = (id: MeetingId) => {
-    // dispatch(
-    //   addTopic({
-    //     topicId: createGuid(),
-    //     title,
-    //     category,
-    //     createdAt,
-    //     comments: [{
-    //       commentId: createGuid(),
-    //       createdAt: dayjs().toString(),
-    //       formView: FormView.QA,
-    //       meetingId: id,
-    //     }]
-    //   })
-    // );
     dispatch(
-      addComment({
+      carryOverTopic({
         topicId,
         comment: {
           commentId: createGuid(),
@@ -85,6 +76,16 @@ export default function MeetingTopicItem(props: TopicItemProps) {
     handleDatesClose();
   };
 
+  const handleTopicSelect = () => {
+    dispatch(
+      openActiveTopic({
+        topicId,
+        title,
+        meetingId: activeMeetingId,
+      })
+    );
+  };
+
   return (
     <Item>
       <Grid container alignItems="center">
@@ -92,8 +93,8 @@ export default function MeetingTopicItem(props: TopicItemProps) {
           {title}
         </Grid>
         <Grid item>
-          <Tooltip title="Comment">
-            <IconButton size="small">
+          <Tooltip title="Open">
+            <IconButton size="small" onClick={handleTopicSelect}>
               <ArticleOutlinedIcon fontSize="small" />
             </IconButton>
           </Tooltip>
@@ -125,8 +126,8 @@ export default function MeetingTopicItem(props: TopicItemProps) {
               },
             }}
           >
-            {activeMeetings.length > 0 ? (
-              activeMeetings.map((meeting) => (
+            {upcomingMeetings.length > 0 ? (
+              upcomingMeetings.map((meeting) => (
                 <MenuItem
                   key={meeting.meetingId}
                   onClick={() => handleCarryOver(meeting.meetingId)}

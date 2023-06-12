@@ -26,7 +26,7 @@ import { Meeting } from '../../app/types';
 import { convertToDate } from '../../utils/helpers/convertToDate';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleMeeting, deleteMeeting, editMeeting } from '../../features/meetings/meetingsSlice';
-import { selectTopicList } from '../../features/topics/topicsSlice';
+import { filterTopics, selectTopicList } from '../../features/topics/topicsSlice';
 
 const ITEM_HEIGHT = 48;
 
@@ -40,7 +40,7 @@ export default function MeetingItem(props: Meeting) {
   const dispatch = useAppDispatch();
   const topics = useAppSelector(selectTopicList);
   const activeTopics = [...topics].filter(({ comments }) => (
-    comments.every((comment) => comment.meetingId === meetingId)
+    comments.some((comment) => comment.meetingId === meetingId)
   ));
   const [curTitle, setCurTitle] = useState(title);
   const [curDate, setCurDate] = useState<Dayjs | null>(dayjs(plannedAt));
@@ -55,10 +55,10 @@ export default function MeetingItem(props: Meeting) {
       setIsExpanded(isExpanded ? meetingId : false);
     };
 
+  const handleMenuClose = () => setDotsAnchor(null);
   const handleMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
     setDotsAnchor(e.currentTarget);
   };
-  const handleMenuClose = () => setDotsAnchor(null);
 
   const handleEditOpen = () => {
     handleMenuClose();
@@ -78,7 +78,6 @@ export default function MeetingItem(props: Meeting) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validTitle = curTitle.trim();
-
     if (!validTitle) {
       setStatus('error');
       return;
@@ -98,6 +97,7 @@ export default function MeetingItem(props: Meeting) {
   const handleDelete = () => {
     handleMenuClose();
     dispatch(deleteMeeting(meetingId));
+    dispatch(filterTopics(meetingId));
   };
 
   const handleMeetingToggle = () => {
@@ -164,7 +164,7 @@ export default function MeetingItem(props: Meeting) {
             </Grid>
           </AccordionSummary>
           <AccordionDetails>
-            <MeetingTopicList activeMeetingId={meetingId} />
+            <MeetingTopicList activeMeetingId={meetingId} activeTopics={activeTopics} />
             <Grid container spacing={1} justifyContent="flex-end" sx={{ mt: -6 }}>
               <Grid item>
                 <IconButton
