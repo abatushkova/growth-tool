@@ -47,18 +47,10 @@ export default function PersonForm(props: FormProps) {
         onChange={onInputChange}
         autoFocus
       />
-      <IconButton
-        aria-label="Save"
-        size="small"
-        type="submit"
-      >
+      <IconButton aria-label="Save" size="small" type="submit">
         <SaveIcon fontSize="small" />
       </IconButton>
-      <IconButton
-        aria-label="Cancel"
-        size="small"
-        onClick={onCloseClick}
-      >
+      <IconButton aria-label="Cancel" size="small" onClick={onCloseClick}>
         <CloseIcon fontSize="small" />
       </IconButton>
     </Stack>

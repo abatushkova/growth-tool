@@ -16,6 +16,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { SelectFunc, PersonId } from '../../app/types';
 import { deletePerson, editPerson, setGuest } from '../../features/persons/personsSlice';
 import { filterMeetings } from '../../features/meetings/meetingsSlice';
+import { closeActiveTopic } from '../../features/topics/topicsSlice';
 
 interface PersonProps {
   personName: string;
@@ -26,6 +27,7 @@ interface PersonProps {
 
 export default function PersonItem(props: PersonProps) {
   const { personName, personId, selected, onPersonClick } = props;
+
   const dispatch = useAppDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(personName);
@@ -73,6 +75,7 @@ export default function PersonItem(props: PersonProps) {
   const handleDelete = () => {
     dispatch(deletePerson(personId));
     dispatch(filterMeetings(personId));
+    dispatch(closeActiveTopic());
   };
 
   return (
@@ -97,10 +100,10 @@ export default function PersonItem(props: PersonProps) {
             <ListItemText>{personName}</ListItemText>
           </ListItemButton>
           <ListItemSecondaryAction>
-            <IconButton onClick={handleEditOpen} size="small">
+            <IconButton aria-label="Edit" onClick={handleEditOpen} size="small">
               <EditIcon fontSize="small" />
             </IconButton>
-            <IconButton onClick={handleDelete} size="small">
+            <IconButton aria-label="Delete" onClick={handleDelete} size="small">
               <DeleteIcon fontSize="small" />
             </IconButton>
           </ListItemSecondaryAction>

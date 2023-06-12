@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Logout from '@mui/icons-material/Logout';
 import { useAppDispatch } from '../../app/hooks';
 import { logout } from '../../features/auth/authSlice';
+import { closeActiveTopic } from '../../features/topics/topicsSlice';
 
 interface HeaderProps {
   onDrawerToggle: () => void;
@@ -38,6 +39,7 @@ export default function Header(props: HeaderProps) {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(closeActiveTopic());
   };
 
   return (

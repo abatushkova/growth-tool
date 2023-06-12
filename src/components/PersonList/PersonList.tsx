@@ -11,6 +11,7 @@ import PersonAdd from '../PersonAdd/PersonAdd';
 import { selectGuest, selectPersonList, setGuest } from '../../features/persons/personsSlice';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { Person } from '../../app/types';
+import { closeActiveTopic } from '../../features/topics/topicsSlice';
 
 export default function PersonList() {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ export default function PersonList() {
         personName: name
       })
     );
+    dispatch(closeActiveTopic());
   };
 
   const handlePersonSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
