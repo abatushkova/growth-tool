@@ -6,7 +6,7 @@ import { Comment, MeetingId, Topic, TopicId } from "../../app/types";
 type TopicEntity = {
   topicId: TopicId;
   title: string;
-  meetingId?: MeetingId;
+  meetingId: MeetingId;
 };
 
 type TopicsState = {
@@ -74,22 +74,6 @@ export const topicsSlice = createSlice({
         if (!hasComment) comments.push(payload.comment);
       }
     },
-    deleteComment(
-      state: TopicsState,
-      { payload }: PayloadAction<{ topicId: TopicId, meetingId: MeetingId}>
-    ) {
-      const index = state.topicList.findIndex((topic) => (
-        topic.topicId === payload.topicId
-      ));
-      if (index === -1) return state;
-
-      state.topicList[index].comments = state.topicList[index].comments.filter(
-        ({ meetingId }) => meetingId !== payload.meetingId
-      );
-      // state.topicList = state.topicList.filter(({ comments }) => (
-      //   comments.length > 0
-      // ));
-    },
     openActiveTopic(
       state: TopicsState,
       { payload }: PayloadAction<TopicEntity>
@@ -119,6 +103,17 @@ export const topicsSlice = createSlice({
         };
       }
     },
+    addComment(
+      state: TopicsState,
+      { payload }: PayloadAction<{ topicId: TopicId, comment: Comment}>
+    ) {
+      const index = state.topicList.findIndex((topic) => (
+        topic.topicId === payload.topicId
+      ));
+      if (index !== -1) {
+        state.topicList[index].comments.push(payload.comment);
+      }
+    },
   },
 });
 
@@ -126,11 +121,11 @@ export const {
   addTopic,
   deleteTopic,
   carryOverTopic,
-  deleteComment,
   filterTopics,
   openActiveTopic,
   closeActiveTopic,
   editActiveTopic,
+  addComment,
 } = topicsSlice.actions;
 
 export const topicsReducer = topicsSlice.reducer;
