@@ -31,22 +31,17 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 }));
 
 export default function TopicPage() {
-  const { title, topicId } = useAppSelector(selectActiveTopic);
   const dispatch = useAppDispatch();
-  const [curTitle, setCurTitle] = useState(title);
+  const activeTopic = useAppSelector(selectActiveTopic);
+  const [curTitle, setCurTitle] = useState(activeTopic.title);
   const [status, setStatus] = useState('typing');
-
-  const handleClose = () => {
-    dispatch(closeActiveTopic());
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStatus('typing');
     setCurTitle(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleClose = () => {
     const validTitle = curTitle.trim();
 
     if (!validTitle) {
@@ -56,22 +51,19 @@ export default function TopicPage() {
 
     dispatch(
       editActiveTopic({
+        ...activeTopic,
         title: validTitle,
-        topicId,
       })
     );
-    handleClose();
+    dispatch(closeActiveTopic());
   };
 
   return (
     <Layout>
       <Grid
         container
-        spacing={1}
+        spacing={2}
         alignItems="flex-start"
-        component="form"
-        noValidate
-        onSubmit={handleSubmit}
       >
         <Grid item xs>
           <Typography variant="h2" hidden>{curTitle}</Typography>
@@ -79,15 +71,11 @@ export default function TopicPage() {
             error={status === 'error' && true}
             helperText={status === 'error' ? 'Title cannot be empty' : null}
             variant="standard"
+            placeholder="Topic title"
             value={curTitle}
             fullWidth
             onChange={handleChange}
           />
-        </Grid>
-        <Grid item>
-          <Button variant="contained" type="submit">
-            Save
-          </Button>
         </Grid>
         <Grid item>
           <Tooltip title="Close">
