@@ -43,7 +43,7 @@ export default function MeetingForm(props: FormProps) {
           error={status === 'error' && true}
           helperText={status === 'error' ? 'Title cannot be empty' : null}
           variant="outlined"
-          placeholder="Enter Title"
+          placeholder="Meeting title"
           fullWidth
           size="small"
           value={title}

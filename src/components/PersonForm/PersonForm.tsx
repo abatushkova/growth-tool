@@ -37,7 +37,7 @@ export default function PersonForm(props: FormProps) {
         error={status === 'error' && true}
         helperText={status === 'error' ? 'Name cannot be empty' : null}
         variant="outlined"
-        placeholder="Enter Name"
+        placeholder="Name"
         fullWidth
         size="small"
         InputProps={{

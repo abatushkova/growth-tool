@@ -67,7 +67,7 @@ export default function MeetingTopicItem(props: TopicItemProps) {
         topicId,
         comment: {
           commentId: createGuid(),
-          createdAt: dayjs().toString(),
+          createdAt: dayjs().toDate().toString(),
           formView: FormView.QA,
           meetingId: id,
         }

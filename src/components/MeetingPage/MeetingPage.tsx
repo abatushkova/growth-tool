@@ -55,8 +55,8 @@ export default function MeetingPage() {
       addMeeting({
         meetingId: createGuid(),
         title: validTitle,
-        createdAt: dayjs().toString(),
-        plannedAt: curDate!.toString(),
+        createdAt: dayjs().toDate().toString(),
+        plannedAt: curDate!.toDate().toString(),
         ownerId: user.personId,
         guests: [{
           guestId: guest.personId,

@@ -8,7 +8,7 @@ export default function EmptyPage() {
   return (
     <Layout>
       <Typography variant="h3" align="center">
-        {convertToDate(dayjs().toString())}
+        {convertToDate(dayjs().toDate().toString())}
       </Typography>
     </Layout>
   )

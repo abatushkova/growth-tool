@@ -51,12 +51,13 @@ export default function MeetingTopicList(props: TopicListProps) {
         topicId: createGuid(),
         title: validTitle,
         category: [''],
-        createdAt: dayjs().toString(),
+        createdAt: dayjs().toDate().toString(),
         comments: [{
           commentId: createGuid(),
-          createdAt: dayjs().toString(),
+          createdAt: dayjs().toDate().toString(),
           formView: FormView.QA,
           meetingId: activeMeetingId,
+          initial: true,
         }],
       })
     );
@@ -89,7 +90,7 @@ export default function MeetingTopicList(props: TopicListProps) {
               error={status === 'error' && true}
               helperText={status === 'error' ? 'Topic cannot be empty' : null}
               variant="outlined"
-              placeholder="Enter Topic"
+              placeholder="Topic title"
               fullWidth
               size="small"
               value={curTitle}
