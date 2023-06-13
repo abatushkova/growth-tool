@@ -51,4 +51,5 @@ export type Comment = {
   comment?: string;
   score?: number;
   meetingId: MeetingId;
+  initial?: boolean;
 };
