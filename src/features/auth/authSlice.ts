@@ -26,6 +26,7 @@ export const authSlice = createSlice({
       state: AuthState
     ) {
       state.user.personId = '';
+      state.user.personName = '';
     },
   }
 });

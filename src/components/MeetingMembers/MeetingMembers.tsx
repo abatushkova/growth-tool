@@ -38,10 +38,14 @@ export default function MeetingMembers() {
       >
         <Grid item>
           <AvatarGroup>
-            <Avatar {...convertToInitials(user.personName, meetingAvatar)} />
-            {guest.personName ? (
-              <Avatar {...convertToInitials(guest.personName, meetingAvatar)} />
-            ) : null}
+            {user.personId
+              ? <Avatar {...convertToInitials(user.personName, meetingAvatar)} />
+              : null
+            }
+            {guest.personId
+              ? <Avatar {...convertToInitials(guest.personName, meetingAvatar)} />
+              : null
+            }
           </AvatarGroup>
         </Grid>
         <Grid item sx={{
@@ -50,17 +54,19 @@ export default function MeetingMembers() {
           justifyContent: 'center',
           flexWrap: 'wrap'
         }}>
-          <Typography variant="h3" component="p">
-            {user.personName}
-          </Typography>
-          {guest.personName ? (
+          {user.personId ? (
+            <Typography variant="h3" component="p">
+              {user.personName}
+            </Typography>
+          ) : null}
+          {guest.personId ? (
             <>
               <CodeIcon sx={{ fontSize: 32, mx: 1 }} />
               <Typography variant="h3" component="p">
                 {guest.personName}
               </Typography>
             </>
-          ): null}
+          ) : null}
         </Grid>
       </Grid>
     </Layout>

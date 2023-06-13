@@ -7,6 +7,6 @@ export const convertToInitials = (name: string, styles?: SxProps) => {
       bgcolor: convertToColor(name),
       ...styles,
     },
-    children: `${name.split('')[0].toUpperCase()}`,
+    children: `${name.split('')[0]}`,
   };
 }
