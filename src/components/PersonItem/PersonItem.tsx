@@ -71,7 +71,6 @@ export default function PersonItem(props: PersonProps) {
       );
     }
     setIsEditing(false);
-    setName(validName);
   };
 
   const handleDelete = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import {
   Typography,
@@ -32,7 +32,7 @@ export default function MeetingPage() {
   const handleCreateOpen = () => setIsCreating(true);
   const handleCreateClose = () => {
     setIsCreating(false);
-    setStatus('typing');
+    if (status !== 'typing') setStatus('typing');
     setCurTitle(defaultTitle);
     setCurDate(tomorrow);
   };
@@ -66,6 +66,10 @@ export default function MeetingPage() {
     );
     handleCreateClose();
   };
+
+  useEffect(() => {
+    setIsCreating(false);
+  }, [guest.personId]);
 
   return (
     <>

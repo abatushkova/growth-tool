@@ -22,7 +22,7 @@ export default function PersonAdd() {
   const handleAddOpen = () => setIsAdding(true);
   const handleAddClose = () => {
     setIsAdding(false);
-    setStatus('typing');
+    if (status !== 'typing') setStatus('typing');
     setName('');
   };
 

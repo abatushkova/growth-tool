@@ -92,7 +92,6 @@ export default function MeetingItem(props: Meeting) {
       })
     );
     setIsEditing(false);
-    setCurTitle(validTitle);
   };
 
   const handleDelete = () => {
@@ -102,13 +101,13 @@ export default function MeetingItem(props: Meeting) {
   };
 
   const handleMeetingToggle = () => {
+    handleMenuClose();
     dispatch(
       toggleMeeting({
         meetingId,
         closed,
       })
     );
-    handleMenuClose();
   };
 
   return (
