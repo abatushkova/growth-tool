@@ -44,8 +44,8 @@ export default function MeetingPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validTitle = curTitle.trim();
 
+    const validTitle = curTitle.trim();
     if (!validTitle) {
       setStatus('error');
       return;

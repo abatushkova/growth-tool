@@ -17,6 +17,7 @@ import { SelectFunc, PersonId } from '../../app/types';
 import { deletePerson, editPerson, setGuest } from '../../features/persons/personsSlice';
 import { filterMeetings } from '../../features/meetings/meetingsSlice';
 import { closeActiveTopic } from '../../features/topics/topicsSlice';
+import { convertToCapital } from '../../utils/helpers/convertToCapital';
 
 interface PersonProps {
   personName: string;
@@ -47,12 +48,13 @@ export default function PersonItem(props: PersonProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validName = name.trim();
 
+    let validName = name.trim();
     if (!validName) {
       setStatus('error');
       return;
     }
+    validName = convertToCapital(validName);
 
     dispatch(
       editPerson({

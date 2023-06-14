@@ -40,6 +40,7 @@ export default function MeetingTopicList(props: TopicListProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const validTitle = curTitle.trim();
     if (!validTitle) {
       setStatus('error');
@@ -88,9 +89,9 @@ export default function MeetingTopicList(props: TopicListProps) {
           <Grid item xs={12}>
             <TextField
               error={status === 'error' && true}
-              helperText={status === 'error' ? 'Topic cannot be empty' : null}
+              helperText={status === 'error' ? 'Please fill out this field' : null}
               variant="outlined"
-              placeholder="Topic title"
+              label="Title"
               fullWidth
               size="small"
               value={curTitle}

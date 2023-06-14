@@ -31,12 +31,13 @@ export default function Auth() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validName = convertToCapital(name.trim());
 
+    let validName = name.trim();
     if (!validName) {
       setStatus('error');
       return;
     };
+    validName = convertToCapital(validName);
 
     dispatch(
       login({
@@ -77,7 +78,7 @@ export default function Auth() {
             <Grid item>
               <TextField
                 error={status === 'error' && true}
-                helperText={status === 'error' ? 'Please enter your Name' : null}
+                helperText={status === 'error' ? 'Please fill out this field' : null}
                 label="Username"
                 variant="outlined"
                 fullWidth

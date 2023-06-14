@@ -35,7 +35,7 @@ export default function PersonForm(props: FormProps) {
     >
       <TextField
         error={status === 'error' && true}
-        helperText={status === 'error' ? 'Name cannot be empty' : null}
+        helperText={status === 'error' ? 'Please fill out this field' : null}
         variant="outlined"
         placeholder="Name"
         fullWidth

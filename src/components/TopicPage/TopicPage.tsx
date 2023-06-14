@@ -43,7 +43,6 @@ export default function TopicPage() {
 
   const handleClose = () => {
     const validTitle = curTitle.trim();
-
     if (!validTitle) {
       setStatus('error');
       return;
@@ -69,9 +68,9 @@ export default function TopicPage() {
           <Typography variant="h2" hidden>{curTitle}</Typography>
           <CustomTextField
             error={status === 'error' && true}
-            helperText={status === 'error' ? 'Title cannot be empty' : null}
+            helperText={status === 'error' ? 'Please fill out this field' : null}
             variant="standard"
-            placeholder="Topic title"
+            placeholder="Title"
             value={curTitle}
             fullWidth
             onChange={handleChange}

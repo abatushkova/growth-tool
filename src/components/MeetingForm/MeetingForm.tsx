@@ -41,9 +41,9 @@ export default function MeetingForm(props: FormProps) {
       <Grid item xs={12}>
         <TextField
           error={status === 'error' && true}
-          helperText={status === 'error' ? 'Title cannot be empty' : null}
+          helperText={status === 'error' ? 'Please fill out this field' : null}
           variant="outlined"
-          placeholder="Meeting title"
+          label="Title"
           fullWidth
           size="small"
           value={title}

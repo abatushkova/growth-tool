@@ -33,12 +33,13 @@ export default function PersonAdd() {
 
   const handleSubmit =(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validName = convertToCapital(name.trim());
 
+    let validName = name.trim();
     if (!validName) {
       setStatus('error');
       return;
     }
+    validName = convertToCapital(validName);
 
     dispatch(
       addPerson({
