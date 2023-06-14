@@ -9,6 +9,14 @@ type TopicEntity = {
   meetingId: MeetingId;
 };
 
+type CommentEntity = {
+  topicId: TopicId;
+  commentId: CommentId;
+  question?: string;
+  comment?: string;
+  score?: number;
+};
+
 type TopicsState = {
   topicList: Topic[];
   activeTopic: TopicEntity;
@@ -120,7 +128,7 @@ export const topicsSlice = createSlice({
     },
     deleteComment(
       state: TopicsState,
-      { payload }: PayloadAction<{ topicId: TopicId, commentId: CommentId}>
+      { payload }: PayloadAction<CommentEntity>
     ) {
       const index = state.topicList.findIndex(({ topicId }) => (
         topicId === payload.topicId
@@ -130,6 +138,25 @@ export const topicsSlice = createSlice({
           commentId !== payload.commentId
         ));
         state.topicList[index].comments = comments;
+      }
+    },
+    editComment(
+      state: TopicsState,
+      { payload }: PayloadAction<CommentEntity>
+    ) {
+      const index = state.topicList.findIndex(({ topicId }) => (
+        topicId === payload.topicId
+      ));
+      const commentIdx = state.topicList[index].comments.findIndex(({ commentId }) => (
+        commentId === payload.commentId
+      ));
+      if (commentIdx !== -1) {
+        state.topicList[index].comments[commentIdx] = {
+          ...state.topicList[index].comments[commentIdx],
+          question: payload.question,
+          comment: payload.comment,
+          score: payload.score,
+        };
       }
     },
   },
@@ -145,6 +172,7 @@ export const {
   editActiveTopic,
   addComment,
   deleteComment,
+  editComment,
 } = topicsSlice.actions;
 
 export const topicsReducer = topicsSlice.reducer;
