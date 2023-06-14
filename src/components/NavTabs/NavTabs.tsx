@@ -8,11 +8,7 @@ import TabPanel from '../NavTabPanel/NavTabPanel';
 import PersonList from '../PersonList/PersonList';
 import { TabTypes } from '../../utils/constants/colors';
 
-const tabColors = [
-  TabTypes.Meetings,
-  TabTypes.Catalog,
-  TabTypes.Reports
-];
+const tabColors = Object.values(TabTypes);
 
 function a11yProps(index: number) {
   return {
