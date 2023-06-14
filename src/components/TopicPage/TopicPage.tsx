@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import {
   Typography,
   Grid,
-  Button,
   IconButton,
   TextField,
   Tooltip,
@@ -90,10 +89,7 @@ export default function TopicPage() {
       <Typography variant="h3" sx={{ mt: 6, mb: 3 }}>
         Activity
       </Typography>
-      <Typography variant="body1">
-        There are no comments yet on this topic.
-      </Typography>
-      {/* <TopicCommentList /> */}
+      <TopicCommentList />
     </Layout>
   );
 }

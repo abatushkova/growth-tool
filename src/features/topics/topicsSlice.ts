@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { loadState } from "../../app/localStorage";
-import { Comment, MeetingId, Topic, TopicId } from "../../app/types";
+import { Comment, CommentId, MeetingId, Topic, TopicId } from "../../app/types";
 
 type TopicEntity = {
   topicId: TopicId;
@@ -33,8 +33,8 @@ export const topicsSlice = createSlice({
       state: TopicsState,
       { payload }: PayloadAction<{ topicId: TopicId, meetingId: MeetingId}>
     ) {
-      const index = state.topicList.findIndex((topic) => (
-        topic.topicId === payload.topicId
+      const index = state.topicList.findIndex(({ topicId }) => (
+        topicId === payload.topicId
       ));
       if (index !== -1) {
         const comments = state.topicList[index].comments.filter(
@@ -53,7 +53,9 @@ export const topicsSlice = createSlice({
       let list: Topic[] = [];
 
       state.topicList.forEach((topic) => {
-        topic.comments = topic.comments.filter(({ meetingId }) => meetingId !== action.payload);
+        topic.comments = topic.comments.filter(({ meetingId }) => (
+          meetingId !== action.payload
+        ));
         list.push(topic);
       });
 
@@ -64,13 +66,15 @@ export const topicsSlice = createSlice({
       state: TopicsState,
       { payload }: PayloadAction<{ topicId: TopicId, comment: Comment}>
     ) {
-      const index = state.topicList.findIndex((topic) => (
-        topic.topicId === payload.topicId
+      const index = state.topicList.findIndex(({ topicId }) => (
+        topicId === payload.topicId
       ));
       if (index !== -1) {
         const comments = state.topicList[index].comments;
-        const hasComment = comments.some(({ meetingId }) => meetingId === payload.comment.meetingId);
-  
+        const hasComment = comments.some(({ meetingId }) => (
+          meetingId === payload.comment.meetingId
+        ));
+
         if (!hasComment) comments.push(payload.comment);
       }
     },
@@ -93,8 +97,8 @@ export const topicsSlice = createSlice({
       state: TopicsState,
       { payload }: PayloadAction<TopicEntity>
     ) {
-      const index = state.topicList.findIndex((topic) => (
-        topic.topicId === payload.topicId
+      const index = state.topicList.findIndex(({ topicId }) => (
+        topicId === payload.topicId
       ));
       if (index !== -1) {
         state.topicList[index] = {
@@ -107,11 +111,25 @@ export const topicsSlice = createSlice({
       state: TopicsState,
       { payload }: PayloadAction<{ topicId: TopicId, comment: Comment}>
     ) {
-      const index = state.topicList.findIndex((topic) => (
-        topic.topicId === payload.topicId
+      const index = state.topicList.findIndex(({ topicId }) => (
+        topicId === payload.topicId
       ));
       if (index !== -1) {
         state.topicList[index].comments.push(payload.comment);
+      }
+    },
+    deleteComment(
+      state: TopicsState,
+      { payload }: PayloadAction<{ topicId: TopicId, commentId: CommentId}>
+    ) {
+      const index = state.topicList.findIndex(({ topicId }) => (
+        topicId === payload.topicId
+      ));
+      if (index !== -1) {
+        const comments = state.topicList[index].comments.filter(({ commentId }) => (
+          commentId !== payload.commentId
+        ));
+        state.topicList[index].comments = comments;
       }
     },
   },
@@ -126,6 +144,7 @@ export const {
   closeActiveTopic,
   editActiveTopic,
   addComment,
+  deleteComment,
 } = topicsSlice.actions;
 
 export const topicsReducer = topicsSlice.reducer;

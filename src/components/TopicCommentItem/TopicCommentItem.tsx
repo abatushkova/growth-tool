@@ -14,24 +14,37 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { Comment } from '../../app/types';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { deleteComment, selectActiveTopic } from '../../features/topics/topicsSlice';
+import { convertToDatetime } from '../../utils/helpers/convertToDatetime';
 
-interface CommentProps {
-  commentId: number;
-  createdAt: string;
-  formView: string;
-  question?: string;
-  comment?: string;
-  score?: number;
-  meetingId: number;
-}
+export default function TopicCommentItem(props: Comment) {
+  const {
+    createdAt,
+    question,
+    comment,
+    score,
+    formView,
+    commentId,
+  } = props;
 
-export default function TopicCommentItem(props: CommentProps) {
-  const { createdAt, question, comment, score, formView } = props;
+  const dispatch = useAppDispatch();
+  const { topicId } = useAppSelector(selectActiveTopic);
   const [scoreValue, setScoreValue] = useState(score);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditOpen = () => setIsEditing(true);
   const handleEditClose = () => setIsEditing(false);
+
+  const handleDelete = () => {
+    dispatch(
+      deleteComment({
+        topicId,
+        commentId,
+      })
+    );
+  };
 
   return (
     <Paper sx={{ p: 2}}>
@@ -77,7 +90,7 @@ export default function TopicCommentItem(props: CommentProps) {
           <Grid item xs={12} container>
             <Grid item xs>
               <Typography variant="body2" color="text.secondary">
-                {createdAt}
+                {convertToDatetime(createdAt)}
               </Typography>
             </Grid>
             <Grid item>
@@ -89,7 +102,7 @@ export default function TopicCommentItem(props: CommentProps) {
             </Grid>
             <Grid item>
               <Tooltip title="Delete">
-                <IconButton size="small">
+                <IconButton size="small" onClick={handleDelete}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
