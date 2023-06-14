@@ -69,6 +69,9 @@ export default function TopicFormView() {
     setStatus('typing');
 
     const { name, value } = e.target;
+    if (!value.trim()) {
+      setStatus('pending');
+    }
     setValues({
       ...values,
       [name]: value,
