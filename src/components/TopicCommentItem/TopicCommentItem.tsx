@@ -6,7 +6,6 @@ import {
   Tooltip,
   IconButton,
   Paper,
-  TextField,
   FormControl,
   FormControlLabel,
   RadioGroup,
@@ -14,9 +13,10 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import TopicCommentForm from '../TopicCommentForm/TopicCommentForm';
 import { Comment } from '../../app/types';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { deleteComment, selectActiveTopic } from '../../features/topics/topicsSlice';
+import { deleteComment, editComment, selectActiveTopic } from '../../features/topics/topicsSlice';
 import { convertToDatetime } from '../../utils/helpers/convertToDatetime';
 
 export default function TopicCommentItem(props: Comment) {
@@ -31,11 +31,14 @@ export default function TopicCommentItem(props: Comment) {
 
   const dispatch = useAppDispatch();
   const { topicId } = useAppSelector(selectActiveTopic);
-  const [scoreValue, setScoreValue] = useState(score);
   const [isEditing, setIsEditing] = useState(false);
+  const [values, setValues] = useState({ question, comment, score });
 
   const handleEditOpen = () => setIsEditing(true);
-  const handleEditClose = () => setIsEditing(false);
+  const handleEditClose = () => {
+    setIsEditing(false);
+    setValues({ question, comment, score });
+  };
 
   const handleDelete = () => {
     dispatch(
@@ -46,35 +49,40 @@ export default function TopicCommentItem(props: Comment) {
     );
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const handleSave = () => {
+    dispatch(
+      editComment({
+        topicId,
+        commentId,
+        question: values.question,
+        comment: values.comment,
+        score: values.score,
+      })
+    );
+    setIsEditing(false);
+  };
+
   return (
     <Paper sx={{ p: 2}}>
       {isEditing ? (
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              id="question"
-              label="Question"
-              multiline
-              fullWidth
-              size="small"
-              value="Question"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              id="answer"
-              label="Answer"
-              multiline
-              fullWidth
-              size="small"
-              value="Answer"
-            />
-          </Grid>
+        <TopicCommentForm
+          formView={formView}
+          question={values.question}
+          comment={values.comment}
+          score={values.score}
+          onInputChange={handleChange}
+        >
           <Grid item container spacing={1}>
             <Grid item>
-              <Button variant="contained">
+              <Button variant="contained" onClick={handleSave}>
                 Save
               </Button>
             </Grid>
@@ -84,7 +92,7 @@ export default function TopicCommentItem(props: Comment) {
               </Button>
             </Grid>
           </Grid>
-        </Grid>
+        </TopicCommentForm>
       ) : (
         <Grid container spacing={1}>
           <Grid item xs={12} container>
@@ -123,12 +131,7 @@ export default function TopicCommentItem(props: Comment) {
           {score && (
             <Grid item xs={12}>
               <FormControl disabled>
-                <RadioGroup
-                  row
-                  aria-labelledby="radio-buttons-group"
-                  name="score"
-                  value={scoreValue}
-                >
+                <RadioGroup row name="score" value={score}>
                   {[...Array(11)].map((_, index) => (index > 0 &&
                     <FormControlLabel
                       key={index}
