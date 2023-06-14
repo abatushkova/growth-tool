@@ -88,7 +88,7 @@ export default function MeetingItem(props: Meeting) {
       editMeeting({
         meetingId,
         title: validTitle,
-        plannedAt: curDate!.toString(),
+        plannedAt: curDate!.toDate().toString(),
       })
     );
     setIsEditing(false);

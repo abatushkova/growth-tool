@@ -70,6 +70,7 @@ export default function MeetingTopicItem(props: TopicItemProps) {
           createdAt: dayjs().toDate().toString(),
           formView: FormView.QA,
           meetingId: id,
+          initial: true,
         }
       })
     );
