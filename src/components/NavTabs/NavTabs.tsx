@@ -10,7 +10,7 @@ import { TabTypes } from '../../utils/constants/colors';
 
 const tabColors = Object.values(TabTypes);
 
-function a11yProps(index: number) {
+const a11yProps = (index: number) => {
   return {
     id: `nav-tab-${index}`,
     'aria-controls': `nav-tabpanel-${index}`,

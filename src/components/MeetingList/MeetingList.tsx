@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useMemo, memo } from 'react';
 import { Box, Typography } from '@mui/material';
 import MeetingItem from '../MeetingItem/MeetingItem';
 import { useAppSelector } from '../../app/hooks';
 import { selectMeetingList } from '../../features/meetings/meetingsSlice';
 import { selectGuest } from '../../features/persons/personsSlice';
 
-export default function MeetingList() {
+const MeetingList = memo(function MeetingList() {
   const { personId } = useAppSelector(selectGuest);
   const meetings = useAppSelector(selectMeetingList);
-  const activeMeetings = [...meetings].filter(({ guests }) => (
-    guests[0].guestId === personId
-  ));
+  const activeMeetings = [...meetings]
+    .filter(({ guests }) => guests[0].guestId === personId)
+    .sort((a, b) => new Date(a.plannedAt).getTime() - new Date(b.plannedAt).getTime());
 
   return (
     <Box>
@@ -25,4 +25,6 @@ export default function MeetingList() {
       )}
     </Box>
   );
-}
+});
+
+export default MeetingList;
