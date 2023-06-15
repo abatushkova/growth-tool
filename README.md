@@ -1,5 +1,5 @@
 # Growth-tool
-App to create meetings, topics, to make comments during one-on-one meetings.
+One-on-one meeting management tool used by developer manager to plan meetings with team members, to discuss different topics, to take notes in the form of a questionnaire, score, comment.
 
 ### Built with
 - Create React App
