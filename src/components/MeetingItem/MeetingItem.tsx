@@ -96,8 +96,8 @@ export default function MeetingItem(props: Meeting) {
 
   const handleDelete = () => {
     handleMenuClose();
-    dispatch(deleteMeeting(meetingId));
     dispatch(filterTopics(meetingId));
+    dispatch(deleteMeeting(meetingId));
   };
 
   const handleMeetingToggle = () => {

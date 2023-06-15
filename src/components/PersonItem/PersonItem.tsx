@@ -12,11 +12,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonFrom from '../PersonForm/PersonForm';
 import { convertToInitials } from '../../utils/helpers/convertToInitials';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { SelectFunc, PersonId } from '../../app/types';
 import { deletePerson, editPerson, setGuest } from '../../features/persons/personsSlice';
-import { filterMeetings } from '../../features/meetings/meetingsSlice';
-import { closeActiveTopic } from '../../features/topics/topicsSlice';
+import { filterMeetings, selectMeetingList } from '../../features/meetings/meetingsSlice';
+import { closeActiveTopic, filterTopics } from '../../features/topics/topicsSlice';
 import { convertToCapital } from '../../utils/helpers/convertToCapital';
 
 interface PersonProps {
@@ -30,6 +30,7 @@ export default function PersonItem(props: PersonProps) {
   const { personName, personId, selected, onPersonClick } = props;
 
   const dispatch = useAppDispatch();
+  const meetings = useAppSelector(selectMeetingList);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(personName);
   const [status, setStatus] = useState('typing');
@@ -74,9 +75,12 @@ export default function PersonItem(props: PersonProps) {
   };
 
   const handleDelete = () => {
-    dispatch(deletePerson(personId));
-    dispatch(filterMeetings(personId));
     dispatch(closeActiveTopic());
+    [...meetings]
+      .filter(({ guests }) => guests[0].guestId === personId)
+      .forEach(({ meetingId }) => dispatch(filterTopics(meetingId)));
+    dispatch(filterMeetings(personId));
+    dispatch(deletePerson(personId));
   };
 
   return (
