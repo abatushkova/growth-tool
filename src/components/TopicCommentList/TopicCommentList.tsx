@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Stack, Typography } from '@mui/material';
 import TopicCommentItem from '../TopicCommentItem/TopicCommentItem';
 import { useAppSelector } from '../../app/hooks';
 import { selectActiveTopic, selectTopicList } from '../../features/topics/topicsSlice';
 
-export default function TopicCommentList() {
+const TopicCommentList = memo(function TopicCommentList() {
   const { topicId } = useAppSelector(selectActiveTopic);
   const topics = useAppSelector(selectTopicList);
-  const activeComments = [...topics].find((topic) => (
-    topic.topicId === topicId
-  ))?.comments.filter((comment) => !comment.initial);
+  const activeComments = [...topics]
+    .find((topic) => topic.topicId === topicId)
+    ?.comments.filter((comment) => !comment.initial);
 
   return (
     <>
@@ -26,4 +26,6 @@ export default function TopicCommentList() {
       )}
     </>
   );
-}
+});
+
+export default TopicCommentList;

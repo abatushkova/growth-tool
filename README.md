@@ -6,6 +6,7 @@ One-on-One Meeting management tool used by a manager to plan meetings with team 
 - Redux Toolkit
 - TypeScript
 - Material UI
+- Data stored in localStorage
 
 ## Getting Started
 To get a local copy up and running follow these steps.

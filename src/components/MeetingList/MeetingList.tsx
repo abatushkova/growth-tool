@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from 'react';
+import React, { memo } from 'react';
 import { Box, Typography } from '@mui/material';
 import MeetingItem from '../MeetingItem/MeetingItem';
 import { useAppSelector } from '../../app/hooks';

@@ -22,6 +22,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import MeetingTopicList from '../MeetingTopicList/MeetingTopicList';
 import MeetingForm from '../MeetingForm/MeetingForm';
+import MeetingTopicAdd from '../MeetingTopicAdd/MeetingTopicAdd';
 import { Meeting } from '../../app/types';
 import { convertToDate } from '../../utils/helpers/convertToDate';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -46,13 +47,13 @@ export default function MeetingItem(props: Meeting) {
   const [curDate, setCurDate] = useState<Dayjs | null>(dayjs(plannedAt));
   const [status, setStatus] = useState('typing');
   const [isEditing, setIsEditing] = useState(false);
-  const [isExpanded, setIsExpanded] = useState<string | false>(false);
+  const [expanded, setExpanded] = useState<string | false>(false);
   const [dotsAnchor, setDotsAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpened = Boolean(dotsAnchor);
 
   const handleAccordionToggle =
     (meetingId: string) => (e: React.SyntheticEvent, isExpanded: boolean) => {
-      setIsExpanded(isExpanded ? meetingId : false);
+      setExpanded(isExpanded ? meetingId : false);
     };
 
   const handleMenuClose = () => setDotsAnchor(null);
@@ -131,10 +132,14 @@ export default function MeetingItem(props: Meeting) {
         </MeetingForm>
       ) : (
         <CustomAccordion
-          expanded={isExpanded === meetingId}
+          expanded={expanded === meetingId}
           onChange={handleAccordionToggle(meetingId)}
         >
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="meeting-content">
+          <AccordionSummary
+            id={`meeting-${meetingId}-header`}
+            aria-controls={`meeting-${meetingId}-content`}
+            expandIcon={<ExpandMoreIcon />}
+          >
             <Grid container spacing={1}>
               <Grid item xs={12} container spacing={2} flexWrap="nowrap">
                 {activeTopics.length > 0 && (
@@ -164,7 +169,8 @@ export default function MeetingItem(props: Meeting) {
             </Grid>
           </AccordionSummary>
           <AccordionDetails>
-            <MeetingTopicList activeMeetingId={meetingId} activeTopics={activeTopics} />
+            <MeetingTopicList activeMeetingId={meetingId} />
+            <MeetingTopicAdd activeMeetingId={meetingId} />
             <Grid container spacing={1} justifyContent="flex-end" sx={{ mt: -6 }}>
               <Grid item>
                 <IconButton
@@ -200,11 +206,10 @@ export default function MeetingItem(props: Meeting) {
                   </MenuItem>
                   <MenuItem onClick={handleMeetingToggle}>
                     <ListItemIcon>
-                      {closed ? (
-                        <LockOpenOutlinedIcon fontSize="small" />
-                        ) : (
-                        <LockIcon fontSize="small" />
-                      )}
+                      {closed
+                        ? <LockOpenOutlinedIcon fontSize="small" />
+                        : <LockIcon fontSize="small" />
+                      }
                     </ListItemIcon>
                     {closed ? 'Open' : 'Close'}
                   </MenuItem>

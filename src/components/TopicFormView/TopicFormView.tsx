@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import dayjs from 'dayjs';
 import { styled } from '@mui/material/styles';
 import {
@@ -43,7 +43,7 @@ const initialValues = {
   score: 0,
 };
 
-export default function TopicFormView() {
+const TopicFormView = memo(function TopicFormView() {
   const dispatch = useAppDispatch();
   const activeTopic = useAppSelector(selectActiveTopic);
   const [formView, setFormView] = useState(FormView.QA);
@@ -141,4 +141,6 @@ export default function TopicFormView() {
       </Box>
     </>
   );
-}
+});
+
+export default TopicFormView;

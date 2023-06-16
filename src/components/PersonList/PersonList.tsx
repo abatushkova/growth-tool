@@ -81,14 +81,14 @@ export default function PersonList() {
         overflow: 'auto',
       }}>
         <PersonAdd />
-          {sortedPersons.map((person) => (
-            <PersonItem
-              key={person.personId}
-              {...person}
-              selected={guest.personId}
-              onPersonClick={handlePersonSelect}
-            />
-          ))}
+        {sortedPersons.map((person) => (
+          <PersonItem
+            key={person.personId}
+            {...person}
+            selected={guest.personId}
+            onPersonClick={handlePersonSelect}
+          />
+        ))}
       </List>
     </>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Typography,
   Grid,
@@ -24,7 +24,7 @@ const meetingAvatar = {
   fontSize: '1.5rem',
 };
 
-export default function MeetingMembers() {
+const MeetingMembers = memo(function MeetingMembers() {
   const user = useAppSelector(selectUser);
   const guest = useAppSelector(selectGuest);
 
@@ -71,4 +71,6 @@ export default function MeetingMembers() {
       </Grid>
     </Layout>
   );
-}
+});
+
+export default MeetingMembers;
