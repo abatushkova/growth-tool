@@ -1,4 +1,4 @@
-# Growth-tool
+# [Growth-tool](https://abatushkova.github.io/growth-tool/)
 One-on-One Meeting management tool used by a manager to plan meetings with team members, to discuss different topics, to take notes in the form of a questionnaire, score, and comment.
 
 ### Built with
