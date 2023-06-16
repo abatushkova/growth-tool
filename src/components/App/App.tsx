@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import Main from '../Main/Main';
 import Auth from '../Auth/Auth';
 import { useAppSelector } from '../../app/hooks';
@@ -19,8 +19,7 @@ export default function App() {
   }, [user.personId]);
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      <CssBaseline />
+    <Box sx={{ flex: 1, display: 'flex' }}>
       {isLoggedIn
         ? <Main />
         : <Auth />
